@@ -1,0 +1,14 @@
+.error-message {
+        color: #ed5565;
+}
+.select2 {
+        width: 100% !important;
+        min-height: 34px;
+}
+
+.img-thumbnail {
+	width: 40px;
+}
+#SearchIndexForm > .row > .col-md-4 {
+    min-height: 73px;
+}
