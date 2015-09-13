@@ -13,4 +13,7 @@ $config['saya'] = array(
         'max_file_size_upload' => 5 * 1000 * 1000,
         'data_file_root' => 'data_files',
     ),
+    'Category' => array(
+        'module_name' => 'categories',
+    ),
 );

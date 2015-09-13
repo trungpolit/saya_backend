@@ -70,9 +70,9 @@ class AppController extends Controller {
 
         $file = &$result['files'][0];
         $save_data = array(
-            'file_name' => $file->name,
-            'file_size' => $file->size,
-            'file_mime' => $file->type,
+            'name' => $file->name,
+            'size' => $file->size,
+            'mime' => $file->type,
             'status' => 0,
             'uri' => WEBROOT_DIR . DS . 'tmp' . DS . $file->name,
         );
@@ -90,7 +90,7 @@ class AppController extends Controller {
         ));
 
         // chuỗi hóa thông tin về file
-        $file->file_serialize = json_encode($file_managed['FileManaged']);
+        $file->fileSerialize = json_encode($file_managed['FileManaged']);
 
         // thực hiện ghi đè lại deleteUrl
         $deleteUrl = Router::url(array(

@@ -119,7 +119,7 @@ class UtilityCommon {
         App::uses('Folder', 'Utility');
         App::uses('File', 'Utility');
 
-        $data_root_name = Configure::read('sysconfig.App.data_file_root');
+        $data_root_name = Configure::read('saya.App.data_file_root');
 
         $pretty_mime = strtolower($mime);
         $extract_mime = explode('/', $pretty_mime);
@@ -168,34 +168,29 @@ class UtilityCommon {
 
         if (empty($file)) {
 
-            return false;
+            return true;
         }
-
-        $status_file_upload_completed = Configure::read('sysconfig.App.constants.STATUS_FILE_UPLOAD_COMPLETED');
-        $file_ids = array();
-
         if (!is_array($file)) {
 
             $file = array($file);
         }
-
+        $target_file = array();
         foreach ($file as $v) {
 
             $item = json_decode($v, true);
             if (empty($item)) {
 
-                throw new CakeException(__('The input file is invalid'));
-            }
-
-            // kiểm tra xem file đã được move hay chưa?
-            if ($item['status'] == $status_file_upload_completed) {
-
-                $file_ids[] = new MongoId($item['id']);
                 continue;
             }
 
-            $file_uri = APP . WEBROOT_DIR . DS . $item['uri'];
+            // kiểm tra xem file đã được move hay chưa?
+            if ($item['status'] == 1) {
 
+                $target_file[] = $item;
+                continue;
+            }
+
+            $file_uri = APP . DS . $item['uri'];
             // thực hiện support cho môi trường windows
             if (DIRECTORY_SEPARATOR == '\\') {
 
@@ -205,23 +200,20 @@ class UtilityCommon {
             $file_obj = new File($file_uri, false, 0755);
             if (!$file_obj->exists()) {
 
-                throw new CakeException(__('The input file is not exist'));
+                continue;
             }
 
             $file_name = basename($item['uri']);
-
             if (!empty($item['mime'])) {
 
                 $mime = $item['mime'];
             } else {
 
-                $mime = ExtendedUtility::getMimeType($file_name);
+                $mime = self::getMimeType($file_name);
             }
 
-            $target = ExtendedUtility::generateFolderStructure($module_name, $mime);
-
+            $target = self::generateFolderStructure($module_name, $mime);
             $copy = $file_obj->copy(APP . $target . $file_name);
-
             if (!$copy) {
 
                 throw new CakeException(__('Can not copy file from %s to %s', $file_obj->path, APP . $target . $file_name));
@@ -230,7 +222,7 @@ class UtilityCommon {
 
             // cập nhật lại đường dẫn file và set status = 1
             $item['uri'] = $target . $file_name;
-            $item['status'] = $status_file_upload_completed;
+            $item['status'] = 1;
 
             App::uses('FileManaged', 'Model');
             $FileManaged = new FileManaged();
@@ -239,10 +231,10 @@ class UtilityCommon {
                 throw new CakeException(__('Cant save file data into File Collection'));
             }
 
-            $file_ids[] = new MongoId($item['id']);
+            $target_file[] = $item;
         }
 
-        return $file_ids;
+        return $target_file;
     }
 
 }

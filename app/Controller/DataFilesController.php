@@ -2,7 +2,7 @@
 
 App::uses('AppController', 'Controller');
 
-class DataFileController extends AppController {
+class DataFilesController extends AppController {
 
     public $file_path = '';
 
@@ -13,11 +13,11 @@ class DataFileController extends AppController {
 
         if ($file->exists()) {
 
-            return $this->response->file(APP . $file_path);
+            $this->response->file(APP . $file_path);
         } else {
 
             $this->response->header('HTTP/1.0 404 Not Found');
-            return $this->response->file(WEBROOT_DIR . DS . 'img/404.png');
+            $this->response->file(WEBROOT_DIR . DS . 'img/404.png');
         }
 
         // hiện thị file
@@ -25,11 +25,10 @@ class DataFileController extends AppController {
     }
 
     public function beforeFilter() {
-
         parent::beforeFilter();
-        $this->Auth->allow('index');
+//        $this->Auth->allow('index');
 
-        $data_file_root = Configure::read('sysconfig.App.data_file_root');
+        $data_file_root = Configure::read('saya.App.data_file_root');
         $file_path = $data_file_root . '/';
 
         if (empty($this->passedArgs)) {
