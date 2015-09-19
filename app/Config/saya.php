@@ -18,5 +18,6 @@ $config['saya'] = array(
     ),
     'Product' => array(
         'module_name' => 'products',
+        'cache_path' => 'webroot/cache/products/',
     ),
 );

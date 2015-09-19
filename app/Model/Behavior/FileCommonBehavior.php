@@ -14,6 +14,10 @@ class FileCommonBehavior extends ModelBehavior {
             return true;
         }
         $FileMapping = new FileMapping();
+        $FileManaged = new FileManaged();
+        $cache_data = array(
+            'id' => $model->id,
+        );
 
         foreach ($model->file_fields as $field) {
 
@@ -40,7 +44,39 @@ class FileCommonBehavior extends ModelBehavior {
             $module_name = Configure::read('saya.Category.module_name');
             $target_file_data = UtilityCommon::moveFromTmp($file_data, $module_name);
             $this->saveFileMapping($target_file_data, $FileMapping, $model, $field);
+            $this->saveFileCache($cache_data, $target_file_data, $FileManaged, $field);
         }
+
+        $model->save($cache_data, array(
+            'callbacks' => false,
+        ));
+    }
+
+    protected function saveFileCache(&$cache_data, $file_data, $FileManaged, $field) {
+
+        $cache_field = $field . '_uri';
+        if (empty($file_data)) {
+
+            $cache_data[$cache_field] = '';
+            return true;
+        }
+
+        $file_uris = array();
+        foreach ($file_data as $item) {
+
+            $file_managed_id = $item['id'];
+            $file_managed = $FileManaged->find('first', array(
+                'conditions' => array(
+                    'id' => $file_managed_id,
+                ),
+            ));
+            if (empty($file_managed)) {
+
+                continue;
+            }
+            $file_uris[] = $file_managed['FileManaged']['uri'];
+        }
+        $cache_data[$cache_field] = serialize($file_uris);
     }
 
     protected function saveFileMapping($file_data, $FileMapping, $model, $field) {
