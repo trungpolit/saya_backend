@@ -16,4 +16,7 @@ $config['saya'] = array(
     'Category' => array(
         'module_name' => 'categories',
     ),
+    'Product' => array(
+        'module_name' => 'products',
+    ),
 );

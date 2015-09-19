@@ -16,9 +16,11 @@ class CategoriesController extends AppController {
         $this->set('breadcrumb', $breadcrumb);
         $this->set('page_title', __('category_title'));
 
+        $this->{$this->modelClass}->file_proccess = 1;
+
         if ($this->request->is('post') || $this->request->is('put')) {
 
-            if ($this->Category->save($this->request->data[$this->modelClass])) {
+            if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
 //                $this->redirect(array('action' => 'index'));
@@ -36,8 +38,8 @@ class CategoriesController extends AppController {
 
             throw new NotFoundException(__('invalid_data'));
         }
-        $this->Category->file_proccess = 1;
-        
+        $this->{$this->modelClass}->file_proccess = 1;
+
         $this->setInit();
 
         $breadcrumb = array();
@@ -50,7 +52,7 @@ class CategoriesController extends AppController {
 
         if ($this->request->is('post') || $this->request->is('put')) {
 
-            if ($this->Category->save($this->request->data[$this->modelClass])) {
+            if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
 //                $this->redirect(array('action' => 'index'));
@@ -60,7 +62,7 @@ class CategoriesController extends AppController {
             }
         } else {
 
-            $category = $this->Category->find('first', array(
+            $category = $this->{$this->modelClass}->find('first', array(
                 'conditions' => array(
                     'id' => $id,
                 ),
@@ -69,6 +71,29 @@ class CategoriesController extends AppController {
         }
 
         $this->render('add');
+    }
+
+    public function index() {
+
+        $this->setInit();
+
+        $breadcrumb = array();
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => 'index')),
+            'label' => __('category_title'),
+        );
+        $this->set('breadcrumb', $breadcrumb);
+        $this->set('page_title', __('category_title'));
+
+        $options = array(
+            'order' => array(
+                'modified' => 'DESC',
+            ),
+        );
+        $this->Paginator->settings = $options;
+        $list_data = $this->Paginator->paginate($this->modelClass);
+
+        $this->set('list_data', $list_data);
     }
 
     protected function setInit() {

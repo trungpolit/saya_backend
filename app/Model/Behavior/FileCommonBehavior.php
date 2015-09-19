@@ -23,6 +23,11 @@ class FileCommonBehavior extends ModelBehavior {
                 'type' => $field,
             ));
 
+            if (empty($model->data[$model->alias][$field])) {
+
+                continue;
+            }
+
             $file_data = array();
             if (!is_array($model->data[$model->alias][$field])) {
 

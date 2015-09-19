@@ -1,18 +1,22 @@
 <?php
 
-class Category extends AppModel {
+class Product extends AppModel {
 
-    public $useTable = 'categories';
+    public $useTable = 'products';
     public $file_fields = array('logo');
-    public $actsAs = array('FileCommon');
+    public $actsAs = array(
+        'FileCommon',
+        'HABTMCommon',
+        'RegionCommon',
+    );
     public $hasAndBelongsToMany = array(
-        'Product' =>
+        'Category' =>
         array(
-            'className' => 'Product',
+            'className' => 'Category',
             'joinTable' => 'products_categories',
-            'foreignKey' => 'category_id',
-            'associationForeignKey' => 'product_id',
-            'unique' => true,
+            'foreignKey' => 'product_id',
+            'associationForeignKey' => 'category_id',
+            'unique' => 'keepExisting',
             'conditions' => '',
             'fields' => '',
             'order' => '',
