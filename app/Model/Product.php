@@ -63,6 +63,34 @@ class Product extends AppModel {
         ));
     }
 
+    public function cache() {
+
+        App::uses('Region', 'Model');
+        App::uses('CacheCommon', 'Lib');
+        $cache_path = APP . Configure::read('saya.Product.cache_path');
+        $Region = new Region();
+        $regions = $Region->find('all', array(
+            'conditions' => array(
+                'status' => 2,
+            ),
+            'order' => array(
+                'weight' => 'ASC',
+                'modified' => 'DESC',
+            ),
+        ));
+        if (empty($regions)) {
+
+            return true;
+        }
+
+        $region_ids = array();
+        foreach ($regions as $v) {
+
+            $region_ids[] = $v['Region']['id'];
+        }
+        $this->resetCacheByRegion($region_ids, $cache_path);
+    }
+
     protected function resetCache() {
 
         App::uses('CacheCommon', 'Lib');
