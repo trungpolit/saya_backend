@@ -47,9 +47,11 @@ class FileCommonBehavior extends ModelBehavior {
             $this->saveFileCache($cache_data, $target_file_data, $FileManaged, $field);
         }
 
-        $model->save($cache_data, array(
+        $model->data = $model->save($cache_data, array(
             'callbacks' => false,
         ));
+
+        return true;
     }
 
     protected function saveFileCache(&$cache_data, $file_data, $FileManaged, $field) {

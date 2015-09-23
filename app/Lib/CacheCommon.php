@@ -9,11 +9,28 @@ class CacheCommon {
 
         if (DIRECTORY_SEPARATOR == '\\') {
 
-            $cache_path = str_replace('\\', '/', $cache_path);
+            $cache_path = str_replace('/', '\\', $cache_path);
         }
 
-        $file = new File($cache_path);
+        $file = new File($cache_path, true);
         return $file->write($content);
+    }
+
+    static public function parseFileUri(&$data, $file_fields) {
+
+        foreach ($file_fields as $field) {
+
+            $uri_field = $field . '_uri';
+            foreach ($data as $k => $v) {
+
+                if (empty($v[$uri_field])) {
+
+                    continue;
+                }
+
+                $data[$k][$uri_field] = unserialize($v[$uri_field]);
+            }
+        }
     }
 
 }

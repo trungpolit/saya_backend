@@ -41,6 +41,7 @@ class Category extends AppModel {
         ));
 
         $json = Hash::extract($categories, '{n}.' . $this->alias);
+        CacheCommon::parseFileUri($json, $this->file_fields);
         $json_content = json_encode($json);
 
         return CacheCommon::write($cache_path, $json_content);

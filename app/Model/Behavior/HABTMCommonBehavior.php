@@ -39,6 +39,8 @@ class HABTMCommonBehavior extends ModelBehavior {
             }
             $JoinModel->saveAll($save_data);
         }
+
+        return true;
     }
 
     public function afterFind(\Model $model, $results, $primary = false) {
@@ -46,7 +48,7 @@ class HABTMCommonBehavior extends ModelBehavior {
 
         if (empty($results) || empty($model->hasAndBelongsToMany)) {
 
-            return true;
+            return $results;
         }
 
         foreach ($model->hasAndBelongsToMany as $k => $v) {
@@ -66,8 +68,11 @@ class HABTMCommonBehavior extends ModelBehavior {
                         $foreignKey => $id
                     ),
                     'recursive' => -1,
+                    'fields' => array(
+                        $associationForeignKey, $associationForeignKey
+                    ),
                 ));
-                $results[$kk][$model->alias][$associationForeignKey] = $associationId;
+                $results[$kk][$model->alias][$associationForeignKey] = array_values($associationId);
             }
         }
 

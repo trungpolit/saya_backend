@@ -153,7 +153,7 @@ if (!empty($uploadYoutube)) {
                             // xác định xem file có phải là ảnh không
                             $image_type = @exif_imagetype(APP . $file_uri);
                             $data_gallery = '';
-
+                            
                             if ($image_type !== false) {
 
                                 $data_gallery = 'data-gallery="#blueimp-gallery-' . $dom_id . '"';
@@ -161,7 +161,7 @@ if (!empty($uploadYoutube)) {
                             // kiểm tra xem file có phải là video hay không
                             else {
 
-                                $video_types = Configure::read('sysconfig.App.video_types');
+                                $video_types = Configure::read('saya.App.video_types');
                                 $data_gallery = 'data-gallery="#blueimp-gallery-' . $dom_id . '"';
                                 $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
                                 $video_type = array_search($file_ext, $video_types);

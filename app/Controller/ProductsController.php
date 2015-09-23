@@ -37,9 +37,49 @@ class ProductsController extends AppController {
         }
     }
 
-    public function edit() {
+    public function edit($id = null) {
+
+        $this->{$this->modelClass}->id = $id;
+        if (!$this->{$this->modelClass}->exists()) {
+
+            throw new NotFoundException(__('invalid_data'));
+        }
 
         $this->{$this->modelClass}->file_proccess = 1;
+
+        $this->setInit();
+        $this->setList();
+
+        $breadcrumb = array();
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => 'index')),
+            'label' => __('category_title'),
+        );
+        $this->set('breadcrumb', $breadcrumb);
+        $this->set('page_title', __('category_title'));
+
+        if ($this->request->is('post') || $this->request->is('put')) {
+
+            if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
+
+                $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
+//                $this->redirect(array('action' => 'index'));
+            } else {
+
+                $this->Session->setFlash(__('save_error_message'), 'default', array(), 'bad');
+            }
+        } else {
+
+            $product = $this->{$this->modelClass}->find('first', array(
+                'conditions' => array(
+                    'id' => $id,
+                ),
+                'recursive' => -1,
+            ));
+            $this->request->data = $product;
+        }
+
+        $this->render('add');
     }
 
     public function index() {
