@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('UtilityCommon', 'Lib');
 
 class DataFilesController extends AppController {
 
@@ -8,20 +9,21 @@ class DataFilesController extends AppController {
 
     public function index() {
 
+        $this->autoRender = false;
+
         $file_path = $this->file_path;
+        $mime = UtilityCommon::getMimeType($file_path);
         $file = new File(APP . $file_path, false);
+        if (!$file->exists()) {
 
-        if ($file->exists()) {
-
-            $this->response->file(APP . $file_path);
-        } else {
-
-            $this->response->header('HTTP/1.0 404 Not Found');
-            $this->response->file(WEBROOT_DIR . DS . 'img/404.png');
+            $file_path = WEBROOT_DIR . DS . 'img/404.png';
+            $mime = UtilityCommon::getMimeType($file_path);
+            $file = new File($file_path, false);
         }
-
-        // hiện thị file
-        return $this->response;
+        header('Content-type: ' . $mime);
+        $content = $file->read();
+        echo $content;
+        exit();
     }
 
     public function beforeFilter() {

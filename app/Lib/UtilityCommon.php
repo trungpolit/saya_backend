@@ -60,7 +60,7 @@ class UtilityCommon {
                         $fileext))
             return (false);
         $regex = "/^([\w\+\-\.\/]+)\s+(\w+\s)*($fileext\s)/i";
-        $lines = file("$mimePath/mime.types");
+        $lines = file("$mimePath");
         foreach ($lines as $line) {
             if (substr($line, 0, 1) == '#')
                 continue; // skip comments 
@@ -139,6 +139,10 @@ class UtilityCommon {
         foreach ($folder_structure as $item) {
 
             $folder_path .= DS . $item;
+            if (DIRECTORY_SEPARATOR == '\\') {
+
+                $folder_path = str_replace('/', '\\', $folder_path);
+            }
             $folder = new Folder($folder_path, false, 0777);
             if (!$folder->inPath($folder_path)) {
 

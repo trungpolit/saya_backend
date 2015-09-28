@@ -11,7 +11,7 @@ $config['saya'] = array(
         ),
         'name' => 'SAYA',
         'max_file_size_upload' => 5 * 1000 * 1000,
-        'data_file_root' => 'data_files',
+        'data_file_root' => 'webroot/data_files/',
         'video_types' => array(
             'mp4',
             'ogg',
