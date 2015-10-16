@@ -1,0 +1,171 @@
+# App - BEGIN
+msgid "home_title"
+msgstr "Trang chủ"
+
+msgid "status_rejected"
+msgstr "Không được phê duyệt"
+
+msgid "status_hidden"
+msgstr "Không hiện thị tạm thời"
+
+msgid "status_wait_review"
+msgstr "Đang chờ xét duyệt"
+
+msgid "status_approved"
+msgstr "Công khai"
+
+msgid "status_active"
+msgstr "Kích hoạt"
+
+msgid "status_inactive"
+msgstr "Tạm ngừng kích hoạt"
+
+msgid "no_result"
+msgstr "Không có dữ liệu"
+
+msgid "no"
+msgstr "STT"
+
+msgid "operation"
+msgstr "Thao tác"
+
+msgid "confirm_before_delete"
+msgstr "Bạn có chắc chắn muốn xóa không?"
+
+msgid "unknown"
+msgstr "Unknown"
+
+msgid "from_date"
+msgstr "Từ ngày"
+
+msgid "to_date"
+msgstr "Đến ngày"
+
+msgid "created"
+msgstr "Ngày tạo"
+
+msgid "creator"
+msgstr "Người tạo"
+
+msgid "unknow creator"
+msgstr "Vô danh"
+
+msgid "modified"
+msgstr "Ngày chỉnh sửa"
+
+msgid "add_action_title"
+msgstr "Thêm mới"
+
+msgid "edit_action_title"
+msgstr "Chỉnh sửa"
+
+msgid "comment_action_title"
+msgstr "Bình luận"
+
+msgid "index_action_title"
+msgstr "Danh sách"
+
+msgid "invalid_data"
+msgstr "Lỗi, dữ liệu không hợp lệ"
+
+msgid "add_files"
+msgstr "Thêm files"
+
+msgid "start_upload"
+msgstr "Tải lên"
+
+msgid "delete"
+msgstr "Xóa"
+
+msgid "cancel"
+msgstr "Hủy"
+
+msgid "start"
+msgstr "Tải lên"
+
+msgid "error"
+msgstr "Lỗi"
+
+msgid "log_out"
+msgstr "Thoát"
+
+msgid "clear_btn"
+msgstr "Refresh"
+
+msgid "date_from"
+msgstr "Từ"
+
+msgid "date_to"
+msgstr "Tới"
+
+msgid "password_placeholder"
+msgstr "Mật Khẩu"
+
+msgid "username_placeholder"
+msgstr "Tài khoản"
+
+msgid "log_in"
+msgstr "Đăng nhập"
+
+msgid "close_btn"
+msgstr "Đóng"
+
+# App - END
+
+# Form buttons - BEGIN
+msgid "save_btn"
+msgstr "Lưu"
+
+msgid "cancel_btn"
+msgstr "Hủy bỏ"
+
+msgid "edit_btn"
+msgstr "Chỉnh sửa"
+
+msgid "delete_btn"
+msgstr "Xóa"
+
+msgid "search_btn"
+msgstr "Tìm kiếm"
+
+msgid "import_btn"
+msgstr "Import"
+
+msgid "rating_score"
+msgstr "Điểm đánh giá"
+
+msgid "rating_count"
+msgstr "Lượt đánh giá"
+
+msgid "expand_all_btn"
+msgstr "Mở rộng"
+
+msgid "collapse_all_btn"
+msgstr "Thu gọn"
+# Form buttons - END
+
+# Form messages - BEGIN
+msgid "save_successful_message"
+msgstr "Dữ liệu được lưu thành công"
+
+msgid "reset_password_successful_message"
+msgstr "Thực hiện đặt lại mật khẩu thành công"
+
+msgid "save_error_message"
+msgstr "Lỗi, dữ liệu không được lưu thành công"
+
+msgid "reset_password_error_message"
+msgstr "Lỗi, thực hiện đặt lại mật khẩu không thành công"
+
+msgid "delete_successful_message"
+msgstr "Dữ liệu đã được xóa thành công"
+
+msgid "delete_error_message"
+msgstr "Lỗi, dữ liệu không được xóa thành công"
+
+msgid "delete_file_error_message"
+msgstr "Lỗi, không thực hiện xóa file thành công"
+
+msgid "nothing_changes_message"
+msgstr "Dữ liệu không có gì thay đổi"
+# Form messages - END

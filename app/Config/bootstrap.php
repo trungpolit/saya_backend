@@ -111,3 +111,4 @@ CakeLog::config('error', array(
 
 CakePlugin::load('DebugKit');
 Configure::load('saya');
+Configure::write('Config.language', 'vie');

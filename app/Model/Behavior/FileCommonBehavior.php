@@ -41,7 +41,7 @@ class FileCommonBehavior extends ModelBehavior {
                 $file_data = $model->data[$model->alias][$field];
             }
 
-            $module_name = Configure::read('saya.Category.module_name');
+            $module_name = Configure::read('saya.' . $model->alias . '.module_name');
             $target_file_data = UtilityCommon::moveFromTmp($file_data, $module_name);
             $this->saveFileMapping($target_file_data, $FileMapping, $model, $field);
             $this->saveFileCache($cache_data, $target_file_data, $FileManaged, $field);

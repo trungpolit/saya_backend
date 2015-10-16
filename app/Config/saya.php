@@ -11,7 +11,7 @@ $config['saya'] = array(
         ),
         'name' => 'SAYA',
         'max_file_size_upload' => 5 * 1000 * 1000,
-        'data_file_root' => 'webroot/data_files/',
+        'data_file_root' => 'data_files/',
         'video_types' => array(
             'mp4',
             'ogg',
@@ -23,5 +23,21 @@ $config['saya'] = array(
     'Product' => array(
         'module_name' => 'products',
         'cache_path' => 'webroot/cache/products/',
+    ),
+    'Settings' => array(
+        'editor_keys' => array(
+            'EMPTY_PRODUCT_IN_REGION',
+            'ADD_CART_THAN_MAX',
+            'DELETE_CART',
+            'REMOVE_ITEM_IN_CART',
+            'NOT_FULLFILL_FORM',
+            'OFFLINE_NETWORK',
+            'CHECKOUT_SUCCESS',
+            'CHECKOUT_ERROR',
+            'SYSTEM_EXCEPTION',
+        ),
+    ),
+    'Setting' => array(
+        'cache_path' => 'webroot/cache/',
     ),
 );

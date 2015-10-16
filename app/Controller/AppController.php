@@ -234,6 +234,10 @@ class AppController extends Controller {
             return;
         }
         $model_name = $this->request->data('model_name');
+        if (empty($model_name)) {
+
+            $model_name = $this->modelClass;
+        }
 
         if (!$this->$model_name) {
 
