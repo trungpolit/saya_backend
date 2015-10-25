@@ -8,6 +8,7 @@ class TestsController extends AppController {
         'Region',
         'Category',
         'Product',
+        'Notification',
     );
 
     public function regionCache() {
@@ -31,6 +32,12 @@ class TestsController extends AppController {
     public function syncRegionNotificationGroup() {
 
         $this->Region->generateNotificationGroup();
+        $this->render('empty');
+    }
+
+    public function notificationCache() {
+
+        $this->Notification->cache();
         $this->render('empty');
     }
 

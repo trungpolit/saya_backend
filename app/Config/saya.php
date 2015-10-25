@@ -35,9 +35,15 @@ $config['saya'] = array(
             'CHECKOUT_SUCCESS',
             'CHECKOUT_ERROR',
             'SYSTEM_EXCEPTION',
+            'EMPTY_CART',
+            'ABOUT_US',
         ),
     ),
     'Setting' => array(
         'cache_path' => 'webroot/cache/',
+    ),
+    'Notification' => array(
+        'cache_path' => 'webroot/cache/notifications/',
+        'period_cache' => 1, // đơn vị là tháng
     ),
 );

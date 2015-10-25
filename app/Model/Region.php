@@ -16,15 +16,15 @@ class Region extends AppModel {
         }
 
         // đồng bộ với nhóm thông báo NotificationGroup
-        $this->syncNotificationGroup($this->id);
+//        $this->syncNotificationGroup($this->id);
     }
 
-    public function afterDelete() {
-        parent::afterDelete();
-
-        $NotificationGroup = new NotificationGroup();
-        $NotificationGroup->syncDetele($this->id);
-    }
+//    public function afterDelete() {
+//        parent::afterDelete();
+//
+//        $NotificationGroup = new NotificationGroup();
+//        $NotificationGroup->syncDetele($this->id);
+//    }
 
     protected function syncNotificationGroup($region_id) {
 
