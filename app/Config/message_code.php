@@ -2,10 +2,12 @@
 
 $config['message_code'] = array(
     'OrderServices' => array(
-        'ord#001' => 'The data param is empty.',
-        'ord#002' => 'The data param is invalid json string.',
-        'ord#003' => 'The customer was banned.',
-        'ord#004' => 'The cart data is empty.',
-        'ord#005' => 'The order was not create successfully.',
+        '#ord001' => 'The order param is empty.',
+        '#ord002' => 'The order param is invalid json string.',
+        '#ord003' => 'The customer was banned.',
+        '#ord004' => 'The cart data is empty.',
+        '#ord005' => 'The order was not create successfully.',
+        '#ord006' => 'The order bundle was not create successfully.',
+        '#ord007' => 'The order product was not create successfully.',
     ),
 );

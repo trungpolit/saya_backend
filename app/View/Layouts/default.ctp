@@ -23,6 +23,7 @@ $cakeDescription = __d('page_meta_title', Configure::read('saya.App.name'));
             <?php echo $cakeDescription ?>:
             <?php echo $this->fetch('title'); ?>
         </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php
         echo $this->Html->meta('icon');
         echo $this->fetch('meta');

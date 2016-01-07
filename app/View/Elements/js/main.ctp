@@ -3,11 +3,14 @@
 
         $('body').on('click', '.req-edit', function () {
 
-            tinyMCE.triggerSave();
+            if (window.tinyMCE) {
+                
+                tinyMCE.triggerSave();
+            }
             var action = $(this).data('action');
             var $form_edit = $(this).closest('.form-edit').find(':input:not(.not-edit)');
             var form_data = $form_edit.serialize();
-            
+
             var req = $.post(action, form_data, function (data) {
 
                 if (data.error_code) {

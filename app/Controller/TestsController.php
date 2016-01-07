@@ -41,4 +41,56 @@ class TestsController extends AppController {
         $this->render('empty');
     }
 
+    public function makeOrderJson() {
+
+        $this->autoRender = false;
+
+        $region_id = $this->request->query('region_id');
+        if (empty($region_id)) {
+
+            $region_id = '3';
+        }
+
+        // lấy ra danh sách product tương ứng với $region_id
+        $products = $this->Product->find('all', array(
+            'recursive' => -1,
+            'conditions' => array(
+                'status' => 2,
+                'region_id' => $region_id,
+            ),
+        ));
+        if (empty($products)) {
+
+            die(__('Have any product with region_id="%s"', $region_id));
+        }
+
+        $cart = array();
+        foreach ($products as $pro) {
+
+            $cart[] = array(
+                'id' => $pro['Product']['id'],
+                'qty' => rand(1, 3),
+            );
+        }
+
+        $arr = array(
+            'customer' => array(
+                'code' => uniqid(),
+                'name' => 'Test 1',
+                'mobile' => '01689405616',
+                'mobile2' => '',
+                'address' => 'Hà Nội Phố',
+            ),
+            'region_id' => $region_id,
+            'platform_os' => 'ANDROID',
+            'platform_version' => '4.4.4',
+            'user_agent' => 'abc',
+            'client_ip' => '1.115.1.113',
+            'host' => 'cms.goga.mobi',
+            'cart' => $cart,
+        );
+
+        echo json_encode($arr);
+    }
+
 }

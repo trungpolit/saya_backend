@@ -6,7 +6,10 @@ class Order extends AppModel {
     public $hasMany = array(
         'OrdersProduct' => array(
             'className' => 'OrdersProduct',
-        )
+        ),
+        'OrdersBundle' => array(
+            'className' => 'OrdersBundle',
+        ),
     );
 
 }
