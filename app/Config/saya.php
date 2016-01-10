@@ -47,3 +47,11 @@ $config['saya'] = array(
         'period_cache' => 1, // đơn vị là tháng
     ),
 );
+
+if (!defined("ORDER_DEFAULT_STATUS")) {
+    define("ORDER_DEFAULT_STATUS", 2);
+}
+
+if (!defined("ORDER_LIMIT")) {
+    define("ORDER_LIMIT", 5);
+}

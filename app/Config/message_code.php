@@ -9,5 +9,6 @@ $config['message_code'] = array(
         '#ord005' => 'The order was not create successfully.',
         '#ord006' => 'The order bundle was not create successfully.',
         '#ord007' => 'The order product was not create successfully.',
+        '#ord008' => 'Update customer data was failed.',
     ),
 );

@@ -37,6 +37,7 @@ class OrderServicesController extends ServiceAppController {
 
         $customer_data = $decode['customer'];
         $customer_data['region_id'] = $decode['region_id'];
+        $customer_data['region_name'] = $decode['region_name'];
         $customer_data['platform_os'] = $decode['platform_os'];
         $customer_data['platform_version'] = $decode['platform_version'];
         $customer_data['user_agent'] = $user_agent;
@@ -58,6 +59,9 @@ class OrderServicesController extends ServiceAppController {
             $this->Customer->save($customer_data);
             $customer_id = $this->Customer->getLastInsertID();
             $customer_data['id'] = $customer_id;
+
+            $total_order = $total_order_bundle = 0;
+            $total_order_pending = $total_order_bundle_pending = 0;
         }
         // nếu đã tồn tại rồi thì update
         else {
@@ -65,6 +69,15 @@ class OrderServicesController extends ServiceAppController {
             $customer_id = $customer['Customer']['id'];
             $customer_data['id'] = $customer_id;
             $this->Customer->save($customer_data);
+
+            $total_order = !empty($customer['Customer']['total_order']) ?
+                    $customer['Customer']['total_order'] : 0;
+            $total_order_bundle = !empty($customer['Customer']['total_order_bundle']) ?
+                    $customer['Customer']['total_order_bundle'] : 0;
+            $total_order_pending = !empty($customer['Customer']['total_order_pending']) ?
+                    $customer['Customer']['total_order_pending'] : 0;
+            $total_order_bundle_pending = !empty($customer['Customer']['total_order_bundle_pending']) ?
+                    $customer['Customer']['total_order_bundle_pending'] : 0;
         }
 
         // lấy ra thông tin trong giỏ hàng
@@ -107,6 +120,7 @@ class OrderServicesController extends ServiceAppController {
                     'customer_code' => $customer_data['code'],
                     'customer_id' => $customer_data['id'],
                     'region_id' => $decode['region_id'],
+                    'region_name' => $decode['region_name'],
                     'bundle_id' => $bundle_id,
                     'order_code' => $order_code,
                     'code' => uniqid(),
@@ -119,6 +133,7 @@ class OrderServicesController extends ServiceAppController {
                     'client_ip' => $client_ip,
                     'host' => $host,
                     'raw_data' => $data,
+                    'status' => ORDER_DEFAULT_STATUS,
                 );
                 $order_bundle_cache[$bundle_id] = array();
             }
@@ -127,6 +142,7 @@ class OrderServicesController extends ServiceAppController {
                 'customer_code' => $customer_data['code'],
                 'customer_id' => $customer_data['id'],
                 'region_id' => $decode['region_id'],
+                'region_name' => $decode['region_name'],
                 'bundle_id' => $bundle_id,
                 'product_id' => $product_id,
                 'product_name' => $name,
@@ -167,7 +183,9 @@ class OrderServicesController extends ServiceAppController {
             'customer_code' => $customer_data['code'],
             'customer_id' => $customer_data['id'],
             'region_id' => $decode['region_id'],
+            'region_name' => $decode['region_name'],
             'code' => $order_code,
+            'no' => $total_order + 1,
             'total_qty' => $total_qty,
             'total_price' => $total_price,
             'notes' => $customer_data['address'],
@@ -178,6 +196,7 @@ class OrderServicesController extends ServiceAppController {
             'host' => $host,
             'raw_data' => $data,
             'cache_data' => serialize($order_cache),
+            'status' => ORDER_DEFAULT_STATUS,
         );
 
         $dataSource = $this->Order->getDataSource();
@@ -192,10 +211,14 @@ class OrderServicesController extends ServiceAppController {
         $order_id = $this->Order->getLastInsertID();
 
         $order_bundle_ref = array();
+        $order_bundle_count = 0;
 
         foreach ($order_bundle_data as $bundle_id => $v) {
 
+            $order_bundle_count++;
+
             $v['order_id'] = $order_id;
+            $v['no'] = $total_order_bundle + $order_bundle_count;
             $this->OrdersBundle->create();
             if (!$this->OrdersBundle->save($v)) {
 
@@ -214,6 +237,20 @@ class OrderServicesController extends ServiceAppController {
 
             $dataSource->rollback();
             $this->resError('ord#007');
+        }
+
+        // thực hiện update lại customer
+        $customer_update_data = array(
+            'id' => $customer_id,
+            'total_order' => $total_order + 1,
+            'total_order_bundle' => $total_order_bundle + $order_bundle_count,
+            'total_order_pending' => $total_order_pending + 1,
+            'total_order_bundle_pending' => $total_order_bundle_pending + $order_bundle_count,
+        );
+        if (!$this->Customer->save($customer_update_data)) {
+
+            $dataSource->rollback();
+            $this->resError('#ord008');
         }
 
         $dataSource->commit();

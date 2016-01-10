@@ -51,6 +51,12 @@ class TestsController extends AppController {
             $region_id = '3';
         }
 
+        $region = $this->Region->find('first', array(
+            'conditions' => array(
+                'id' => $region_id,
+            ),
+        ));
+
         // lấy ra danh sách product tương ứng với $region_id
         $products = $this->Product->find('all', array(
             'recursive' => -1,
@@ -82,11 +88,9 @@ class TestsController extends AppController {
                 'address' => 'Hà Nội Phố',
             ),
             'region_id' => $region_id,
+            'region_name' => $region['Region']['name'],
             'platform_os' => 'ANDROID',
             'platform_version' => '4.4.4',
-            'user_agent' => 'abc',
-            'client_ip' => '1.115.1.113',
-            'host' => 'cms.goga.mobi',
             'cart' => $cart,
         );
 
