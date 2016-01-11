@@ -18,7 +18,7 @@ class OrderServicesController extends ServiceAppController {
         $this->log_file_name = __CLASS__ . '_' . __FUNCTION__;
         $this->setInit();
 
-        $data = $this->request->data('order');
+        $data = $this->request->query('order');
         if (empty($data)) {
 
             $this->resError('#ord001');
@@ -91,7 +91,9 @@ class OrderServicesController extends ServiceAppController {
         $order_bundle_cache = array();
         $total_qty = 0;
         $total_price = 0;
-        $order_code = uniqid();
+
+        $order_no = $total_order + 1;
+        $order_code = $customer_id . '_' . $order_no;
 
         foreach ($cart_data as $v) {
 
@@ -123,7 +125,6 @@ class OrderServicesController extends ServiceAppController {
                     'region_name' => $decode['region_name'],
                     'bundle_id' => $bundle_id,
                     'order_code' => $order_code,
-                    'code' => uniqid(),
                     'total_qty' => 0,
                     'total_price' => 0,
                     'notes' => $customer_data['address'],
@@ -219,6 +220,8 @@ class OrderServicesController extends ServiceAppController {
 
             $v['order_id'] = $order_id;
             $v['no'] = $total_order_bundle + $order_bundle_count;
+            $v['code'] = $customer_id . '_' . $v['no'];
+
             $this->OrdersBundle->create();
             if (!$this->OrdersBundle->save($v)) {
 
@@ -229,6 +232,7 @@ class OrderServicesController extends ServiceAppController {
             $order_bundle_ref[$bundle_id] = array(
                 'id' => $order_bundle_id,
                 'code' => $v['code'],
+                'bundle_id' => $bundle_id,
             );
         }
 
@@ -259,6 +263,8 @@ class OrderServicesController extends ServiceAppController {
             'order_id' => $order_id,
             'order_code' => $order_code,
             'order_bundle_ref' => $order_bundle_ref,
+            'total_order' => $total_order + 1,
+            'total_order_bundle' => $total_order_bundle + $order_bundle_count,
         );
         $this->resSuccess($res);
     }
