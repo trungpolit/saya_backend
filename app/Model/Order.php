@@ -123,6 +123,7 @@ class Order extends AppModel {
                 'total_qty' => $v[$this->alias]['total_qty'],
                 'total_price' => $v[$this->alias]['total_price'],
                 'notes' => $v[$this->alias]['notes'],
+                'status' => $v[$this->alias]['status'],
             );
 
             // thực hiện parse lại cache_data

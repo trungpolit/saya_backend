@@ -13,6 +13,9 @@ class OrderServicesController extends ServiceAppController {
     );
     public $debug_mode = 3;
 
+    const ORDER_CODE_DELIMITER = 'N';
+    const ORDER_BUNDLE_CODE_DELIMITER = 'A';
+
     public function create() {
 
         $this->log_file_name = __CLASS__ . '_' . __FUNCTION__;
@@ -93,7 +96,7 @@ class OrderServicesController extends ServiceAppController {
         $total_price = 0;
 
         $order_no = $total_order + 1;
-        $order_code = $customer_id . '_' . $order_no;
+        $order_code = $customer_id . self::ORDER_CODE_DELIMITER . $order_no;
 
         foreach ($cart_data as $v) {
 
@@ -114,6 +117,7 @@ class OrderServicesController extends ServiceAppController {
             $bundle_id = $product['Product']['bundle_id'];
             $price = $product['Product']['price'];
             $name = $product['Product']['name'];
+            $unit = $product['Product']['unit'];
 
             // nếu chưa tồn tại dữ liệu cho $order_bundle_data thì khởi tạo
             if (empty($order_bundle_data[$bundle_id])) {
@@ -147,6 +151,7 @@ class OrderServicesController extends ServiceAppController {
                 'bundle_id' => $bundle_id,
                 'product_id' => $product_id,
                 'product_name' => $name,
+                'product_unit' => $unit,
                 'product_logo_uri' => $product_logo_uri[0],
                 'qty' => $v['qty'],
                 'product_price' => $price,
@@ -163,6 +168,7 @@ class OrderServicesController extends ServiceAppController {
                 'product_logo_uri' => $product_logo_uri[0],
                 'qty' => $v['qty'],
                 'product_price' => $price,
+                'product_unit' => $unit,
             );
 
             $total_qty += $v['qty'];
@@ -170,14 +176,20 @@ class OrderServicesController extends ServiceAppController {
 
             $order_bundle_data[$bundle_id]['total_qty'] += $v['qty'];
             $order_bundle_data [$bundle_id]['total_price'] += $v['qty'] * $price;
-            $order_bundle_cache[$bundle_id] = array(
+
+            if (empty($order_bundle_cache[$bundle_id])) {
+
+                $order_bundle_cache[$bundle_id] = array();
+            }
+            $order_bundle_cache[$bundle_id][] = array(
                 'product_id' => $product_id,
                 'product_name' => $name,
                 'product_logo_uri' => $product_logo_uri[0],
                 'qty' => $v['qty'],
                 'product_price' => $price,
+                'product_unit' => $unit,
             );
-            $order_bundle_data[$bundle_id]['cache_data'] = serialize(array_values($order_bundle_cache));
+            $order_bundle_data[$bundle_id]['cache_data'] = serialize($order_bundle_cache[$bundle_id]);
         }
 
         $order_data = array(
@@ -220,7 +232,7 @@ class OrderServicesController extends ServiceAppController {
 
             $v['order_id'] = $order_id;
             $v['no'] = $total_order_bundle + $order_bundle_count;
-            $v['code'] = $customer_id . '_' . $v['no'];
+            $v['code'] = $customer_id . self::ORDER_BUNDLE_CODE_DELIMITER . $v['no'];
 
             $this->OrdersBundle->create();
             if (!$this->OrdersBundle->save($v)) {
@@ -265,6 +277,8 @@ class OrderServicesController extends ServiceAppController {
             'order_bundle_ref' => $order_bundle_ref,
             'total_order' => $total_order + 1,
             'total_order_bundle' => $total_order_bundle + $order_bundle_count,
+            'total_order_pending' => $total_order + 1,
+            'total_order_bundle_pending' => $total_order_bundle + $order_bundle_count,
         );
         $this->resSuccess($res);
     }

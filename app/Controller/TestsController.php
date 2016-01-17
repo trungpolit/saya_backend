@@ -9,6 +9,9 @@ class TestsController extends AppController {
         'Category',
         'Product',
         'Notification',
+        'Order',
+        'OrdersBundle',
+        'Customer',
     );
 
     public function regionCache() {
@@ -38,6 +41,24 @@ class TestsController extends AppController {
     public function notificationCache() {
 
         $this->Notification->cache();
+        $this->render('empty');
+    }
+
+    public function orderCache() {
+
+        $this->Order->cache();
+        $this->render('empty');
+    }
+
+    public function ordersBundleCache() {
+
+        $this->OrdersBundle->cache();
+        $this->render('empty');
+    }
+
+    public function customerCache() {
+
+        $this->Customer->cache();
         $this->render('empty');
     }
 

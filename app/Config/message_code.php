@@ -11,4 +11,8 @@ $config['message_code'] = array(
         '#ord007' => 'The order product was not create successfully.',
         '#ord008' => 'Update customer data was failed.',
     ),
+    'CustomerServices' => array(
+        '#cus001' => 'The code param is empty.',
+        '#cus002' => 'The customer with code=%s does not exist.',
+    ),
 );
