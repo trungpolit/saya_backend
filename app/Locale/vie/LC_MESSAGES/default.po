@@ -169,3 +169,51 @@ msgstr "Lỗi, không thực hiện xóa file thành công"
 msgid "nothing_changes_message"
 msgstr "Dữ liệu không có gì thay đổi"
 # Form messages - END
+
+# /OrderBundles/index/* - BEGIN
+msgid "orders_bundle_title"
+msgstr "Danh sách đơn hàng"
+
+# /OrderBundles/index/* - END
+
+# OrderBundles - BEGIN
+msgid "orders_bundle_region_id"
+msgstr "Vùng miền"
+
+msgid "orders_bundle_bundle_id"
+msgstr "Nhóm sản phẩm"
+
+msgid "orders_bundle_code"
+msgstr "Mã đơn hàng"
+
+msgid "orders_bundle_customer_name"
+msgstr "Tên khách hàng"
+
+msgid "orders_bundle_customer_mobile"
+msgstr "Số ĐT khách hàng"
+
+msgid "orders_bundle_customer_id"
+msgstr "Mã ID khách hàng"
+
+msgid "orders_bundle_status"
+msgstr "Trạng thái"
+
+msgid "orders_bundle_created_start"
+msgstr "Từ ngày"
+
+msgid "orders_bundle_created_end"
+msgstr "Đến ngày"
+
+msgid "orders_bundle_total_qty"
+msgstr "Tổng số lượng"
+
+msgid "orders_bundle_total_price"
+msgstr "Tổng giá"
+
+msgid "orders_bundle_notes"
+msgstr "Ghi chú"
+
+msgid "orders_bundle_created"
+msgstr "Ngày đặt"
+
+# OrderBundles - END

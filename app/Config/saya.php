@@ -55,3 +55,7 @@ if (!defined("ORDER_DEFAULT_STATUS")) {
 if (!defined("ORDER_LIMIT")) {
     define("ORDER_LIMIT", 5);
 }
+
+if (!defined("STATUS_PUBLIC")) {
+    define("STATUS_PUBLIC", 2);
+}

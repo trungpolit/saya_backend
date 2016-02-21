@@ -6,6 +6,7 @@ class Region extends AppModel {
 
     public $useTable = 'regions';
     public $cached = 0;
+    public $actsAs = array('Tree');
 
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
@@ -139,6 +140,25 @@ class Region extends AppModel {
             $region_id = $v[$this->alias]['id'];
             $this->syncNotificationGroup($region_id);
         }
+    }
+
+    public function getTree() {
+
+        $results = $this->find('all', array(
+            'conditions' => array(
+                'status' => STATUS_PUBLIC
+            ),
+            'recursive' => -1,
+//            'order' => array(
+//                'weight' => 'ASC',
+//                'modified' => 'DESC',
+//            ),
+        ));
+        $tree = $this->formatTreeList($results, array(
+            'spacer' => '--'
+        ));
+
+        return $tree;
     }
 
 }

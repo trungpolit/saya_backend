@@ -35,7 +35,7 @@ class AppModel extends Model {
 
         $default_opts = array(
             'conditions' => array(
-                'status' => 2,
+                'status' => STATUS_PUBLIC,
             ),
             'fields' => array(
                 'id', 'name',
@@ -48,6 +48,25 @@ class AppModel extends Model {
         );
         $options = Hash::merge($default_opts, $options);
         return $this->find('list', $options);
+    }
+
+    public function getPublic($options = array()) {
+
+        $default_opts = array(
+            'conditions' => array(
+                'status' => STATUS_PUBLIC,
+            ),
+            'fields' => array(
+                'id', 'name',
+            ),
+            'order' => array(
+                'weight' => 'ASC',
+                'modified' => 'DESC',
+            ),
+            'recursive' => -1,
+        );
+        $options = Hash::merge($default_opts, $options);
+        return $this->find('all', $options);
     }
 
 }

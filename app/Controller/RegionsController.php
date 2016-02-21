@@ -135,4 +135,18 @@ class RegionsController extends AppController {
         }
     }
 
+    public function recover() {
+
+        $this->autoRender = false;
+        $this->Region->recover();
+    }
+
+    public function reorder() {
+
+        $this->autoRender = false;
+        $this->Region->reorder(array(
+            'field' => 'weight',
+        ));
+    }
+
 }
