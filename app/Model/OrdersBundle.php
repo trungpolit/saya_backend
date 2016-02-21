@@ -16,6 +16,23 @@ class OrdersBundle extends AppModel {
             'className' => 'OrdersProduct',
         ),
     );
+    public $data_old = array();
+
+    public function beforeSave($options = array()) {
+        parent::beforeSave($options);
+
+        // khi thực hiện edit thay đổi trạng thái status của đơn hàng
+        if (
+                !empty($this->data[$this->alias]['id']) &&
+                !empty($this->data[$this->alias]['customer_id']) &&
+                isset($this->data[$this->alias]['status'])
+        ) {
+
+            // thực hiện lưu lại status dữ liệu của bản ghi trước khi bị thay đổi
+            $data_old = $this->findById($this->data[$this->alias]['id']);
+            $this->data_old = $data_old;
+        }
+    }
 
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
@@ -28,6 +45,63 @@ class OrdersBundle extends AppModel {
 
             $page = ceil($this->data[$this->alias]['no'] / ORDER_LIMIT);
             $this->cacheByCustomerPage($this->data[$this->alias]['customer_code'], $page);
+        }
+
+        // khi thực hiện edit thay đổi trạng thái status của đơn hàng
+        // và trạng thái status bị thay đổi khác với trạng thái status trước đó
+        if (
+                !empty($this->data[$this->alias]['id']) &&
+                !empty($this->data[$this->alias]['customer_id']) &&
+                isset($this->data[$this->alias]['status']) &&
+                $this->data[$this->alias]['status'] != $this->data_old[$this->alias]['status']
+        ) {
+
+            // thực hiện cập nhật lại cache tổng số đơn hàng trong Customer
+            App::uses('Customer', 'Model');
+            $Customer = new Customer();
+
+            $customer = $Customer->findById($this->data[$this->alias]['customer_id']);
+            if (empty($customer)) {
+
+                throw new NotImplementedException(__('The customer with id=%s does not exist', $this->data[$this->alias]['customer_id']));
+            }
+
+            $status_alias = $this->getStatusAlias($this->data[$this->alias]['status']);
+            $status_old_alias = $this->getStatusAlias($this->data_old[$this->alias]['status']);
+
+            $status_field = 'total_order_bundle_' . $status_alias;
+            $status_old_field = 'total_order_bundle_' . $status_old_alias;
+
+            $$status_old_field = !empty($customer[$Customer->alias][$status_old_field]) ?
+                    $customer[$Customer->alias][$status_old_field] : 0;
+            $$status_old_field -= 1;
+
+            $$status_field = !empty($customer[$Customer->alias][$status_field]) ?
+                    $customer[$Customer->alias][$status_field] : 0;
+            $$status_field += 1;
+
+            $save_data = array(
+                'id' => $customer[$Customer->alias]['id'],
+                $status_old_field => $$status_old_field,
+                $status_field => $$status_field
+            );
+            $Customer->save($save_data);
+        }
+    }
+
+    protected function getStatusAlias($status) {
+
+        switch ($status) {
+            case STATUS_PENDING:
+                return 'pending';
+            case STATUS_SUCCESS:
+                return 'success';
+            case STATUS_FAIL:
+                return 'fail';
+            case STATUS_BAD:
+                return 'bad';
+            default :
+                return 'pending';
         }
     }
 

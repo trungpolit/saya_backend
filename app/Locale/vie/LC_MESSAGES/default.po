@@ -211,9 +211,33 @@ msgid "orders_bundle_total_price"
 msgstr "Tổng giá"
 
 msgid "orders_bundle_notes"
-msgstr "Ghi chú"
+msgstr "Địa chỉ"
 
 msgid "orders_bundle_created"
 msgstr "Ngày đặt"
 
+msgid "orders_bundle_customer_details"
+msgstr "Thông tin khách hàng"
+
 # OrderBundles - END
+
+# Product - BEGIN
+msgid "product_name"
+msgstr "Tên sản phẩm"
+
+msgid "product_logo"
+msgstr "Ảnh sản phẩm"
+
+msgid "qty"
+msgstr "Số lượng"
+
+msgid "product_price"
+msgstr "Đơn giá"
+
+msgid "product_unit"
+msgstr "Đơn vị"
+
+msgid "product_total_price"
+msgstr "Thành tiền"
+
+# Product - END

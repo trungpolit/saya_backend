@@ -13,6 +13,11 @@ echo $this->element('js/datetimepicker');
         });
     });
 </script>
+<style>
+    .product-logo {
+        width: 64px;
+    }
+</style>
 <div class="ibox-content m-b-sm border-bottom">
     <?php
     echo $this->Form->create('Search', array(
@@ -157,12 +162,15 @@ echo $this->element('js/datetimepicker');
                         <?php if (!empty($list_data)): ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo $this->Paginator->sort('code', __('orders_bundle_code')); ?></th>
-                            <th><?php echo $this->Paginator->sort('region_id', __('orders_bundle_region_id')); ?></th>
-                            <th><?php echo $this->Paginator->sort('bundle_id', __('orders_bundle_bundle_id')); ?></th>
-                            <th><?php echo $this->Paginator->sort('customer_id', __('orders_bundle_customer_id')); ?></th>
+                            <th style="width: 15%">
+                                <?php echo $this->Paginator->sort('region_id', __('orders_bundle_region_id')); ?>
+                                <br/>
+                                <?php echo $this->Paginator->sort('bundle_id', __('orders_bundle_bundle_id')); ?>
+                            </th>
+                            <th style="width: 15%"><?php echo $this->Paginator->sort('customer_id', __('orders_bundle_customer_details')); ?></th>
+                            <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_notes')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_qty', __('orders_bundle_total_qty')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_total_price')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_notes')); ?></th>
                             <th><?php echo $this->Paginator->sort('status', __('orders_bundle_status')); ?></th>
                             <th>
                                 <?php echo $this->Paginator->sort('created', __('orders_bundle_created')); ?>
@@ -171,12 +179,15 @@ echo $this->element('js/datetimepicker');
                         <?php else: ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('orders_bundle_code'); ?></th>
-                            <th><?php echo __('orders_bundle_region_id'); ?></th>
-                            <th><?php echo __('orders_bundle_bundle_id'); ?></th>
-                            <th><?php echo __('orders_bundle_customer_id'); ?></th>
+                            <th>
+                                <?php echo __('orders_bundle_region_id'); ?>
+                                <br/>
+                                <?php echo __('orders_bundle_bundle_id'); ?>
+                            </th>
+                            <th><?php echo __('orders_bundle_customer_details'); ?></th>
+                            <th><?php echo __('orders_bundle_notes') ?></th>
                             <th><?php echo __('orders_bundle_total_qty'); ?></th>
                             <th><?php echo __('orders_bundle_total_price') ?></th>
-                            <th><?php echo __('orders_bundle_notes') ?></th>
                             <th><?php echo __('orders_bundle_status') ?></th>
                             <th><?php echo __('orders_bundle_created') ?></th>
                             <th><?php echo __('operation') ?></th>
@@ -189,12 +200,24 @@ echo $this->element('js/datetimepicker');
                         $stt = $this->Paginator->counter('{:start}');
                         ?>
                         <?php foreach ($list_data as $item): ?>
-                            <tr class="form-edit">
+                            <?php
+                            $order_class = $this->Common->getOrderClass($item[$model_name]['status']);
+                            ?>
+                            <tr class="form-edit <?php echo $order_class ?>">
                                 <td >
                                     <?php
                                     $id = $item[$model_name]['id'];
                                     echo $this->Form->hidden('id', array(
                                         'value' => $id,
+                                    ));
+                                    echo $this->Form->hidden('customer_id', array(
+                                        'value' => $item[$model_name]['customer_id'],
+                                    ));
+                                    echo $this->Form->hidden('customer_code', array(
+                                        'value' => $item[$model_name]['customer_code'],
+                                    ));
+                                    echo $this->Form->hidden('no', array(
+                                        'value' => $item[$model_name]['no'],
                                     ));
                                     echo $stt;
                                     ?>
@@ -208,11 +231,10 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo!empty($regionTree[$item[$model_name]['region_id']]) ?
-                                            $regionTree[$item[$model_name]['region_id']] : __('unknown');
+                                    echo!empty($item[$model_name]['region_name']) ?
+                                            $item[$model_name]['region_name'] : __('unknown');
                                     ?>
-                                </td>
-                                <td>
+                                    <br/>
                                     <?php
                                     echo!empty($bundles[$item[$model_name]['bundle_id']]) ?
                                             $bundles[$item[$model_name]['bundle_id']] : __('unknown');
@@ -230,6 +252,41 @@ echo $this->element('js/datetimepicker');
                                         $customer_id,
                                     ));
                                     ?>
+                                    <?php if (!empty($item['Customer']['mobile'])): ?>
+                                        <br/>
+                                        <span>ĐT: <?php echo $item['Customer']['mobile'] ?></span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($item['Customer']['mobile2'])): ?>
+                                        <br/>
+                                        <span>ĐT2: <?php echo $item['Customer']['mobile2'] ?></span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($item['Customer'])): ?>   
+                                        <?php
+                                        $cus_total_order = !empty($item['Customer']['total_order']) ? $item['Customer']['total_order'] : 0;
+                                        $cus_total_order_bundle_success = !empty($item['Customer']['total_order_bundle_success']) ? $item['Customer']['total_order_bundle_success'] : 0;
+                                        $cus_total_order_bundle_pending = !empty($item['Customer']['total_order_bundle_pending']) ? $item['Customer']['total_order_bundle_pending'] : 0;
+                                        $cus_total_order_bundle_fail = !empty($item['Customer']['total_order_bundle_fail']) ? $item['Customer']['total_order_bundle_fail'] : 0;
+                                        $cus_total_order_bundle_bad = !empty($item['Customer']['total_order_bundle_bad']) ? $item['Customer']['total_order_bundle_bad'] : 0;
+                                        ?>
+                                        <hr/>
+                                        <span><strong>Lịch sử đơn hàng</strong></span>
+                                        <br/>
+                                        <span>Tổng số: <?php echo number_format($cus_total_order) ?></span>
+                                        <br/>
+                                        <span>Tổng thành công: <?php echo number_format($cus_total_order_bundle_success) ?></span>
+                                        <br/>
+                                        <span>Tổng chờ xử lý: <?php echo number_format($cus_total_order_bundle_pending) ?></span>
+                                        <br/>
+                                        <span>Tổng hủy: <?php echo number_format($cus_total_order_bundle_fail) ?></span>
+                                        <br/>
+                                        <span>Tổng giả mạo: <?php echo number_format($cus_total_order_bundle_bad) ?></span>
+                                        <br/>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    echo h($item[$model_name]['notes']);
+                                    ?>
                                 </td>
                                 <td>
                                     <?php
@@ -239,11 +296,6 @@ echo $this->element('js/datetimepicker');
                                 <td>
                                     <?php
                                     echo number_format($item[$model_name]['total_price']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo h($item[$model_name]['notes']);
                                     ?>
                                 </td>
                                 <td>
@@ -264,6 +316,10 @@ echo $this->element('js/datetimepicker');
                                     ?>
                                 </td>
                                 <td>
+                                    <a class="btn btn-info" href="#product-data-<?php echo $id ?>" data-toggle="collapse" >
+                                        <i class="fa fa-list-ul"> Chi tiết đơn hàng</i>
+                                    </a>
+                                    <br/>
                                     <?php
                                     echo $this->element('Button/req_edit', array(
                                         'id' => $id,
@@ -279,6 +335,64 @@ echo $this->element('js/datetimepicker');
                                         'id' => $id,
                                     ));
                                     ?>
+                                </td>
+                            </tr>
+                            <tr  class="panel-collapse collapse"  id="product-data-<?php echo $id ?>">
+                                <td colspan="10">
+                                    <?php
+                                    $product_data = $item[$model_name]['product_data'];
+                                    ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th><?php echo __('no') ?></th>
+                                                    <th><?php echo __('product_logo') ?></th>
+                                                    <th><?php echo __('product_name') ?></th>
+                                                    <th><?php echo __('qty') ?></th>
+                                                    <th><?php echo __('product_price') ?></th>
+                                                    <th><?php echo __('product_unit') ?></th>
+                                                    <th><?php echo __('product_total_price') ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $product_index = 1;
+                                                ?>
+                                                <?php foreach ($product_data as $product): ?>
+                                                    <?php
+                                                    $product_url = Router::url(array(
+                                                                'controller' => 'Products',
+                                                                'action' => 'index',
+                                                                '?' => array(
+                                                                    'id' => $product['product_id'],
+                                                                ),
+                                                    ));
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $product_index ?></td>
+                                                        <td>
+                                                            <a href="<?php echo $product_url ?>" target="_blank">
+                                                                <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="<?php echo $product_url ?>" target="_blank">
+                                                                <?php
+                                                                echo $product['product_name']
+                                                                ?>
+                                                            </a>
+                                                        </td>
+                                                        <td><?php echo number_format($product['qty']) ?></td>
+                                                        <td><?php echo number_format($product['product_price']) ?></td>
+                                                        <td><?php echo $product['product_unit'] ?></td>
+                                                        <td><?php echo number_format($product['qty'] * $product['product_price']) ?></td>
+                                                    </tr>
+                                                    <?php $product_index++; ?>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </td>
                             </tr>
                             <?php $stt++; ?>

@@ -243,13 +243,7 @@ class AppController extends Controller {
 
             $this->loadModel($model_name);
         }
-        $check_exist = $this->$model_name->find('first', array(
-            'conditions' => array(
-                'id' => array(
-                    '$eq' => $id,
-                ),
-            ),
-        ));
+        $check_exist = $this->$model_name->findById($id);
         if (empty($check_exist)) {
 
             $res = array(

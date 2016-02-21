@@ -46,6 +46,14 @@ $config['saya'] = array(
         'cache_path' => 'webroot/cache/notifications/',
         'period_cache' => 1, // đơn vị là tháng
     ),
+    'Order' => array(
+        'status' => array(
+            0 => __('Hủy'),
+            1 => __('Thành công'),
+            2 => __('Chờ xử lý'),
+            3 => __('Giả mạo'),
+        ),
+    ),
 );
 
 if (!defined("ORDER_DEFAULT_STATUS")) {
@@ -58,4 +66,20 @@ if (!defined("ORDER_LIMIT")) {
 
 if (!defined("STATUS_PUBLIC")) {
     define("STATUS_PUBLIC", 2);
+}
+
+if (!defined("STATUS_PENDING")) {
+    define("STATUS_PENDING", 2);
+}
+
+if (!defined("STATUS_SUCCESS")) {
+    define("STATUS_SUCCESS", 1);
+}
+
+if (!defined("STATUS_FAIL")) {
+    define("STATUS_FAIL", 0);
+}
+
+if (!defined("STATUS_BAD")) {
+    define("STATUS_BAD", 3);
 }

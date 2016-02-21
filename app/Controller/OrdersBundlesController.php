@@ -2,7 +2,7 @@
 
 App::uses('AppController', 'Controller');
 
-class OrderBundlesController extends AppController {
+class OrdersBundlesController extends AppController {
 
     public $uses = array(
         'OrdersBundle',
@@ -108,41 +108,42 @@ class OrderBundlesController extends AppController {
             $this->request->query['created_end'] = trim($this->request->query['created_end']);
             $options['conditions']['OrdersBundle.created <='] = date('Y-m-d H:i:s', strtotime($this->request->query['created_end']));
         }
+        if (isset($this->request->query['customer_id']) && strlen(trim($this->request->query['customer_id']))) {
+
+            $this->request->query['customer_id'] = trim($this->request->query['customer_id']);
+            $options['conditions']['OrdersBundle.customer_id'] = $this->request->query['customer_id'];
+        }
         if (isset($this->request->query['customer_name']) && strlen(trim($this->request->query['customer_name']))) {
 
             $this->request->query['customer_name'] = trim($this->request->query['customer_name']);
-            $options['joins'] = array(
-                array('table' => 'customers',
-                    'alias' => 'Customer',
-                    'type' => 'LEFT',
-                    'conditions' => array(
-                        'Customer.id = OrdersBundle.customer_id',
-                    )
-                )
-            );
-            $options['conditions']['LOWER(Customer.name) LIKE'] = '%' . strtolower($this->request->query['customer_name']) . '%';
+            $options['conditions']['LOWER(OrdersBundle.customer_name) LIKE'] = '%' . strtolower($this->request->query['customer_name']) . '%';
         }
         if (isset($this->request->query['customer_mobile']) && strlen(trim($this->request->query['customer_mobile']))) {
 
             $this->request->query['customer_mobile'] = trim($this->request->query['customer_mobile']);
-            $options['joins'] = array(
-                array('table' => 'customers',
-                    'alias' => 'Customer',
-                    'type' => 'LEFT',
-                    'conditions' => array(
-                        'Customer.id = OrdersBundle.customer_id',
-                    )
-                )
-            );
-            $options['conditions']['OR'][]['LOWER(Customer.mobile) LIKE'] = '%' . strtolower($this->request->query['customer_mobile']) . '%';
-            $options['conditions']['OR'][]['LOWER(Customer.mobile2) LIKE'] = '%' . strtolower($this->request->query['customer_mobile']) . '%';
+            $options['conditions']['OR'][]['LOWER(OrdersBundle.customer_mobile) LIKE'] = '%' . strtolower($this->request->query['customer_mobile']) . '%';
+            $options['conditions']['OR'][]['LOWER(OrdersBundle.customer_mobile2) LIKE'] = '%' . strtolower($this->request->query['customer_mobile']) . '%';
+        }
+        if (isset($this->request->query['customer_address']) && strlen(trim($this->request->query['customer_address']))) {
+
+            $this->request->query['customer_address'] = trim($this->request->query['customer_address']);
+            $options['conditions']['OR'][]['LOWER(OrdersBundle.customer_address) LIKE'] = '%' . strtolower($this->request->query['customer_address']) . '%';
         }
     }
 
     protected function setInit() {
 
         $this->set('model_name', $this->modelClass);
-        $this->set('status', Configure::read('saya.App.status'));
+        $this->set('status', Configure::read('saya.Order.status'));
+    }
+
+    public function edit($id = null) {
+
+        $this->{$this->modelClass}->id = $id;
+        if (!$this->{$this->modelClass}->exists()) {
+
+            throw new NotFoundException(__('invalid_data'));
+        }
     }
 
 }

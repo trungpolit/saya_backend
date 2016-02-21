@@ -41,4 +41,20 @@ class CommonHelper extends AppHelper {
         return date('d-m-Y H:i:s', strtotime($datetime));
     }
 
+    public function getOrderClass($status) {
+
+        switch ($status) {
+            case STATUS_PENDING:
+                return '';
+            case STATUS_SUCCESS:
+                return 'success';
+            case STATUS_FAIL:
+                return 'warning';
+            case STATUS_BAD:
+                return 'danger';
+            default :
+                return '';
+        }
+    }
+
 }
