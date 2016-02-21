@@ -192,6 +192,10 @@ class OrdersBundle extends AppModel {
             $pretty_data[$k] = array(
                 'customer_code' => $v[$this->alias]['customer_code'],
                 'customer_id' => $v[$this->alias]['customer_id'],
+                'customer_name' => $v[$this->alias]['customer_name'],
+                'customer_mobile' => $v[$this->alias]['customer_mobile'],
+                'customer_mobile2' => $v[$this->alias]['customer_mobile2'],
+                'customer_address' => $v[$this->alias]['customer_address'],
                 'region_id' => $region_id,
                 'region_name' => $v[$this->alias]['region_name'],
                 'code' => $v[$this->alias]['code'],
@@ -202,6 +206,8 @@ class OrdersBundle extends AppModel {
                 'status' => $v[$this->alias]['status'],
                 'order_id' => $v[$this->alias]['order_id'],
                 'order_code' => $v[$this->alias]['order_code'],
+                'created' => $v[$this->alias]['created'],
+                'modified' => $v[$this->alias]['modified'],
             );
 
             // thực hiện parse lại cache_data
