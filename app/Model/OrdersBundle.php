@@ -24,8 +24,7 @@ class OrdersBundle extends AppModel {
         // khi thực hiện edit thay đổi trạng thái status của đơn hàng
         if (
                 !empty($this->data[$this->alias]['id']) &&
-                !empty($this->data[$this->alias]['customer_id']) &&
-                isset($this->data[$this->alias]['status'])
+                !empty($this->data[$this->alias]['customer_id'])
         ) {
 
             // thực hiện lưu lại status dữ liệu của bản ghi trước khi bị thay đổi
@@ -46,11 +45,11 @@ class OrdersBundle extends AppModel {
             $page = ceil($this->data[$this->alias]['no'] / ORDER_LIMIT);
             $this->cacheByCustomerPage($this->data[$this->alias]['customer_code'], $page);
         }
-
+        
         // khi thực hiện edit thay đổi trạng thái status của đơn hàng
         // và trạng thái status bị thay đổi khác với trạng thái status trước đó
         if (
-                !empty($this->data[$this->alias]['id']) &&
+                !$created &&
                 !empty($this->data[$this->alias]['customer_id']) &&
                 isset($this->data[$this->alias]['status']) &&
                 $this->data[$this->alias]['status'] != $this->data_old[$this->alias]['status']

@@ -1,5 +1,7 @@
 <?php
 
+App::uses('UtilityCommon', 'Lib');
+
 class Setting extends AppModel {
 
     public $useTable = 'settings';
@@ -59,12 +61,28 @@ class Setting extends AppModel {
 
         $settings = $this->find('all');
         $pretty = array();
-        if (!empty($settings)) {
+        if (empty($settings)) {
 
-            foreach ($settings as $v) {
+            return $pretty;
+        }
 
-                $pretty[strtolower($v[$this->alias]['key'])] = $v[$this->alias]['value'];
+        foreach ($settings as $v) {
+
+            $key = strtolower($v[$this->alias]['key']);
+            $value = $v[$this->alias]['value'];
+
+            // nếu giá trị trong value là kiểu số thì ép kiểu về kiểu số
+            if (is_numeric($value)) {
+
+                $value = (int) $value;
             }
+            // nếu giá trị trong value là 1 chuỗi json thì biến nó thành kiểu mảng
+            elseif (UtilityCommon::isJson($value)) {
+
+                $value = json_decode($value, true);
+            }
+
+            $pretty[$key] = $value;
         }
 
         return $pretty;

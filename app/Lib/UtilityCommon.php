@@ -241,4 +241,17 @@ class UtilityCommon {
         return $target_file;
     }
 
+    /**
+     * isJson
+     * kiểm tra xem chuỗi string có phải là json k?
+     * 
+     * @param string $string
+     * @return bool
+     */
+    static public function isJson($string) {
+
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
+
 }
