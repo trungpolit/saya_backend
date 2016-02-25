@@ -1,5 +1,45 @@
 <?php
 
+if (!defined("ORDER_DEFAULT_STATUS")) {
+    define("ORDER_DEFAULT_STATUS", 2);
+}
+
+if (!defined("ORDER_LIMIT")) {
+    define("ORDER_LIMIT", 5);
+}
+
+if (!defined("STATUS_PUBLIC")) {
+    define("STATUS_PUBLIC", 2);
+}
+
+if (!defined("STATUS_PENDING")) {
+    define("STATUS_PENDING", 2);
+}
+
+if (!defined("STATUS_SUCCESS")) {
+    define("STATUS_SUCCESS", 1);
+}
+
+if (!defined("STATUS_FAIL")) {
+    define("STATUS_FAIL", 0);
+}
+
+if (!defined("STATUS_BAD")) {
+    define("STATUS_BAD", 3);
+}
+
+if (!defined("STATUS_BUY_BLACK")) {
+    define("STATUS_BUY_BLACK", 0);
+}
+
+if (!defined("STATUS_BUY_BAD")) {
+    define("STATUS_BUY_BAD", 1);
+}
+
+if (!defined("STATUS_BUY_GOOD")) {
+    define("STATUS_BUY_GOOD", 2);
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',
@@ -48,38 +88,21 @@ $config['saya'] = array(
     ),
     'Order' => array(
         'status' => array(
-            0 => __('Hủy'),
-            1 => __('Thành công'),
-            2 => __('Chờ xử lý'),
-            3 => __('Giả mạo'),
+            STATUS_FAIL => __('Hủy'),
+            STATUS_SUCCESS => __('Thành công'),
+            STATUS_PENDING => __('Chờ xử lý'),
+            STATUS_BAD => __('Giả mạo'),
+        ),
+    ),
+    'Customer' => array(
+        'status' => array(
+            STATUS_BUY_BLACK => __('Chặn mua hàng'),
+            STATUS_BUY_BAD => __('Mua giả mạo'),
+            STATUS_BUY_GOOD => __('Cho phép mua'),
         ),
     ),
 );
 
-if (!defined("ORDER_DEFAULT_STATUS")) {
-    define("ORDER_DEFAULT_STATUS", 2);
-}
 
-if (!defined("ORDER_LIMIT")) {
-    define("ORDER_LIMIT", 5);
-}
 
-if (!defined("STATUS_PUBLIC")) {
-    define("STATUS_PUBLIC", 2);
-}
 
-if (!defined("STATUS_PENDING")) {
-    define("STATUS_PENDING", 2);
-}
-
-if (!defined("STATUS_SUCCESS")) {
-    define("STATUS_SUCCESS", 1);
-}
-
-if (!defined("STATUS_FAIL")) {
-    define("STATUS_FAIL", 0);
-}
-
-if (!defined("STATUS_BAD")) {
-    define("STATUS_BAD", 3);
-}

@@ -69,4 +69,29 @@ class AppModel extends Model {
         return $this->find('all', $options);
     }
 
+    /**
+     * incrementField
+     * Thực hiện tăng giá trị cho trường Field lên +$inc 
+     * 
+     * @param int $id
+     * @param string or array $field_name
+     * @param int $inc
+     * 
+     * @return mixed
+     */
+    function incrementField($id, $field_name, $inc = 1) {
+
+        if (!is_array($field_name)) {
+
+            $field_name = array($field_name);
+        }
+        $save_data = array();
+        foreach ($field_name as $k => $v) {
+
+            $save_data[$k][$this->alias . '.' . $v] = $this->alias . '.' . $v . '+' . $inc;
+        }
+
+        return $this->updateAll($save_data, array($this->alias . '.id' => $id));
+    }
+
 }

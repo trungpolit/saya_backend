@@ -241,3 +241,45 @@ msgid "product_total_price"
 msgstr "Thành tiền"
 
 # Product - END
+
+# /DailyReports/index/* - BEGIN
+msgid "daily_report_title"
+msgstr "Thống kê đơn hàng"
+
+msgid "daily_report_date_start"
+msgstr "Từ ngày"
+
+msgid "daily_report_date_end"
+msgstr "Đến ngày"
+
+msgid "daily_report_date_end"
+msgstr "Đến ngày"
+
+# /DailyReports/index/* - END
+
+# Product - BEGIN
+msgid "daily_report_date"
+msgstr "Ngày"
+
+msgid "daily_report_region_id"
+msgstr "Vùng miền"
+
+msgid "daily_report_bundle_id"
+msgstr "Nhóm sản phẩm"
+
+msgid "daily_report_total_order_bundle"
+msgstr "Tổng số"
+
+msgid "daily_report_total_order_bundle_success"
+msgstr "Thành công"
+
+msgid "daily_report_total_order_bundle_pending"
+msgstr "Chờ xử lý"
+
+msgid "daily_report_total_order_bundle_fail"
+msgstr "Hủy"
+
+msgid "daily_report_total_order_bundle_bad"
+msgstr "Giả mạo"
+
+# Product - END

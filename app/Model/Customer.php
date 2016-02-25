@@ -36,6 +36,44 @@ class Customer extends AppModel {
             $json_content = json_encode($customer[$this->alias]);
             return CacheCommon::write($cache_path, $json_content);
         }
+
+//        // nếu thưc hiện tạo mới customer thì cộng +1 vào report_dailys.total_customer
+//        // công +1 vào report_dailys.total_customer_good
+//        if (
+//                $created &&
+//                isset($this->data[$this->alias]['region_id']) &&
+//                isset($this->data[$this->alias]['bundle_id'])
+//        ) {
+//
+//            App::uses('ReportDaily', 'Model');
+//            $ReportDaily = new ReportDaily();
+//            $region_id = $this->data[$this->alias]['region_id'];
+//            $bundle_id = $this->data[$this->alias]['bundle_id'];
+//            $date = date('Ymd');
+//            $save_data = array();
+//
+//            $report_daily = $ReportDaily->checkExist($date, $region_id, $bundle_id);
+//            if (empty($report_daily)) {
+//
+//                $ReportDaily->create();
+//                $save_data['date'] = $date;
+//                $save_data['region_id'] = $region_id;
+//                $save_data['bundle_id'] = $bundle_id;
+//                $save_data['total_customer'] = 1;
+//                $save_data['total_customer_good'] = 1;
+//                $ReportDaily->save($save_data);
+//            } else {
+//
+//                $ReportDaily->updateAll(array(
+//                    $ReportDaily->alias . '.' . 'total_customer' => $ReportDaily->alias . '.' . 'total_customer' . '+1',
+//                    $ReportDaily->alias . '.' . 'total_customer_good' => $ReportDaily->alias . '.' . 'total_customer_good' . '+1',
+//                        ), array(
+//                    $ReportDaily->alias . '.' . 'id' => $report_daily[$ReportDaily->alias]['id'],
+//                ));
+//            }
+//        } elseif (!$created) {
+//            
+//        }
     }
 
     public function cache() {

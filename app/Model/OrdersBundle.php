@@ -23,8 +23,7 @@ class OrdersBundle extends AppModel {
 
         // khi thực hiện edit thay đổi trạng thái status của đơn hàng
         if (
-                !empty($this->data[$this->alias]['id']) &&
-                !empty($this->data[$this->alias]['customer_id'])
+                !empty($this->data[$this->alias]['id'])
         ) {
 
             // thực hiện lưu lại status dữ liệu của bản ghi trước khi bị thay đổi
@@ -45,7 +44,7 @@ class OrdersBundle extends AppModel {
             $page = ceil($this->data[$this->alias]['no'] / ORDER_LIMIT);
             $this->cacheByCustomerPage($this->data[$this->alias]['customer_code'], $page);
         }
-        
+
         // khi thực hiện edit thay đổi trạng thái status của đơn hàng
         // và trạng thái status bị thay đổi khác với trạng thái status trước đó
         if (
@@ -79,12 +78,108 @@ class OrdersBundle extends AppModel {
                     $customer[$Customer->alias][$status_field] : 0;
             $$status_field += 1;
 
+            // thực hiện update thông tin thống kê vào Customer
             $save_data = array(
                 'id' => $customer[$Customer->alias]['id'],
                 $status_old_field => $$status_old_field,
                 $status_field => $$status_field
             );
             $Customer->save($save_data);
+        }
+
+        if (
+                !$created &&
+                !empty($this->data[$this->alias]['region_id']) &&
+                !empty($this->data[$this->alias]['bundle_id']) &&
+                !empty($this->data[$this->alias]['created']) &&
+                isset($this->data[$this->alias]['total_price']) &&
+                isset($this->data[$this->alias]['status']) &&
+                $this->data[$this->alias]['status'] != $this->data_old[$this->alias]['status']
+        ) {
+
+            App::uses('DailyReport', 'Model');
+            $DailyReport = new DailyReport();
+            $region_id = $this->data[$this->alias]['region_id'];
+            $bundle_id = $this->data[$this->alias]['bundle_id'];
+            $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
+
+            $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
+            if (empty($report_daily)) {
+
+                throw new NotImplementedException(__('The DailyReport with date=%s, region_id=%s, bundle_id=%s  does not exist', $date, $region_id, $bundle_id));
+            }
+
+            $status_alias = $this->getStatusAlias($this->data[$this->alias]['status']);
+            $status_old_alias = $this->getStatusAlias($this->data_old[$this->alias]['status']);
+
+            $status_field = 'total_order_bundle_' . $status_alias;
+            $status_old_field = 'total_order_bundle_' . $status_old_alias;
+
+            $$status_old_field = !empty($report_daily[$DailyReport->alias][$status_old_field]) ?
+                    $report_daily[$DailyReport->alias][$status_old_field] : 0;
+            $$status_old_field -= 1;
+
+            $$status_field = !empty($report_daily[$DailyReport->alias][$status_field]) ?
+                    $report_daily[$DailyReport->alias][$status_field] : 0;
+            $$status_field += 1;
+
+            // thực hiện update doanh thu
+            $total_revernue = !empty($report_daily[$DailyReport->alias]['total_revernue']) ?
+                    $report_daily[$DailyReport->alias]['total_revernue'] : 0;
+            // nếu trạng thái mới là STATUS_SUCCESS
+            if ($this->data[$this->alias]['status'] == STATUS_SUCCESS) {
+
+                $total_revernue += $this->data[$this->alias]['total_price'];
+            } 
+            // nếu trạng thái cũ là STATUS_SUCCESS
+            elseif ($this->data_old[$this->alias]['status'] == STATUS_SUCCESS) {
+
+                $total_revernue -= $this->data[$this->alias]['total_price'];
+            }
+
+            // thực hiện update thông tin thống kê vào DailyReport
+            $save_data = array(
+                'id' => $report_daily[$DailyReport->alias]['id'],
+                $status_old_field => $$status_old_field,
+                $status_field => $$status_field,
+                'total_revernue' => $total_revernue,
+            );
+            $DailyReport->save($save_data);
+        }
+
+
+        // nếu thưc hiện tạo mới customer thì cộng +1 vào report_dailys.total_order_bundle
+        // công +1 vào report_dailys.total_order_bundle_pending
+        if (
+                $created &&
+                isset($this->data[$this->alias]['region_id']) &&
+                isset($this->data[$this->alias]['bundle_id'])
+        ) {
+
+            App::uses('DailyReport', 'Model');
+            $DailyReport = new DailyReport();
+            $region_id = $this->data[$this->alias]['region_id'];
+            $bundle_id = $this->data[$this->alias]['bundle_id'];
+            $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
+            $save_data = array();
+
+            $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
+            if (empty($report_daily)) {
+
+                $DailyReport->create();
+                $save_data['date'] = $date;
+                $save_data['region_id'] = $region_id;
+                $save_data['bundle_id'] = $bundle_id;
+                $save_data['total_order_bundle'] = 1;
+                $save_data['total_order_bundle_pending'] = 1;
+                $DailyReport->save($save_data);
+            } else {
+
+                $DailyReport->incrementField($report_daily[$DailyReport->alias]['id'], array(
+                    'total_order_bundle',
+                    'total_order_bundle_pending',
+                ));
+            }
         }
     }
 

@@ -219,6 +219,18 @@ echo $this->element('js/datetimepicker');
                                     echo $this->Form->hidden('no', array(
                                         'value' => $item[$model_name]['no'],
                                     ));
+                                    echo $this->Form->hidden('region_id', array(
+                                        'value' => $item[$model_name]['region_id'],
+                                    ));
+                                    echo $this->Form->hidden('bundle_id', array(
+                                        'value' => $item[$model_name]['bundle_id'],
+                                    ));
+                                    echo $this->Form->hidden('created', array(
+                                        'value' => $item[$model_name]['created'],
+                                    ));
+                                    echo $this->Form->hidden('total_price', array(
+                                        'value' => $item[$model_name]['total_price'],
+                                    ));
                                     echo $stt;
                                     ?>
                                 </td>
@@ -285,7 +297,7 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo h($item[$model_name]['notes']);
+                                    echo h($item[$model_name]['customer_address']);
                                     ?>
                                 </td>
                                 <td>
@@ -326,14 +338,14 @@ echo $this->element('js/datetimepicker');
                                     ));
                                     ?>
                                     <?php
-                                    echo $this->element('Button/edit', array(
-                                        'id' => $id,
-                                    ));
+//                                    echo $this->element('Button/edit', array(
+//                                        'id' => $id,
+//                                    ));
                                     ?>
                                     <?php
-                                    echo $this->element('Button/delete', array(
-                                        'id' => $id,
-                                    ));
+//                                    echo $this->element('Button/delete', array(
+//                                        'id' => $id,
+//                                    ));
                                     ?>
                                 </td>
                             </tr>

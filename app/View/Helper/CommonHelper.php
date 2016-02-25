@@ -57,4 +57,14 @@ class CommonHelper extends AppHelper {
         }
     }
 
+    public function parseDate($date) {
+
+        if (empty($date)) {
+
+            return '';
+        }
+
+        return date('d-m-Y', strtotime($date));
+    }
+
 }
