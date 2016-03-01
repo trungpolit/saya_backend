@@ -5,14 +5,14 @@ App::uses('UtilityCommon', 'Lib');
 class Setting extends AppModel {
 
     public $useTable = 'settings';
-    public $cached = 0;
+    public $cached = 1;
 
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
 
         if ($this->cached) {
 
-            $this->cache();
+            $this->updateSettingCache();
         }
     }
 

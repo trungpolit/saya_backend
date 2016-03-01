@@ -1,39 +1,37 @@
 <?php
 
-App::uses('AppController', 'Controller');
-
-class OrdersBundlesController extends AppController {
+class CustomersController extends AppController {
 
     public $uses = array(
-        'OrdersBundle',
         'Customer',
-        'Bundle',
+        'OrdersBundle',
         'Region',
+        'Bundle',
     );
 
-    public function index() {
+    public function detail($id = null) {
 
         $this->setInit();
 
         $breadcrumb = array();
         $breadcrumb[] = array(
             'url' => Router::url(array('action' => 'index')),
-            'label' => __('orders_bundle_title'),
+            'label' => __('customer_title'),
         );
         $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('orders_bundle_title'));
+        $this->set('page_title', __('customer_title'));
 
-        $options = array(
-            'recursive' => -1,
-            'order' => array(
-                'created' => 'DESC',
-            ),
-        );
+        if ($this->request->is('post') || $this->request->is('put')) {
 
-        $this->setSearchConds($options);
+            $this->{$this->modelClass}->save($this->request->data[$this->modelClass]);
+        }
 
-        $this->Paginator->settings = $options;
-        $list_data = $this->Paginator->paginate($this->modelClass);
+        $customer = $this->{$this->modelClass}->findById($id);
+        if (empty($customer)) {
+
+            throw new NotImplementedException(__('The customer with id=%s does not exist.', $id));
+        }
+        $this->set('customer', $customer);
 
         // lấy ra thông tin tất cả nhóm Bundle
         $bundles = $this->Bundle->getList();
@@ -43,43 +41,27 @@ class OrdersBundlesController extends AppController {
         $regionTree = $this->Region->getTree();
         $this->set('regionTree', $regionTree);
 
-        // Thực hiện lấy ra thông tin của Customer
-        $this->setCustomerInfo($list_data);
+        // lấy ra danh sách các order của Customer
+        $options = array(
+            'recursive' => -1,
+            'order' => array(
+                'created' => 'DESC',
+            ),
+            'conditions' => array(
+                'customer_id' => $id,
+            ),
+        );
+
+        $this->setSearchConds($options);
+
+        $this->Paginator->settings = $options;
+        $list_data = $this->Paginator->paginate($this->OrdersBundle);
 
         // unserialize thông tin chứa trong cache_data
         $this->unserializeCacheData($list_data);
 
         $this->set('list_data', $list_data);
-    }
-
-    protected function setCustomerInfo(&$list_data) {
-
-        if (empty($list_data)) {
-
-            return;
-        }
-        $customers = array();
-        foreach ($list_data as $k => $v) {
-
-            $customer_id = $v[$this->modelClass]['customer_id'];
-            if (empty($customers[$customer_id])) {
-
-                $customers[$customer_id] = $this->Customer->findById($customer_id);
-            }
-            $list_data[$k]['Customer'] = $customers[$customer_id]['Customer'];
-        }
-    }
-
-    protected function unserializeCacheData(&$list_data) {
-
-        if (empty($list_data)) {
-
-            return;
-        }
-        foreach ($list_data as $k => $v) {
-
-            $list_data[$k][$this->modelClass]['product_data'] = unserialize($v[$this->modelClass]['cache_data']);
-        }
+        $this->set('id', $id);
     }
 
     protected function setSearchConds(&$options) {
@@ -134,20 +116,23 @@ class OrdersBundlesController extends AppController {
         }
     }
 
+    protected function unserializeCacheData(&$list_data) {
+
+        if (empty($list_data)) {
+
+            return;
+        }
+        foreach ($list_data as $k => $v) {
+
+            $list_data[$k]['OrdersBundle']['product_data'] = unserialize($v['OrdersBundle']['cache_data']);
+        }
+    }
+
     protected function setInit() {
 
         $this->set('model_name', $this->modelClass);
-        $this->set('status', Configure::read('saya.Order.status'));
-        $this->set('status_customer', Configure::read('saya.Customer.status'));
-    }
-
-    public function edit($id = null) {
-
-        $this->{$this->modelClass}->id = $id;
-        if (!$this->{$this->modelClass}->exists()) {
-
-            throw new NotFoundException(__('invalid_data'));
-        }
+        $this->set('status_order', Configure::read('saya.Order.status'));
+        $this->set('status', Configure::read('saya.Customer.status'));
     }
 
 }

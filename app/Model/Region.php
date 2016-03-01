@@ -64,7 +64,8 @@ class Region extends AppModel {
         $children = $this->getListChildren();
 
         // thực hiện hợp nhất vào setting cache
-        $this->mergeSettingCache($parents, $children);
+//        $this->mergeSettingCache($parents, $children);
+        $this->updateSettingCache();
 
         $json_content = json_encode(array(
             'parent' => $parents,

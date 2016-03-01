@@ -79,7 +79,7 @@ class AppModel extends Model {
      * 
      * @return mixed
      */
-    function incrementField($id, $field_name, $inc = 1) {
+    public function incrementField($id, $field_name, $inc = 1) {
 
         if (!is_array($field_name)) {
 
@@ -92,6 +92,41 @@ class AppModel extends Model {
         }
 
         return $this->updateAll($save_data, array($this->alias . '.id' => $id));
+    }
+
+    public function updateSettingCache() {
+
+        App::uses('CacheCommon', 'Lib');
+        App::uses('Setting', 'Model');
+        App::uses('Region', 'Model');
+        App::uses('ClientVersion', 'Model');
+        App::uses('Ads', 'Model');
+
+        $Setting = new Setting();
+        $settings = $Setting->getAll();
+        $cache_path = APP . Configure::read('saya.App.cache_path') . $Setting->useTable . '.json';
+
+        // lấy ra danh sách Region
+        $Region = new Region();
+        $region_parents = $Region->getListParents();
+        $region_children = $Region->getListChildren();
+        $settings[$Region->useTable] = array(
+            'parent' => $region_parents,
+            'child' => $region_children,
+        );
+
+        // lấy ra danh sách ClientVersion
+        $ClientVersion = new ClientVersion();
+        $client_versions = $ClientVersion->getAll();
+        $settings[$ClientVersion->useTable] = $client_versions;
+
+        // lấy ra danh sách Ads
+        $Ads = new Ads();
+        $ads = $Ads->getAll();
+        $settings[$Ads->useTable] = $ads;
+
+        $json_content = json_encode($settings);
+        return CacheCommon::write($cache_path, $json_content);
     }
 
 }

@@ -57,6 +57,20 @@ class CommonHelper extends AppHelper {
         }
     }
 
+    public function getCustomerClass($status) {
+
+        switch ($status) {
+            case STATUS_BUY_BLACK:
+                return 'btn-warning';
+            case STATUS_BUY_BAD:
+                return 'btn-danger';
+            case STATUS_BUY_GOOD:
+                return 'btn-primary';
+            default :
+                return '';
+        }
+    }
+
     public function parseDate($date) {
 
         if (empty($date)) {

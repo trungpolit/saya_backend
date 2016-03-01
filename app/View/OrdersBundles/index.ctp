@@ -168,7 +168,7 @@ echo $this->element('js/datetimepicker');
                                 <?php echo $this->Paginator->sort('bundle_id', __('orders_bundle_bundle_id')); ?>
                             </th>
                             <th style="width: 15%"><?php echo $this->Paginator->sort('customer_id', __('orders_bundle_customer_details')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_notes')); ?></th>
+                            <th><?php echo $this->Paginator->sort('customer_address', __('orders_bundle_customer_address')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_qty', __('orders_bundle_total_qty')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_total_price')); ?></th>
                             <th><?php echo $this->Paginator->sort('status', __('orders_bundle_status')); ?></th>
@@ -185,7 +185,7 @@ echo $this->element('js/datetimepicker');
                                 <?php echo __('orders_bundle_bundle_id'); ?>
                             </th>
                             <th><?php echo __('orders_bundle_customer_details'); ?></th>
-                            <th><?php echo __('orders_bundle_notes') ?></th>
+                            <th><?php echo __('orders_bundle_customer_address') ?></th>
                             <th><?php echo __('orders_bundle_total_qty'); ?></th>
                             <th><?php echo __('orders_bundle_total_price') ?></th>
                             <th><?php echo __('orders_bundle_status') ?></th>
@@ -264,6 +264,11 @@ echo $this->element('js/datetimepicker');
                                         $customer_id,
                                     ));
                                     ?>
+                                    <?php
+                                    $cust_status_class = $this->Common->getCustomerClass($item['Customer']['status']);
+                                    ?>
+                                    <br/>
+                                    <span>Trạng thái: <button class="btn <?php echo $cust_status_class ?>" title="<?php echo $status_customer[$item['Customer']['status']] ?>"><i class="fa fa-flag"></i></button></span>
                                     <?php if (!empty($item['Customer']['mobile'])): ?>
                                         <br/>
                                         <span>ĐT: <?php echo $item['Customer']['mobile'] ?></span>
@@ -280,19 +285,19 @@ echo $this->element('js/datetimepicker');
                                         $cus_total_order_bundle_fail = !empty($item['Customer']['total_order_bundle_fail']) ? $item['Customer']['total_order_bundle_fail'] : 0;
                                         $cus_total_order_bundle_bad = !empty($item['Customer']['total_order_bundle_bad']) ? $item['Customer']['total_order_bundle_bad'] : 0;
                                         ?>
-                                        <hr/>
-                                        <span><strong>Lịch sử đơn hàng</strong></span>
-                                        <br/>
-                                        <span>Tổng số: <?php echo number_format($cus_total_order) ?></span>
-                                        <br/>
-                                        <span>Tổng thành công: <?php echo number_format($cus_total_order_bundle_success) ?></span>
-                                        <br/>
-                                        <span>Tổng chờ xử lý: <?php echo number_format($cus_total_order_bundle_pending) ?></span>
-                                        <br/>
-                                        <span>Tổng hủy: <?php echo number_format($cus_total_order_bundle_fail) ?></span>
-                                        <br/>
-                                        <span>Tổng giả mạo: <?php echo number_format($cus_total_order_bundle_bad) ?></span>
-                                        <br/>
+                                        <!--                                        <hr/>
+                                                                                <span><strong>Lịch sử đơn hàng</strong></span>
+                                                                                <br/>
+                                                                                <span>Tổng số: <?php echo number_format($cus_total_order) ?></span>
+                                                                                <br/>
+                                                                                <span>Tổng thành công: <?php echo number_format($cus_total_order_bundle_success) ?></span>
+                                                                                <br/>
+                                                                                <span>Tổng chờ xử lý: <?php echo number_format($cus_total_order_bundle_pending) ?></span>
+                                                                                <br/>
+                                                                                <span>Tổng hủy: <?php echo number_format($cus_total_order_bundle_fail) ?></span>
+                                                                                <br/>
+                                                                                <span>Tổng giả mạo: <?php echo number_format($cus_total_order_bundle_bad) ?></span>
+                                                                                <br/>-->
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -317,7 +322,7 @@ echo $this->element('js/datetimepicker');
                                         'class' => 'form-control',
                                         'label' => false,
                                         'default' => isset($item[$model_name]['status']) ?
-                                                $item[$model_name]['status'] : 2,
+                                                $item[$model_name]['status'] : STATUS_PENDING,
                                         'options' => $status,
                                     ));
                                     ?>
@@ -329,7 +334,7 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <a class="btn btn-info" href="#product-data-<?php echo $id ?>" data-toggle="collapse" >
-                                        <i class="fa fa-list-ul"> Chi tiết đơn hàng</i>
+                                        <i class="fa fa-list-ul"> <?php echo __('detail_btn') ?></i>
                                     </a>
                                     <br/>
                                     <?php

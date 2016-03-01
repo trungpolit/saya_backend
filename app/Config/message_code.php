@@ -15,4 +15,8 @@ $config['message_code'] = array(
         '#cus001' => 'The code param is empty.',
         '#cus002' => 'The customer with code=%s does not exist.',
     ),
+    'FeedbackServices' => array(
+        '#fee001' => 'The name or description param is empty.',
+        '#fee002' => 'The feedback can not save successful.',
+    ),
 );

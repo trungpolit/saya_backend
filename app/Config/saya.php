@@ -40,6 +40,14 @@ if (!defined("STATUS_BUY_GOOD")) {
     define("STATUS_BUY_GOOD", 2);
 }
 
+if (!defined("STATUS_ENABLE")) {
+    define("STATUS_ENABLE", 1);
+}
+
+if (!defined("STATUS_DISABLE")) {
+    define("STATUS_DISABLE", 0);
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',
@@ -77,6 +85,9 @@ $config['saya'] = array(
             'SYSTEM_EXCEPTION',
             'EMPTY_CART',
             'ABOUT_US',
+            'FEEDBACK_SUCCESS',
+            'FEEDBACK_ERROR',
+            'CLIENT_VERSION_MESSAGE',
         ),
     ),
     'Setting' => array(
@@ -99,6 +110,18 @@ $config['saya'] = array(
             STATUS_BUY_BLACK => __('Chặn mua hàng'),
             STATUS_BUY_BAD => __('Mua giả mạo'),
             STATUS_BUY_GOOD => __('Cho phép mua'),
+        ),
+    ),
+    'Ads' => array(
+        'status' => array(
+            STATUS_DISABLE => __('Tắt'),
+            STATUS_ENABLE => __('Bật'),
+        ),
+    ),
+    'Platform' => array(
+        'os' => array(
+            'Android' => 'Android',
+            'iOS' => 'iOS',
         ),
     ),
 );

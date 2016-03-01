@@ -84,6 +84,12 @@ class OrdersBundle extends AppModel {
                 $status_old_field => $$status_old_field,
                 $status_field => $$status_field
             );
+
+            // thực hiện set trạng thái của Customer thành STATUS_BUY_BAD nếu đơn hàng bị đánh trạng thái là giả mạo
+            if ($this->data[$this->alias]['status'] == STATUS_BAD) {
+
+                $save_data['status'] = STATUS_BUY_BAD;
+            }
             $Customer->save($save_data);
         }
 
@@ -130,7 +136,7 @@ class OrdersBundle extends AppModel {
             if ($this->data[$this->alias]['status'] == STATUS_SUCCESS) {
 
                 $total_revernue += $this->data[$this->alias]['total_price'];
-            } 
+            }
             // nếu trạng thái cũ là STATUS_SUCCESS
             elseif ($this->data_old[$this->alias]['status'] == STATUS_SUCCESS) {
 

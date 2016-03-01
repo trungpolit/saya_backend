@@ -96,6 +96,7 @@ echo $this->element('js/datetimepicker');
                             <th><?php echo $this->Paginator->sort('date', __('daily_report_date')); ?></th>
                             <th><?php echo $this->Paginator->sort('region_id', __('daily_report_region_id')); ?></th>
                             <th><?php echo $this->Paginator->sort('bundle_id', __('daily_report_bundle_id')); ?></th>
+                            <th><?php echo $this->Paginator->sort('total_revernue', __('daily_report_total_revernue')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle', __('daily_report_total_order_bundle')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle_success', __('daily_report_total_order_bundle_success')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle_pending', __('daily_report_total_order_bundle_pending')); ?></th>
@@ -106,6 +107,7 @@ echo $this->element('js/datetimepicker');
                             <th><?php echo __('daily_report_date'); ?></th>
                             <th><?php echo __('daily_report_region_id'); ?></th>
                             <th><?php echo __('daily_report_bundle_id'); ?></th>
+                            <th><?php echo __('daily_report_total_revernue'); ?></th>
                             <th><?php echo __('daily_report_total_order_bundle') ?></th>
                             <th><?php echo __('daily_report_total_order_bundle_success'); ?></th>
                             <th><?php echo __('daily_report_total_order_bundle_pending') ?></th>
@@ -133,14 +135,19 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo!empty($item[$model_name]['region_name']) ?
-                                            $item[$model_name]['region_name'] : __('unknown');
+                                    echo!empty($regionTree[$item[$model_name]['region_id']]) ?
+                                            $regionTree[$item[$model_name]['region_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>
                                     <?php
                                     echo!empty($bundles[$item[$model_name]['bundle_id']]) ?
                                             $bundles[$item[$model_name]['bundle_id']] : __('unknown');
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    echo number_format($item[$model_name]['total_revernue']);
                                     ?>
                                 </td>
                                 <td>

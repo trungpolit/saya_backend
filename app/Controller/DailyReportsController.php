@@ -22,6 +22,9 @@ class DailyReportsController extends AppController {
 
         $options = array(
             'recursive' => -1,
+            'order' => array(
+                'date' => 'DESC',
+            ),
         );
 
         $this->setSearchConds($options);
