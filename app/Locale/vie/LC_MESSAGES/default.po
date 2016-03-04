@@ -406,3 +406,67 @@ msgid "setting_title"
 msgstr "Danh sách cài đặt"
 # /Setting/* - END
 
+# Perm - BEGIN
+msgid "perm_name"
+msgstr "Tên"
+
+msgid "perm_code"
+msgstr "Mã"
+
+msgid "perm_module"
+msgstr "Module"
+
+msgid "perm_description"
+msgstr "Mô tả"
+
+msgid "perm_weight"
+msgstr "Trọng số"
+# Perm - END
+
+# /Perms/* - BEGIN
+msgid "perm_title"
+msgstr "Danh sách quyền"
+# /Perms/* - END
+
+# Navbar - BEGIN
+msgid "perm_nav_title"
+msgstr "Quyền hạn"
+
+msgid "user_nav_title"
+msgstr "Quản trị viên"
+
+msgid "role_nav_title"
+msgstr "Nhóm quyền"
+# Navbar - END
+
+# Role - BEGIN
+msgid "role_name"
+msgstr "Tên nhóm"
+
+msgid "role_description"
+msgstr "Mô tả"
+
+msgid "role_weight"
+msgstr "Trọng số"
+
+msgid "role_status"
+msgstr "Trạng thái"
+
+msgid "role_modified"
+msgstr "Ngày cập nhật"
+
+msgid "role_perm_id"
+msgstr "Quyền hạn"
+# Role - END
+
+# /Roles/* - BEGIN
+msgid "role_title"
+msgstr "Nhóm quyền"
+
+msgid "role_add_title"
+msgstr "Thêm mới nhóm quyền"
+
+msgid "role_edit_title"
+msgstr "Chỉnh sửa nhóm quyền"
+# /Roles/* - END
+

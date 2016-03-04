@@ -97,6 +97,7 @@
             <div>
                 <label style="visibility: hidden"><?php echo __('search_btn') ?></label>
             </div>
+            <?php echo $this->element('buttonSearchClear'); ?>
         </div>
     </div>
     <?php echo $this->Form->end(); ?>

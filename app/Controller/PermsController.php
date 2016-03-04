@@ -138,13 +138,35 @@ class PermsController extends AppController {
         $this->set('breadcrumb', $breadcrumb);
         $this->set('page_title', __('perm_title'));
 
-        $options = array();
+        $options = array(
+            'recursive' => -1,
+        );
         $options['order'] = array('modified' => 'DESC');
+        $this->setSearchConds($options);
 
         $this->Paginator->settings = $options;
 
         $list_data = $this->Paginator->paginate($this->modelClass);
         $this->set('list_data', $list_data);
+    }
+
+    protected function setSearchConds(&$options) {
+
+        if (isset($this->request->query['name']) && strlen(trim($this->request->query['name']))) {
+
+            $this->request->query['name'] = trim($this->request->query['name']);
+            $options['conditions']['LOWER(Perm.name) LIKE'] = '%' . strtolower($this->request->query['name']) . '%';
+        }
+        if (isset($this->request->query['code']) && strlen(trim($this->request->query['code']))) {
+
+            $this->request->query['code'] = trim($this->request->query['code']);
+            $options['conditions']['LOWER(Perm.code) LIKE'] = '%' . strtolower($this->request->query['code']) . '%';
+        }
+        if (isset($this->request->query['module']) && strlen(trim($this->request->query['module']))) {
+
+            $this->request->query['module'] = trim($this->request->query['module']);
+            $options['conditions']['LOWER(Perm.module) LIKE'] = '%' . strtolower($this->request->query['module']) . '%';
+        }
     }
 
     protected function setInit() {
