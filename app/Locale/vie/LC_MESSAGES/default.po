@@ -470,3 +470,40 @@ msgid "role_edit_title"
 msgstr "Chỉnh sửa nhóm quyền"
 # /Roles/* - END
 
+# User - BEGIN
+msgid "user_username"
+msgstr "Tên tài khoản"
+
+msgid "user_description"
+msgstr "Mô tả"
+
+msgid "user_weight"
+msgstr "Trọng số"
+
+msgid "user_status"
+msgstr "Trạng thái"
+
+msgid "user_modified"
+msgstr "Ngày cập nhật"
+
+msgid "user_role_id"
+msgstr "Nhóm quyền"
+
+msgid "user_region_id"
+msgstr "Vùng miền"
+
+msgid "user_bundle_id"
+msgstr "Nhóm sản phẩm"
+# User - END
+
+# /Users/* - BEGIN
+msgid "user_title"
+msgstr "Danh sách tài khoản"
+
+msgid "user_add_title"
+msgstr "Thêm mới tài khoản"
+
+msgid "user_edit_title"
+msgstr "Chỉnh sửa tài khoản"
+# /Users/* - END
+

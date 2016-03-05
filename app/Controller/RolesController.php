@@ -7,6 +7,7 @@ class RolesController extends AppController {
     public $uses = array(
         'Role',
         'Perm',
+        'RolesPerm',
     );
 
     public function index() {
@@ -102,10 +103,32 @@ class RolesController extends AppController {
                 ),
                 'recursive' => -1,
             ));
+
+            // Thực hiện set role và perm
+            $this->setRolesPerm($data, $id);
+
             $this->request->data = $data;
         }
 
         $this->render('add');
+    }
+
+    protected function setRolesPerm(&$data, $id) {
+
+        if (empty($data)) {
+
+            return;
+        }
+
+        $roles_perm = $this->RolesPerm->findAllByRoleId($id);
+        if (empty($roles_perm)) {
+
+            $data[$this->modelClass]['perm_id'] = array();
+        } else {
+
+            $perm_id = Hash::extract($roles_perm, '{n}.RolesPerm.perm_id');
+            $data[$this->modelClass]['perm_id'] = $perm_id;
+        }
     }
 
     protected function setInit() {

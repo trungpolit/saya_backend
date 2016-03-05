@@ -112,6 +112,9 @@ class Region extends AppModel {
                     'fields' => array(
                         'id', 'name',
                     ),
+                    'order' => array(
+                        'weight' => 'ASC',
+                    ),
         ));
     }
 
@@ -124,6 +127,9 @@ class Region extends AppModel {
                     ),
                     'fields' => array(
                         'id', 'name', 'parent_id',
+                    ),
+                    'order' => array(
+                        'weight' => 'ASC',
                     ),
         ));
     }
@@ -145,21 +151,20 @@ class Region extends AppModel {
 
     public function getTree() {
 
-        $results = $this->find('all', array(
-            'conditions' => array(
-                'status' => STATUS_PUBLIC
-            ),
-            'recursive' => -1,
-//            'order' => array(
-//                'weight' => 'ASC',
-//                'modified' => 'DESC',
-//            ),
-        ));
-        $tree = $this->formatTreeList($results, array(
-            'spacer' => '--'
-        ));
+        // lấy ra các region_parents
+        $parent = $this->getListParents();
+        $child = $this->getListChildren();
 
-        return $tree;
+        $trees = array();
+        foreach ($child as $k => $v) {
+
+            $trees[$parent[$k]] = array();
+            foreach ($v as $kk => $vv) {
+
+                $trees[$parent[$k]][$kk] = $vv;
+            }
+        }
+        return $trees;
     }
 
 }
