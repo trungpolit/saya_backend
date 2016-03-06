@@ -166,7 +166,7 @@ class UsersController extends AppController {
             $this->request->data = $data;
         }
 
-        $this->render('add');
+//        $this->render('add');
     }
 
     protected function setUsersRegion(&$data, $id) {
@@ -203,6 +203,54 @@ class UsersController extends AppController {
             $bundle_id = Hash::extract($users_bundle, '{n}.UsersBundle.bundle_id');
             $data[$this->modelClass]['bundle_id'] = $bundle_id;
         }
+    }
+
+    /*
+     * resetPassword
+     * Thực hiện reset password
+     */
+
+    public function resetPassword($id = null) {
+
+        if ($this->request->is('post') || $this->request->is('put')) {
+
+            if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
+
+                $this->Session->setFlash(__('reset_password_successful_message'), 'default', array(), 'good');
+                $this->redirect(array('action' => 'edit', $id));
+            } else {
+
+                $this->Session->setFlash(__('reset_password_error_message'), 'default', array(), 'bad');
+            }
+        }
+    }
+
+    public function login() {
+
+        $this->layout = 'login';
+        $this->set('model_name', $this->modelClass);
+
+        if ($this->request->is('post') || $this->request->is('put')) {
+
+            if ($this->Auth->login()) {
+
+                return $this->redirect($this->Auth->loginRedirect);
+            }
+
+            $this->Session->setFlash(__('invalid_username_or_password', 'login', array(), 'bad'));
+        }
+    }
+
+    public function logout() {
+
+        return $this->redirect($this->Auth->logout());
+    }
+
+    public function beforeFilter() {
+        parent::beforeFilter();
+
+        $this->Auth->allow(array('login', 'logout'));
+        $this->PermLimit->allow(array('login', 'logout'));
     }
 
     protected function setInit() {

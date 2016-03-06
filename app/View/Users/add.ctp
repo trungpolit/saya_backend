@@ -1,11 +1,21 @@
 <?php
 echo $this->element('js/chosen');
+echo $this->element('js/validate');
 ?>
 <script>
     $(function () {
 
         $('.chosen-select').chosen({
             max_selected_options: 1
+        });
+
+        $('form').validate();
+        // thực hiện validate cho password và password confirm
+        $("#password_confirm").rules("add", {
+            equalTo: '#password',
+            messages: {
+                equalTo: "<?php echo __('password_confirm_invalid') ?>"
+            }
         });
     });
 </script>
@@ -59,6 +69,40 @@ echo $this->element('js/chosen');
                             'div' => false,
                             'label' => false,
                             'options' => $roles,
+                        ));
+                        ?>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><?php echo __('user_password') ?> <?php echo $this->element('required') ?></label>
+
+                    <div class="col-sm-10">
+                        <?php
+                        echo $this->Form->input($model_name . '.password', array(
+                            'class' => 'form-control',
+                            'div' => false,
+                            'label' => false,
+                            'required' => true,
+                            'type' => 'password',
+                            'id' => 'password',
+                        ));
+                        ?>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><?php echo __('user_password_confirm') ?> <?php echo $this->element('required') ?></label>
+
+                    <div class="col-sm-10">
+                        <?php
+                        echo $this->Form->input($model_name . '.password_confirm', array(
+                            'class' => 'form-control',
+                            'div' => false,
+                            'label' => false,
+                            'required' => true,
+                            'type' => 'password',
+                            'id' => 'password_confirm',
                         ));
                         ?>
                     </div>

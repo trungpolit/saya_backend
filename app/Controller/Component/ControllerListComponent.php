@@ -12,7 +12,7 @@
  */
 class ControllerListComponent extends Component {
 
-    public function getList(Array $controllersToExclude = array('PagesController')) {
+    public function getList(Array $controllersToExclude = array('PagesController', 'Controller')) {
         $controllersToExclude[] = 'AppController';
         $controllerClasses = array_filter(App::objects('Controller'), function ($controller) use ($controllersToExclude) {
             return !in_array($controller, $controllersToExclude);
@@ -65,7 +65,7 @@ class ControllerListComponent extends Component {
     }
 
     private function removeParentMethods(Array $methods) {
-        $appControllerMethods = get_class_methods('AppController');
+        $appControllerMethods = get_class_methods('Controller');
 
         return array_diff($methods, $appControllerMethods);
     }

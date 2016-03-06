@@ -135,8 +135,8 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo!empty($regionTree[$item[$model_name]['region_id']]) ?
-                                            $regionTree[$item[$model_name]['region_id']] : __('unknown');
+                                    echo!empty($regions[$item[$model_name]['region_id']]) ?
+                                            $regions[$item[$model_name]['region_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>

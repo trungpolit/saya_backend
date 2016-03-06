@@ -16,6 +16,7 @@ class OrdersBundle extends AppModel {
             'className' => 'OrdersProduct',
         ),
     );
+    public $actsAs = array('ManagerFilter');
     public $data_old = array();
 
     public function beforeSave($options = array()) {

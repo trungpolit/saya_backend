@@ -19,8 +19,12 @@ class ProductsController extends AppController {
             'url' => Router::url(array('action' => 'index')),
             'label' => __('product_title'),
         );
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => __FUNCTION__)),
+            'label' => __('add_action_title'),
+        );
         $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('product_title'));
+        $this->set('page_title', __('product_add_title'));
 
         $this->{$this->modelClass}->file_proccess = 1;
 
@@ -29,7 +33,7 @@ class ProductsController extends AppController {
             if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
-//                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
             } else {
 
                 $this->Session->setFlash(__('save_error_message'), 'default', array(), 'bad');
@@ -53,17 +57,21 @@ class ProductsController extends AppController {
         $breadcrumb = array();
         $breadcrumb[] = array(
             'url' => Router::url(array('action' => 'index')),
-            'label' => __('category_title'),
+            'label' => __('product_title'),
+        );
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => __FUNCTION__)),
+            'label' => __('edit_action_title'),
         );
         $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('category_title'));
+        $this->set('page_title', __('product_edit_title'));
 
         if ($this->request->is('post') || $this->request->is('put')) {
 
             if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
-//                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
             } else {
 
                 $this->Session->setFlash(__('save_error_message'), 'default', array(), 'bad');
@@ -101,6 +109,9 @@ class ProductsController extends AppController {
             ),
             'recursive' => -1,
         );
+
+        $this->setSearchConds($options);
+
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
@@ -134,6 +145,40 @@ class ProductsController extends AppController {
 
         $categories = $this->Category->getList();
         $this->set('categories', $categories);
+
+        $regionTree = $this->Region->getTree();
+        $this->set('regionTree', $regionTree);
+    }
+
+    protected function setSearchConds(&$options) {
+
+        if (isset($this->request->query['name']) && strlen(trim($this->request->query['name']))) {
+
+            $this->request->query['name'] = trim($this->request->query['name']);
+            $options['conditions']['LOWER(Product.name) LIKE'] = '%' . strtolower($this->request->query['name']) . '%';
+        }
+        if (isset($this->request->query['region_id']) && strlen($this->request->query['region_id'])) {
+
+            $options['conditions']['Product.region_id'] = $this->request->query['region_id'];
+        }
+        if (isset($this->request->query['bundle_id']) && strlen($this->request->query['bundle_id'])) {
+
+            $options['conditions']['Product.bundle_id'] = $this->request->query['bundle_id'];
+        }
+        if (isset($this->request->query['status']) && strlen($this->request->query['status'])) {
+
+            $options['conditions']['Product.status'] = $this->request->query['status'];
+        }
+        if (isset($this->request->query['created_start']) && strlen(trim($this->request->query['created_start']))) {
+
+            $this->request->query['created_start'] = trim($this->request->query['created_start']);
+            $options['conditions']['Product.created >='] = date('Y-m-d H:i:s', strtotime($this->request->query['created_start']));
+        }
+        if (isset($this->request->query['created_end']) && strlen(trim($this->request->query['created_end']))) {
+
+            $this->request->query['created_end'] = trim($this->request->query['created_end']);
+            $options['conditions']['Product.created <='] = date('Y-m-d H:i:s', strtotime($this->request->query['created_end']));
+        }
     }
 
 }

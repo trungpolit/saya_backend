@@ -255,7 +255,52 @@ msgstr "Đơn vị"
 msgid "product_total_price"
 msgstr "Thành tiền"
 
+msgid "product_status"
+msgstr "Trạng thái"
+
+msgid "product_weight"
+msgstr "Trọng số"
+
+msgid "product_region_parent_id"
+msgstr "Tỉnh/Thành phố"
+
+msgid "product_region_id"
+msgstr "Quận/Huyện/Thị xã"
+
+msgid "product_bundle_id"
+msgstr "Nhóm sản phẩm"
+
+msgid "product_category_id"
+msgstr "Danh mục"
+
+msgid "product_description"
+msgstr "Mô tả"
+
+msgid "product_supplier"
+msgstr "Nhà cung cấp"
+
+msgid "product_supplier"
+msgstr "Nhà cung cấp"
+
+msgid "product_contact"
+msgstr "Thông tin liên hệ"
+
+msgid "product_modified"
+msgstr "Ngày cập nhật"
+
 # Product - END
+
+# /Products/* - BEGIN
+msgid "product_title"
+msgstr "Danh sách sản phẩm"
+
+msgid "product_add_title"
+msgstr "Thêm mới sản phẩm"
+
+msgid "product_edit_title"
+msgstr "Chỉnh sửa sản phẩm"
+
+# /Products/* - END
 
 # /DailyReports/index/* - BEGIN
 msgid "daily_report_title"
@@ -441,14 +486,47 @@ msgstr "Danh sách quyền"
 # /Perms/* - END
 
 # Navbar - BEGIN
-msgid "perm_nav_title"
-msgstr "Quyền hạn"
+msgid "daily_report_nav_title"
+msgstr "Thống kê"
+
+msgid "orders_bundle_nav_title"
+msgstr "Đơn hàng"
+
+msgid "product_nav_title"
+msgstr "Sản phẩm"
+
+msgid "ad_nav_title"
+msgstr "Quảng cáo"
+
+msgid "ad_nav_title"
+msgstr "Quảng cáo"
+
+msgid "client_version_nav_title"
+msgstr "Phiên bản app"
+
+msgid "category_nav_title"
+msgstr "Danh mục"
+
+msgid "region_parent_nav_title"
+msgstr "Tỉnh/Thành phố"
+
+msgid "region_child_nav_title"
+msgstr "Quận/Huyện/Thị xã"
+
+msgid "bundle_nav_title"
+msgstr "Nhóm sản phẩm"
+
+msgid "admin_user_nav_title"
+msgstr "Quản trị cấp cao"
 
 msgid "user_nav_title"
 msgstr "Quản trị viên"
 
 msgid "role_nav_title"
 msgstr "Nhóm quyền"
+
+msgid "perm_nav_title"
+msgstr "Quyền hạn"
 # Navbar - END
 
 # Role - BEGIN
@@ -524,4 +602,103 @@ msgstr "Thêm mới tài khoản"
 msgid "user_edit_title"
 msgstr "Chỉnh sửa tài khoản"
 # /Users/* - END
+
+# Category - BEGIN
+msgid "category_name"
+msgstr "Tên"
+
+msgid "category_description"
+msgstr "Mô tả"
+
+msgid "category_weight"
+msgstr "Trọng số"
+
+msgid "category_status"
+msgstr "Trạng thái"
+
+msgid "category_logo"
+msgstr "Ảnh đại diện"
+
+msgid "category_modified"
+msgstr "Ngày cập nhật"
+# Category - END
+
+# /Categories/* - BEGIN
+msgid "category_title"
+msgstr "Danh sách danh mục"
+
+msgid "category_add_title"
+msgstr "Thêm mới danh mục"
+
+msgid "category_edit_title"
+msgstr "Chỉnh sửa danh mục"
+# /Categories/* - END
+
+# Region - BEGIN
+msgid "region_name"
+msgstr "Tên"
+
+msgid "region_description"
+msgstr "Mô tả"
+
+msgid "region_weight"
+msgstr "Trọng số"
+
+msgid "region_status"
+msgstr "Trạng thái"
+
+msgid "region_modified"
+msgstr "Ngày cập nhật"
+
+msgid "region_parent_id"
+msgstr "Tỉnh/Thành Phố"
+# Region - END
+
+# /Categories/* - BEGIN
+msgid "region_parent_title"
+msgstr "Danh sách Tỉnh/Thành phố"
+
+msgid "region_parent_add_title"
+msgstr "Thêm mới Tỉnh/Thành phố"
+
+msgid "region_parent_edit_title"
+msgstr "Chỉnh sửa Tỉnh/Thành phố"
+
+msgid "region_title"
+msgstr "Danh sách Quận/Huyện/Thị xã"
+
+msgid "region_add_title"
+msgstr "Thêm mới Quận/Huyện/Thị xã"
+
+msgid "region_edit_title"
+msgstr "Chỉnh sửa Quận/Huyện/Thị xã"
+# /Categories/* - END
+
+# Bundle - BEGIN
+msgid "bundle_name"
+msgstr "Tên"
+
+msgid "bundle_description"
+msgstr "Mô tả"
+
+msgid "bundle_weight"
+msgstr "Trọng số"
+
+msgid "bundle_status"
+msgstr "Trạng thái"
+
+msgid "bundle_modified"
+msgstr "Ngày cập nhật"
+# Bundle - END
+
+# /Bundles/* - BEGIN
+msgid "bundle_title"
+msgstr "Danh sách nhóm sản phẩm"
+
+msgid "bundle_add_title"
+msgstr "Thêm mới nhóm sản phẩm"
+
+msgid "bundle_edit_title"
+msgstr "Chỉnh sửa nhóm sản phẩm"
+# /Bundles/* - END
 

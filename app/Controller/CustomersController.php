@@ -38,9 +38,9 @@ class CustomersController extends AppController {
         $this->set('bundles', $bundles);
 
         // lấy ra danh sách region theo dạng tree phân cấp
-        $regionTree = $this->Region->getTree();
+        $regionTree = $this->Region->getList();
         $this->set('regionTree', $regionTree);
-
+        
         // lấy ra danh sách các order của Customer
         $options = array(
             'recursive' => -1,

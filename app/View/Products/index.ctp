@@ -1,11 +1,16 @@
 <?php
 echo $this->element('page-heading-with-add-action');
 echo $this->element('js/chosen');
+echo $this->element('js/datetimepicker');
 ?>
 <script>
     $(function () {
 
         $('.chosen-select').chosen();
+        $('.datepicker').datetimepicker({
+            'format': 'DD-MM-YYYY HH:mm:ss',
+            'showTodayButton': true
+        });
     });
 </script>
 <div class="ibox-content m-b-sm border-bottom">
@@ -34,6 +39,34 @@ echo $this->element('js/chosen');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
+                echo $this->Form->input('region_id', array(
+                    'div' => false,
+                    'class' => 'form-control',
+                    'label' => __('product_region_id'),
+                    'options' => $regionTree,
+                    'empty' => '-------',
+                    'default' => $this->request->query('region_id'),
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input('bundle_id', array(
+                    'div' => false,
+                    'class' => 'form-control',
+                    'label' => __('product_bundle_id'),
+                    'options' => $bundles,
+                    'empty' => '-------',
+                    'default' => $this->request->query('bundle_id'),
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
                 echo $this->Form->input('status', array(
                     'div' => false,
                     'class' => 'form-control',
@@ -48,15 +81,32 @@ echo $this->element('js/chosen');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
-                echo $this->Form->input('weight', array(
-                    'type' => 'number',
+                echo $this->Form->input('created_start', array(
                     'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('product_weight'),
-                    'default' => $this->request->query('weight'),
+                    'class' => 'form-control datepicker',
+                    'label' => __('orders_bundle_created_start'),
+                    'default' => $this->request->query('created_start'),
                 ));
                 ?>
             </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input('created_end', array(
+                    'div' => false,
+                    'class' => 'form-control datepicker',
+                    'label' => __('orders_bundle_created_end'),
+                    'default' => $this->request->query('created_end'),
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div>
+                <label style="visibility: hidden"><?php echo __('search_btn') ?></label>
+            </div>
+            <?php echo $this->element('buttonSearchClear'); ?>
         </div>
     </div>
     <?php echo $this->Form->end(); ?>

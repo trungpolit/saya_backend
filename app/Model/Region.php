@@ -6,7 +6,7 @@ class Region extends AppModel {
 
     public $useTable = 'regions';
     public $cached = 0;
-    public $actsAs = array('Tree');
+    public $actsAs = array('Tree', 'ManagerFilter');
 
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
@@ -165,6 +165,24 @@ class Region extends AppModel {
             }
         }
         return $trees;
+    }
+
+    public function getChildrenFromTree($trees) {
+
+        if (empty($trees)) {
+
+            return array();
+        }
+
+        $children = array();
+        foreach ($trees as $k => $v) {
+
+            foreach ($v as $kk => $vv) {
+
+                $children[$kk] = $vv;
+            }
+        }
+        return $children;
     }
 
 }

@@ -13,8 +13,12 @@ class CategoriesController extends AppController {
             'url' => Router::url(array('action' => 'index')),
             'label' => __('category_title'),
         );
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => __FUNCTION__)),
+            'label' => __('add_action_title'),
+        );
         $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('category_title'));
+        $this->set('page_title', __('category_add_title'));
 
         $this->{$this->modelClass}->file_proccess = 1;
 
@@ -23,7 +27,7 @@ class CategoriesController extends AppController {
             if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
-//                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
             } else {
 
                 $this->Session->setFlash(__('save_error_message'), 'default', array(), 'bad');
@@ -47,15 +51,19 @@ class CategoriesController extends AppController {
             'url' => Router::url(array('action' => 'index')),
             'label' => __('category_title'),
         );
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => __FUNCTION__)),
+            'label' => __('edit_action_title'),
+        );
         $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('category_title'));
+        $this->set('page_title', __('category_edit_title'));
 
         if ($this->request->is('post') || $this->request->is('put')) {
 
             if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
-//                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'index'));
             } else {
 
                 $this->Session->setFlash(__('save_error_message'), 'default', array(), 'bad');
@@ -90,10 +98,30 @@ class CategoriesController extends AppController {
                 'modified' => 'DESC',
             ),
         );
+
+        $this->setSearchConds($options);
+
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
         $this->set('list_data', $list_data);
+    }
+
+    protected function setSearchConds(&$options) {
+
+        if (isset($this->request->query['name']) && strlen(trim($this->request->query['name']))) {
+
+            $this->request->query['name'] = trim($this->request->query['name']);
+            $options['conditions']['LOWER(Category.name) LIKE'] = '%' . strtolower($this->request->query['name']) . '%';
+        }
+        if (isset($this->request->query['status']) && strlen($this->request->query['status'])) {
+
+            $options['conditions']['Category.status'] = $this->request->query['status'];
+        }
+        if (isset($this->request->query['parent_id']) && strlen($this->request->query['parent_id'])) {
+
+            $options['conditions']['Category.parent_id'] = $this->request->query['parent_id'];
+        }
     }
 
     protected function setInit() {

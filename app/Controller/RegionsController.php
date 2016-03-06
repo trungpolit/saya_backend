@@ -14,12 +14,32 @@ class RegionsController extends AppController {
         $this->setInit();
 
         $breadcrumb = array();
-        $breadcrumb[] = array(
-            'url' => Router::url(array('action' => 'index')),
-            'label' => __('region_title'),
-        );
-        $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('region_title'));
+
+        if ($type == 'child') {
+
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => 'index')),
+                'label' => __('region_title'),
+            );
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => __FUNCTION__)),
+                'label' => __('add_action_title'),
+            );
+            $this->set('breadcrumb', $breadcrumb);
+            $this->set('page_title', __('region_add_title'));
+        } else {
+
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => 'index')),
+                'label' => __('region_parent_title'),
+            );
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => __FUNCTION__)),
+                'label' => __('add_action_title'),
+            );
+            $this->set('breadcrumb', $breadcrumb);
+            $this->set('page_title', __('region_parent_add_title'));
+        }
 
         if ($this->request->is('post') || $this->request->is('put')) {
 
@@ -48,12 +68,31 @@ class RegionsController extends AppController {
         $this->setInit();
 
         $breadcrumb = array();
-        $breadcrumb[] = array(
-            'url' => Router::url(array('action' => 'index')),
-            'label' => __('region_title'),
-        );
-        $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('region_title'));
+        if ($type == 'child') {
+
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => 'index')),
+                'label' => __('region_title'),
+            );
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => __FUNCTION__)),
+                'label' => __('edit_action_title'),
+            );
+            $this->set('breadcrumb', $breadcrumb);
+            $this->set('page_title', __('region_edit_title'));
+        } else {
+
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => 'index')),
+                'label' => __('region_parent_title'),
+            );
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => __FUNCTION__)),
+                'label' => __('edit_action_title'),
+            );
+            $this->set('breadcrumb', $breadcrumb);
+            $this->set('page_title', __('region_parent_edit_title'));
+        }
 
         if ($this->request->is('post') || $this->request->is('put')) {
 
@@ -86,12 +125,23 @@ class RegionsController extends AppController {
         $this->setInit();
 
         $breadcrumb = array();
-        $breadcrumb[] = array(
-            'url' => Router::url(array('action' => 'index')),
-            'label' => __('region_title'),
-        );
-        $this->set('breadcrumb', $breadcrumb);
-        $this->set('page_title', __('region_title'));
+        if ($type == 'child') {
+
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => 'index')),
+                'label' => __('region_title'),
+            );
+            $this->set('breadcrumb', $breadcrumb);
+            $this->set('page_title', __('region_title'));
+        } else {
+
+            $breadcrumb[] = array(
+                'url' => Router::url(array('action' => 'index')),
+                'label' => __('region_parent_title'),
+            );
+            $this->set('breadcrumb', $breadcrumb);
+            $this->set('page_title', __('region_parent_title'));
+        }
 
         $options = array(
             'order' => array(
@@ -132,6 +182,19 @@ class RegionsController extends AppController {
                 ),
             ));
             $this->set('parents', $parents);
+        }
+    }
+
+    protected function setSearchConds(&$options) {
+
+        if (isset($this->request->query['name']) && strlen(trim($this->request->query['name']))) {
+
+            $this->request->query['name'] = trim($this->request->query['name']);
+            $options['conditions']['LOWER(Region.name) LIKE'] = '%' . strtolower($this->request->query['name']) . '%';
+        }
+        if (isset($this->request->query['status']) && strlen($this->request->query['status'])) {
+
+            $options['conditions']['Region.status'] = $this->request->query['status'];
         }
     }
 

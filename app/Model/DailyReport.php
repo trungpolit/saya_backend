@@ -2,6 +2,8 @@
 
 class DailyReport extends AppModel {
 
+    public $actsAs = array('ManagerFilter');
+
     public function checkExist($date, $region_id, $bundle_id) {
 
         return $this->find('first', array(

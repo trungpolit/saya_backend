@@ -65,13 +65,14 @@ $config['saya'] = array(
             1 => __('status_wait_review'),
             2 => __('status_approved'),
         ),
-        'name' => 'SAYA',
+        'name' => 'onGas',
         'max_file_size_upload' => 5 * 1000 * 1000,
         'data_file_root' => 'data_files/',
         'video_types' => array(
             'mp4',
             'ogg',
         ),
+        'slogan' => 'kết nối niềm tin',
     ),
     'Category' => array(
         'module_name' => 'categories',

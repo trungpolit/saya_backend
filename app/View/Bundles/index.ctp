@@ -39,17 +39,10 @@ echo $this->element('page-heading-with-add-action');
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input('weight', array(
-                    'type' => 'number',
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('bundle_weight'),
-                    'default' => $this->request->query('weight'),
-                ));
-                ?>
+            <div>
+                <label style="visibility: hidden"><?php echo __('search_btn') ?></label>
             </div>
+            <?php echo $this->element('buttonSearchClear'); ?>
         </div>
     </div>
     <?php echo $this->Form->end(); ?>

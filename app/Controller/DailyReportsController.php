@@ -40,6 +40,9 @@ class DailyReportsController extends AppController {
         $regionTree = $this->Region->getTree();
         $this->set('regionTree', $regionTree);
 
+        $regions = $this->Region->getChildrenFromTree($regionTree);
+        $this->set('regions', $regions);
+
         $this->set('list_data', $list_data);
     }
 
