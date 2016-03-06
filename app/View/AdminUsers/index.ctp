@@ -50,34 +50,6 @@ echo $this->element('js/chosen');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
-                echo $this->Form->input('bundle_id', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('user_bundle_id'),
-                    'default' => $this->request->query('bundle_id'),
-                    'options' => $bundles,
-                    'empty' => '-------',
-                ));
-                ?>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input('region_id', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('user_region_id'),
-                    'default' => $this->request->query('region_id'),
-                    'options' => $regionTree,
-                    'empty' => '-------',
-                ));
-                ?>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php
                 echo $this->Form->input('status', array(
                     'div' => false,
                     'class' => 'form-control',
@@ -108,8 +80,6 @@ echo $this->element('js/chosen');
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('user_username') ?></th>
                             <th><?php echo __('user_role_id') ?></th>
-                            <th><?php echo __('user_region_id') ?></th>
-                            <th><?php echo __('user_bundle_id') ?></th>
                             <th><?php echo __('user_weight') ?></th>
                             <th><?php echo __('user_status') ?></th>
                             <th><?php echo __('user_modified') ?></th>
@@ -118,8 +88,6 @@ echo $this->element('js/chosen');
                             <th><?php echo __('no') ?></th>
                             <th><?php echo $this->Paginator->sort('name', __('user_username')); ?></th>
                             <th><?php echo $this->Paginator->sort('role_id', __('user_role_id')); ?></th>
-                            <th><?php echo __('user_region_id') ?></th>
-                            <th><?php echo __('user_bundle_id') ?></th>
                             <th><?php echo $this->Paginator->sort('weight', __('user_weight')); ?></th>
                             <th><?php echo $this->Paginator->sort('status', __('user_status')); ?></th>
                             <th><?php echo $this->Paginator->sort('modified', __('user_modified')); ?></th>
@@ -143,30 +111,6 @@ echo $this->element('js/chosen');
                                     <?php
                                     echo!empty($roles[$item[$model_name]['role_id']]) ?
                                             $roles[$item[$model_name]['role_id']] : __('unknown');
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo $this->Form->input($model_name . '.region_id', array(
-                                        'class' => 'form-control chosen-select-one',
-                                        'div' => false,
-                                        'label' => false,
-                                        'options' => $regionTree,
-                                        'multiple' => true,
-                                        'default' => $item[$model_name]['region_id'],
-                                    ));
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo $this->Form->input($model_name . '.bundle_id', array(
-                                        'class' => 'form-control chosen-select-one',
-                                        'div' => false,
-                                        'label' => false,
-                                        'options' => $bundles,
-                                        'multiple' => true,
-                                        'default' => $item[$model_name]['bundle_id'],
-                                    ));
                                     ?>
                                 </td>
                                 <td>
@@ -206,6 +150,7 @@ echo $this->element('js/chosen');
                                     <?php
                                     echo $this->element('Button/edit', array(
                                         'id' => $id,
+                                        'model_name' => 'AdminUser',
                                     ));
                                     ?>
                                     <?php
@@ -219,7 +164,7 @@ echo $this->element('js/chosen');
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="9" style="text-align: center"><?php echo __('no_result') ?></td>
+                            <td colspan="7" style="text-align: center"><?php echo __('no_result') ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

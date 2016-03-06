@@ -48,6 +48,14 @@ if (!defined("STATUS_DISABLE")) {
     define("STATUS_DISABLE", 0);
 }
 
+if (!defined("ADMIN_TYPE")) {
+    define("ADMIN_TYPE", 'ADMIN');
+}
+
+if (!defined("MANAGER_TYPE")) {
+    define("MANAGER_TYPE", 'MANAGER');
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',

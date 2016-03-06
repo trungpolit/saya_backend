@@ -113,6 +113,18 @@ msgstr "Đóng"
 msgid "detail_btn"
 msgstr "Chi tiết"
 
+msgid "reset_password_action_title"
+msgstr "Đặt lại mật khẩu"
+
+msgid "password_confirm_invalid"
+msgstr "Mật khẩu không khớp"
+
+msgid "invalid_username_or_password"
+msgstr "Không nhập đúng tài khoản hoặc mật khẩu, hãy đăng nhập lại"
+
+msgid "refresh_action_title"
+msgstr "Làm mới"
+
 # App - END
 
 # Form buttons - BEGIN
@@ -494,6 +506,12 @@ msgstr "Vùng miền"
 
 msgid "user_bundle_id"
 msgstr "Nhóm sản phẩm"
+
+msgid "user_password"
+msgstr "Mật khẩu"
+
+msgid "user_password_confirm"
+msgstr "Nhập lại mật khẩu"
 # User - END
 
 # /Users/* - BEGIN

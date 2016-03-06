@@ -4,6 +4,15 @@ class User extends AppModel {
 
     public $useTable = 'users';
 
+    public function beforeSave($options = array()) {
+        parent::beforeSave($options);
+
+        if (!empty($this->data[$this->alias]['password'])) {
+
+            $this->data[$this->alias]['password'] = Security::hash(trim($this->data[$this->alias]['password']), null, true);
+        }
+    }
+
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
 

@@ -2,7 +2,7 @@
 
 App::uses('AppController', 'Controller');
 
-class UsersController extends AppController {
+class AdminUsersController extends AppController {
 
     public $uses = array(
         'User',
@@ -31,61 +31,14 @@ class UsersController extends AppController {
                 'modified' => 'DESC',
             ),
             'conditions' => array(
-                'type' => MANAGER_TYPE,
+                'type' => ADMIN_TYPE,
             ),
         );
 
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
-        $this->setUsersRegionInList($list_data);
-        $this->setUsersBundleInList($list_data);
-
         $this->set('list_data', $list_data);
-    }
-
-    protected function setUsersRegionInList(&$list_data) {
-
-        if (empty($list_data)) {
-
-            return;
-        }
-
-        foreach ($list_data as $k => $v) {
-
-            $id = $v[$this->modelClass]['id'];
-            $users_region = $this->UsersRegion->findAllByUserId($id);
-            if (empty($users_region)) {
-
-                $list_data[$k][$this->modelClass]['region_id'] = array();
-            } else {
-
-                $region_id = Hash::extract($users_region, '{n}.UsersRegion.region_id');
-                $list_data[$k][$this->modelClass]['region_id'] = $region_id;
-            }
-        }
-    }
-
-    protected function setUsersBundleInList(&$list_data) {
-
-        if (empty($list_data)) {
-
-            return;
-        }
-
-        foreach ($list_data as $k => $v) {
-
-            $id = $v[$this->modelClass]['id'];
-            $users_bundle = $this->UsersBundle->findAllByUserId($id);
-            if (empty($users_bundle)) {
-
-                $list_data[$k][$this->modelClass]['bundle_id'] = array();
-            } else {
-
-                $bundle_id = Hash::extract($users_bundle, '{n}.UsersBundle.bundle_id');
-                $list_data[$k][$this->modelClass]['bundle_id'] = $bundle_id;
-            }
-        }
     }
 
     public function add() {
@@ -107,7 +60,7 @@ class UsersController extends AppController {
         if ($this->request->is('post') || $this->request->is('put')) {
 
             // cưỡng ép kiểu user
-            $this->request->data[$this->modelClass]['type'] = MANAGER_TYPE;
+            $this->request->data[$this->modelClass]['type'] = ADMIN_TYPE;
             if ($this->{$this->modelClass}->save($this->request->data[$this->modelClass])) {
 
                 $this->Session->setFlash(__('save_successful_message'), 'default', array(), 'good');
@@ -160,49 +113,10 @@ class UsersController extends AppController {
                 'recursive' => -1,
             ));
 
-            $this->setUsersBundle($data, $id);
-            $this->setUsersRegion($data, $id);
-
             $this->request->data = $data;
         }
 
-        $this->render('add');
-    }
-
-    protected function setUsersRegion(&$data, $id) {
-
-        if (empty($data)) {
-
-            return;
-        }
-
-        $users_region = $this->UsersRegion->findAllByUserId($id);
-        if (empty($users_region)) {
-
-            $data[$this->modelClass]['region_id'] = array();
-        } else {
-
-            $region_id = Hash::extract($users_region, '{n}.UsersRegion.region_id');
-            $data[$this->modelClass]['region_id'] = $region_id;
-        }
-    }
-
-    protected function setUsersBundle(&$data, $id) {
-
-        if (empty($data)) {
-
-            return;
-        }
-
-        $users_bundle = $this->UsersBundle->findAllByUserId($id);
-        if (empty($users_bundle)) {
-
-            $data[$this->modelClass]['bundle_id'] = array();
-        } else {
-
-            $bundle_id = Hash::extract($users_bundle, '{n}.UsersBundle.bundle_id');
-            $data[$this->modelClass]['bundle_id'] = $bundle_id;
-        }
+//        $this->render('add');
     }
 
     protected function setInit() {
@@ -212,12 +126,6 @@ class UsersController extends AppController {
 
         $roles = $this->Role->getList();
         $this->set('roles', $roles);
-
-        $bundles = $this->Bundle->getList();
-        $this->set('bundles', $bundles);
-
-        $regionTree = $this->Region->getTree();
-        $this->set('regionTree', $regionTree);
     }
 
 }
