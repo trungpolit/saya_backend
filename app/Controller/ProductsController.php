@@ -169,6 +169,10 @@ class ProductsController extends AppController {
 
             $options['conditions']['Product.status'] = $this->request->query['status'];
         }
+        if (isset($this->request->query['id']) && strlen($this->request->query['id'])) {
+
+            $options['conditions']['Product.id'] = $this->request->query['id'];
+        }
         if (isset($this->request->query['created_start']) && strlen(trim($this->request->query['created_start']))) {
 
             $this->request->query['created_start'] = trim($this->request->query['created_start']);

@@ -7,6 +7,9 @@ class RegionsController extends AppController {
     public $uses = array('Region');
     public $types = array('parent', 'child');
     public $type = null;
+    public $components = array(
+        'PermLimit',
+    );
 
     public function add($type = 'parent') {
 

@@ -226,7 +226,7 @@
                                     ?>
                                     <?php
                                     echo $this->element('Button/delete', array(
-                                        'action_path' => Router::url(array('action' => 'reqDelete', $type, $id)),
+                                        'action_path' => Router::url(array('action' => 'reqDelete', $id)),
                                     ));
                                     ?>
                                 </td>

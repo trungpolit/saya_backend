@@ -3,7 +3,7 @@
 class Notification extends AppModel {
 
     public $useTable = 'notifications';
-    public $cached = 0;
+    public $cached = 1;
 
     public function beforeSave($options = array()) {
         parent::beforeSave($options);

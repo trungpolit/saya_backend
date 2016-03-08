@@ -5,7 +5,7 @@ App::uses('NotificationGroup', 'Model');
 class Region extends AppModel {
 
     public $useTable = 'regions';
-    public $cached = 0;
+    public $cached = 1;
     public $actsAs = array('Tree', 'ManagerFilter');
 
     public function afterSave($created, $options = array()) {

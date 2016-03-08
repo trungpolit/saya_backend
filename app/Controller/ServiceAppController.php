@@ -5,6 +5,7 @@ App::uses('Controller', 'Controller');
 class ServiceAppController extends Controller {
 
     public $log_file_name = null;
+    protected $_mergeParent = 'ServiceAppController';
 
     /**
      * setInit

@@ -50,7 +50,6 @@ class AppController extends Controller {
                 )
             )
         ),
-        'PermLimit',
         'DebugKit.Toolbar',
     );
     public $helpers = array('Common');
@@ -191,6 +190,10 @@ class AppController extends Controller {
             return;
         }
         $model_name = $this->request->data('model_name');
+        if (empty($model_name)) {
+
+            $model_name = $this->modelClass;
+        }
         if (!$this->$model_name) {
 
             $this->loadModel($model_name);
@@ -198,9 +201,7 @@ class AppController extends Controller {
 
         $check_exist = $this->$model_name->find('first', array(
             'conditions' => array(
-                'id' => array(
-                    '$eq' => $id,
-                ),
+                'id' => $id,
             ),
         ));
 
