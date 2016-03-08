@@ -30,7 +30,7 @@ class DataFilesController extends AppController {
         parent::beforeFilter();
 
         $this->Auth->allow('index');
-        $this->PermLimit->allow('index');
+//        $this->PermLimit->allow('index');
 
         $data_file_root = Configure::read('saya.App.data_file_root');
         $file_path = $data_file_root . '/';

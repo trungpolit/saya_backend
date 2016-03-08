@@ -88,7 +88,7 @@ class AppModel extends Model {
         $save_data = array();
         foreach ($field_name as $k => $v) {
 
-            $save_data[$k][$this->alias . '.' . $v] = $this->alias . '.' . $v . '+' . $inc;
+            $save_data[$this->alias . '.' . $v] = $this->alias . '.' . $v . '+' . $inc;
         }
 
         return $this->updateAll($save_data, array($this->alias . '.id' => $id));
