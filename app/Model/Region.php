@@ -13,6 +13,7 @@ class Region extends AppModel {
 
         if ($this->cached) {
 
+            $this->Behaviors->disable('ManagerFilter');
             $this->cache();
         }
 

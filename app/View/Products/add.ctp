@@ -29,27 +29,6 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                 }
                 ?>
                 <?php
-                $region_parent_id_err = $this->Form->error($model_name . '.region_parent_id');
-                $region_parent_id_err_class = !empty($region_parent_id_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $region_parent_id_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('product_region_parent_id') ?> <?php echo $this->element('required') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.region_parent_id', array(
-                            'class' => 'form-control chosen-select',
-                            'div' => false,
-                            'label' => false,
-                            'required' => true,
-                            'empty' => '-------',
-                            'options' => $region_parents,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
                 $region_id_err = $this->Form->error($model_name . '.region_id');
                 $region_id_err_class = !empty($region_id_err) ? 'has-error' : '';
                 ?>
@@ -64,7 +43,7 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                             'label' => false,
                             'required' => true,
                             'empty' => '-------',
-                            'options' => $region_children,
+                            'options' => $regionTree,
                         ));
                         ?>
                     </div>
@@ -183,42 +162,6 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                         echo $this->Form->input($model_name . '.description', array(
                             'type' => 'textarea',
                             'class' => 'form-control editor',
-                            'div' => false,
-                            'label' => false,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $supplier_err = $this->Form->error($model_name . '.supplier');
-                $supplier_err_class = !empty($supplier_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $supplier_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('product_supplier') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.supplier', array(
-                            'class' => 'form-control',
-                            'div' => false,
-                            'label' => false,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $contact_err = $this->Form->error($model_name . '.contact');
-                $contact_err_class = !empty($contact_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $contact_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('product_contact') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.contact', array(
-                            'class' => 'form-control',
                             'div' => false,
                             'label' => false,
                         ));

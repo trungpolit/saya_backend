@@ -1,5 +1,4 @@
 <?php
-echo $this->element('page-heading-with-add-action');
 echo $this->element('js/chosen');
 echo $this->element('js/datetimepicker');
 ?>
@@ -136,12 +135,11 @@ echo $this->element('js/datetimepicker');
                             </th>
                             <th><?php echo $this->Paginator->sort('bundle_id', __('product_bundle_id')); ?></th>
                             <th><?php echo __('product_category_id'); ?></th>
-                            <th><?php echo $this->Paginator->sort('weight', __('product_weight')); ?></th>
-                            <th><?php echo $this->Paginator->sort('status', __('product_status')); ?></th>
+                            <th><?php echo $this->Paginator->sort('price', __('product_price')); ?></th>
+                            <th><?php echo $this->Paginator->sort('unit', __('product_unit')); ?></th>
                             <th>
                                 <?php echo $this->Paginator->sort('modified', __('product_modified')); ?>
                             </th>
-                            <th><?php echo __('operation') ?></th>
                         <?php else: ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('product_name'); ?></th>
@@ -152,12 +150,11 @@ echo $this->element('js/datetimepicker');
                             </th>
                             <th><?php echo __('product_bundle_id'); ?></th>
                             <th><?php echo __('product_category_id'); ?></th>
-                            <th><?php echo __('product_weight'); ?></th>
-                            <th><?php echo __('product_status') ?></th>
+                            <th><?php echo __('product_price'); ?></th>
+                            <th><?php echo __('product_unit') ?></th>
                             <th>
                                 <?php echo __('product_modified') ?>
                             </th>
-                            <th><?php echo __('operation') ?></th>
                         <?php endif; ?>
                     </tr>
                 </thead>
@@ -188,28 +185,6 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-//                                    echo $this->Form->input('region_parent_id', array(
-//                                        'div' => false,
-//                                        'class' => 'form-control chosen-select',
-//                                        'label' => false,
-//                                        'default' => isset($item[$model_name]['region_parent_id']) ?
-//                                                $item[$model_name]['region_parent_id'] : '',
-//                                        'options' => $region_parents,
-//                                        'empty' => '-------',
-//                                    ));
-                                    ?>
-                                    <?php
-//                                    echo $this->Form->input('region_id', array(
-//                                        'div' => false,
-//                                        'class' => 'form-control chosen-select',
-//                                        'label' => false,
-//                                        'default' => isset($item[$model_name]['region_id']) ?
-//                                                $item[$model_name]['region_id'] : '',
-//                                        'options' => $region_children,
-//                                        'empty' => '-------',
-//                                    ));
-                                    ?>
-                                    <?php
                                     echo!empty($region_parents[$item[$model_name]['region_parent_id']]) ?
                                             $region_parents[$item[$model_name]['region_parent_id']] : __('unknown');
                                     ?>
@@ -221,51 +196,27 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input('bundle_id', array(
-                                        'div' => false,
-                                        'class' => 'form-control chosen-select',
-                                        'label' => false,
-                                        'default' => isset($item[$model_name]['bundle_id']) ?
-                                                $item[$model_name]['bundle_id'] : '',
-                                        'options' => $bundles,
-                                        'empty' => '-------',
-                                    ));
+                                    echo isset($bundles[$item[$model_name]['bundle_id']]) ?
+                                            $bundles[$item[$model_name]['bundle_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input('category_id', array(
-                                        'div' => false,
-                                        'class' => 'form-control chosen-select',
-                                        'label' => false,
-                                        'default' => isset($item[$model_name]['category_id']) ?
-                                                $item[$model_name]['category_id'] : array(),
-                                        'options' => $categories,
-                                        'multiple' => true,
-                                    ));
+                                    foreach ($item[$model_name]['category_id'] as $v) {
+
+                                        echo isset($categories[$v]) ?
+                                                $categories[$v] : __('unknown') . '<br/>';
+                                    }
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input('weight', array(
-                                        'div' => false,
-                                        'class' => 'form-control',
-                                        'label' => false,
-                                        'default' => isset($item[$model_name]['weight']) ?
-                                                $item[$model_name]['weight'] : '',
-                                    ));
+                                    echo number_format($item[$model_name]['price']);
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input('status', array(
-                                        'div' => false,
-                                        'class' => 'form-control',
-                                        'label' => false,
-                                        'default' => isset($item[$model_name]['status']) ?
-                                                $item[$model_name]['status'] : 2,
-                                        'options' => $status,
-                                    ));
+                                    echo $item[$model_name]['unit'];
                                     ?>
                                 </td>
                                 <td>
@@ -273,29 +224,12 @@ echo $this->element('js/datetimepicker');
                                     echo $this->Common->parseDateTime($item[$model_name]['modified']);
                                     ?>
                                 </td>
-                                <td>
-                                    <?php
-                                    echo $this->element('Button/req_edit', array(
-                                        'id' => $id,
-                                    ));
-                                    ?>
-                                    <?php
-                                    echo $this->element('Button/edit', array(
-                                        'id' => $id,
-                                    ));
-                                    ?>
-                                    <?php
-                                    echo $this->element('Button/delete', array(
-                                        'id' => $id,
-                                    ));
-                                    ?>
-                                </td>
                             </tr>
                             <?php $stt++; ?>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="7" style="text-align: center"><?php echo __('no_result') ?></td>
+                            <td colspan="6" style="text-align: center"><?php echo __('no_result') ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

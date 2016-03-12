@@ -40,6 +40,11 @@ class ManagerFilterBehavior extends ModelBehavior {
             $query['conditions'][$model->alias . '.bundle_id'] = $bundle_id;
             $query['conditions'][$model->alias . '.region_id'] = $region_id;
         }
+        if ($model->alias == 'Product') {
+
+            $query['conditions'][$model->alias . '.bundle_id'] = $bundle_id;
+            $query['conditions'][$model->alias . '.region_id'] = $region_id;
+        }
 
         return $query;
     }

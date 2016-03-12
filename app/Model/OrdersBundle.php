@@ -42,6 +42,7 @@ class OrdersBundle extends AppModel {
                 $this->cached
         ) {
 
+            $this->Behaviors->disable('ManagerFilter');
             $page = ceil($this->data[$this->alias]['no'] / ORDER_LIMIT);
             $this->cacheByCustomerPage($this->data[$this->alias]['customer_code'], $page);
         }
@@ -110,6 +111,7 @@ class OrdersBundle extends AppModel {
             $bundle_id = $this->data[$this->alias]['bundle_id'];
             $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
 
+            $DailyReport->Behaviors->disable('ManagerFilter');
             $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
             if (empty($report_daily)) {
 
@@ -317,6 +319,34 @@ class OrdersBundle extends AppModel {
 
         $json_content = json_encode($pretty_data);
         return CacheCommon::write($cache_path, $json_content);
+    }
+
+    public function countPendingStatus() {
+
+        return $this->find('count', array(
+                    'recursive' => -1,
+                    'conditions' => array(
+                        'status' => STATUS_PENDING,
+                    ),
+        ));
+    }
+
+    public function countByCustomerId($customer_id, $conditions = array()) {
+
+        $default_conditions = array(
+            'customer_id' => $customer_id,
+        );
+        $conditions = Hash::merge($default_conditions, $conditions);
+        $options = array(
+            'recursive' => -1,
+            'conditions' => $conditions,
+            'fields' => array(
+                'COUNT(*) AS counter'
+            ),
+        );
+        $counter = $this->find('first', $options);
+
+        return $counter[0]['counter'];
     }
 
 }

@@ -250,7 +250,7 @@ class UsersController extends AppController {
         parent::beforeFilter();
 
         $this->Auth->allow(array('login', 'logout'));
-        $this->PermLimit->allow(array('login', 'logout'));
+//        $this->PermLimit->allow(array('login', 'logout'));
     }
 
     protected function setInit() {

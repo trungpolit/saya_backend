@@ -31,6 +31,7 @@ class CustomersController extends AppController {
 
             throw new NotImplementedException(__('The customer with id=%s does not exist.', $id));
         }
+        $this->setCustomerStats($customer);
         $this->set('customer', $customer);
 
         // lấy ra thông tin tất cả nhóm Bundle
@@ -40,7 +41,7 @@ class CustomersController extends AppController {
         // lấy ra danh sách region theo dạng tree phân cấp
         $regionTree = $this->Region->getList();
         $this->set('regionTree', $regionTree);
-        
+
         // lấy ra danh sách các order của Customer
         $options = array(
             'recursive' => -1,
@@ -126,6 +127,45 @@ class CustomersController extends AppController {
 
             $list_data[$k]['OrdersBundle']['product_data'] = unserialize($v['OrdersBundle']['cache_data']);
         }
+    }
+
+    protected function setCustomerStats(&$customer) {
+
+        if (empty($customer)) {
+
+            return;
+        }
+
+        $user = $this->Auth->user();
+        if (empty($user) || $user['type'] != MANAGER_TYPE) {
+
+            return;
+        }
+
+        $customer_id = $customer[$this->modelClass]['id'];
+
+        $total_order_bundle = $this->OrdersBundle->countByCustomerId($customer_id);
+        $customer[$this->modelClass]['total_order_bundle'] = $total_order_bundle;
+
+        $total_order_bundle_success = $this->OrdersBundle->countByCustomerId($customer_id, array(
+            'status' => STATUS_SUCCESS,
+        ));
+        $customer[$this->modelClass]['total_order_bundle_success'] = $total_order_bundle_success;
+
+        $total_order_bundle_pending = $this->OrdersBundle->countByCustomerId($customer_id, array(
+            'status' => STATUS_PENDING,
+        ));
+        $customer[$this->modelClass]['total_order_bundle_pending'] = $total_order_bundle_pending;
+
+        $total_order_bundle_fail = $this->OrdersBundle->countByCustomerId($customer_id, array(
+            'status' => STATUS_FAIL,
+        ));
+        $customer[$this->modelClass]['total_order_bundle_fail'] = $total_order_bundle_fail;
+
+        $total_order_bundle_bad = $this->OrdersBundle->countByCustomerId($customer_id, array(
+            'status' => STATUS_BAD,
+        ));
+        $customer[$this->modelClass]['total_order_bundle_bad'] = $total_order_bundle_bad;
     }
 
     protected function setInit() {

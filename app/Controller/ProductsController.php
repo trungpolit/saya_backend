@@ -60,7 +60,7 @@ class ProductsController extends AppController {
             'label' => __('product_title'),
         );
         $breadcrumb[] = array(
-            'url' => Router::url(array('action' => __FUNCTION__)),
+            'url' => Router::url(array('action' => __FUNCTION__, $id)),
             'label' => __('edit_action_title'),
         );
         $this->set('breadcrumb', $breadcrumb);
@@ -115,7 +115,68 @@ class ProductsController extends AppController {
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
+        $this->unserializeLogoUri($list_data);
+
         $this->set('list_data', $list_data);
+    }
+
+    public function indexView() {
+
+        $this->setInit();
+        $this->setList();
+
+        $breadcrumb = array();
+        $breadcrumb[] = array(
+            'url' => Router::url(array('action' => __FUNCTION__)),
+            'label' => __('product_view_title'),
+        );
+        $this->set('breadcrumb', $breadcrumb);
+        $this->set('page_title', __('product_view_title'));
+
+        $options = array(
+            'order' => array(
+                'modified' => 'DESC',
+            ),
+            'recursive' => -1,
+        );
+
+        // nếu user thuộc MANAGER_TYPE, thì thực hiện lọc
+        $user = CakeSession::read('Auth.User');
+        if ($user['type'] == MANAGER_TYPE) {
+
+            $region_id = $user['region_id'];
+            $bundle_id = $user['bundle_id'];
+            $options['conditions']['region_id'] = $region_id;
+            $options['conditions']['bundle_id'] = $bundle_id;
+
+            // chỉ lọc ra các content có status là STATUS_PUBLIC
+            $options['conditions']['status'] = STATUS_PUBLIC;
+        }
+
+        $this->setSearchConds($options);
+
+        $this->Paginator->settings = $options;
+        $list_data = $this->Paginator->paginate($this->modelClass);
+
+        $this->unserializeLogoUri($list_data);
+
+        $this->set('list_data', $list_data);
+    }
+
+    protected function unserializeLogoUri(&$list_data) {
+
+        if (empty($list_data)) {
+
+            return;
+        }
+
+        foreach ($list_data as $k => $v) {
+
+            if (!empty($v[$this->modelClass]['logo_uri'])) {
+
+                $list_data[$k][$this->modelClass]['logo_path'] = unserialize($v[$this->modelClass]['logo_uri'])[0];
+            }
+        }
     }
 
     protected function setInit() {

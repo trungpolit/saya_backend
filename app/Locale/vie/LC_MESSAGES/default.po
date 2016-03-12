@@ -189,6 +189,9 @@ msgstr "Dữ liệu không có gì thay đổi"
 msgid "orders_bundle_title"
 msgstr "Danh sách đơn hàng"
 
+msgid "total_pending_order"
+msgstr "Tổng số đơn hàng chờ xử lý"
+
 # /OrderBundles/index/* - END
 
 # OrderBundles - BEGIN
@@ -294,6 +297,9 @@ msgstr "Ngày cập nhật"
 msgid "product_title"
 msgstr "Danh sách sản phẩm"
 
+msgid "product_view_title"
+msgstr "Danh sách sản phẩm đang bán"
+
 msgid "product_add_title"
 msgstr "Thêm mới sản phẩm"
 
@@ -302,7 +308,7 @@ msgstr "Chỉnh sửa sản phẩm"
 
 # /Products/* - END
 
-# /DailyReports/index/* - BEGIN
+# /DailyReports/* - BEGIN
 msgid "daily_report_title"
 msgstr "Thống kê đơn hàng"
 
@@ -315,7 +321,7 @@ msgstr "Đến ngày"
 msgid "daily_report_date_end"
 msgstr "Đến ngày"
 
-# /DailyReports/index/* - END
+# /DailyReports/* - END
 
 # Product - BEGIN
 msgid "daily_report_date"
@@ -331,7 +337,7 @@ msgid "daily_report_total_revernue"
 msgstr "Doanh thu"
 
 msgid "daily_report_total_order_bundle"
-msgstr "Tổng số"
+msgstr "Tổng số đơn"
 
 msgid "daily_report_total_order_bundle_success"
 msgstr "Thành công"
@@ -495,6 +501,9 @@ msgstr "Đơn hàng"
 msgid "product_nav_title"
 msgstr "Sản phẩm"
 
+msgid "product_view_nav_title"
+msgstr "Sản phẩm đang bán"
+
 msgid "ad_nav_title"
 msgstr "Quảng cáo"
 
@@ -527,6 +536,15 @@ msgstr "Nhóm quyền"
 
 msgid "perm_nav_title"
 msgstr "Quyền hạn"
+
+msgid "notification_nav_title"
+msgstr "Thông báo"
+
+msgid "notification_view_nav_title"
+msgstr "Thông báo đang chạy"
+
+msgid "feedback_nav_title"
+msgstr "Phản hồi"
 # Navbar - END
 
 # Role - BEGIN
@@ -702,3 +720,76 @@ msgid "bundle_edit_title"
 msgstr "Chỉnh sửa nhóm sản phẩm"
 # /Bundles/* - END
 
+# Notification - BEGIN
+msgid "notification_name"
+msgstr "Nội dung"
+
+msgid "notification_region_parent_id"
+msgstr "Tỉnh/Thành phố"
+
+msgid "notification_region_id"
+msgstr "Quận/Huyện/Thị xã"
+
+msgid "notification_begin_at"
+msgstr "Thời điểm bắt đầu"
+
+msgid "notification_end_at"
+msgstr "Thời điểm kết thúc"
+
+msgid "notification_description"
+msgstr "Mô tả"
+
+msgid "notification_weight"
+msgstr "Trọng số"
+
+msgid "notification_status"
+msgstr "Trạng thái"
+
+msgid "notification_modified"
+msgstr "Ngày cập nhật"
+# Notification - END
+
+# /Notifications/* - BEGIN
+msgid "notification_title"
+msgstr "Danh sách thông báo"
+
+msgid "notification_view_title"
+msgstr "Danh sách thông báo đang chạy"
+
+msgid "notification_add_title"
+msgstr "Thêm mới thông báo"
+
+msgid "notification_edit_title"
+msgstr "Chỉnh sửa thông báo"
+
+msgid "notification_end_at_start"
+msgstr "Từ ngày"
+
+msgid "notification_end_at_end"
+msgstr "Đến ngày"
+# /Notifications/* - END
+
+# Feedback - BEGIN
+msgid "feedback_name"
+msgstr "Tiêu đề"
+
+msgid "feedback_description"
+msgstr "Nội dung"
+
+msgid "feedback_modified"
+msgstr "Ngày cập nhật"
+
+msgid "feedback_keyword"
+msgstr "Từ khóa"
+
+msgid "feedback_created_start"
+msgstr "Từ ngày"
+
+msgid "feedback_created_end"
+msgstr "Đến ngày"
+# Feedback - END
+
+# /Feedbacks/* - BEGIN
+msgid "feedback_title"
+msgstr "Danh sách phản hồi"
+# /Feedbacks/* - END

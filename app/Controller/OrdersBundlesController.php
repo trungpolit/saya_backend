@@ -43,6 +43,10 @@ class OrdersBundlesController extends AppController {
         $regionTree = $this->Region->getTree();
         $this->set('regionTree', $regionTree);
 
+        // lấy tổng số đơn hàng đang chờ xử lý
+        $count_pending_status = $this->OrdersBundle->countPendingStatus();
+        $this->set('count_pending_status', $count_pending_status);
+
         // Thực hiện lấy ra thông tin của Customer
         $this->setCustomerInfo($list_data);
 

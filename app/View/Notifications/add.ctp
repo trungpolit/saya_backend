@@ -32,27 +32,6 @@ echo $this->element('js/datetimepicker');
                 }
                 ?>
                 <?php
-                $region_parent_id_err = $this->Form->error($model_name . '.region_parent_id');
-                $region_parent_id_err_class = !empty($region_parent_id_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $region_parent_id_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('notification_region_parent_id') ?> <?php echo $this->element('required') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.region_parent_id', array(
-                            'class' => 'form-control chosen-select',
-                            'div' => false,
-                            'label' => false,
-                            'required' => true,
-                            'empty' => '-------',
-                            'options' => $region_parents,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
                 $region_id_err = $this->Form->error($model_name . '.region_id');
                 $region_id_err_class = !empty($region_id_err) ? 'has-error' : '';
                 ?>
@@ -67,7 +46,7 @@ echo $this->element('js/datetimepicker');
                             'label' => false,
                             'required' => true,
                             'empty' => '-------',
-                            'options' => $region_children,
+                            'options' => $regionTree,
                         ));
                         ?>
                     </div>
@@ -82,7 +61,7 @@ echo $this->element('js/datetimepicker');
 
                     <div class="col-sm-10">
                         <?php
-                        echo $this->Form->input($model_name . '.name', array(
+                        echo $this->Form->textarea($model_name . '.name', array(
                             'class' => 'form-control',
                             'div' => false,
                             'label' => false,
@@ -133,24 +112,24 @@ echo $this->element('js/datetimepicker');
                 </div>
                 <div class="hr-line-dashed"></div>
                 <?php
-                $description_err = $this->Form->error($model_name . '.description');
-                $description_err_class = !empty($description_err) ? 'has-error' : '';
+//                $description_err = $this->Form->error($model_name . '.description');
+//                $description_err_class = !empty($description_err) ? 'has-error' : '';
                 ?>
-                <div class="form-group <?php echo $description_err_class ?>">
+<!--                <div class="form-group <?php echo $description_err_class ?>">
                     <label class="col-sm-2 control-label"><?php echo __('notification_description') ?> <?php echo $this->element('required') ?></label>
 
                     <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.description', array(
-                            'type' => 'textarea',
-                            'class' => 'form-control editor',
-                            'div' => false,
-                            'label' => false,
-                        ));
-                        ?>
+                <?php
+//                        echo $this->Form->input($model_name . '.description', array(
+//                            'type' => 'textarea',
+//                            'class' => 'form-control editor',
+//                            'div' => false,
+//                            'label' => false,
+//                        ));
+                ?>
                     </div>
                 </div>
-                <div class="hr-line-dashed"></div>
+                <div class="hr-line-dashed"></div>-->
                 <?php
                 $weight_err = $this->Form->error($model_name . '.weight');
                 $weight_err_class = !empty($weight_err) ? 'has-error' : '';

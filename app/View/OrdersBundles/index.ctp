@@ -17,6 +17,10 @@ echo $this->element('js/datetimepicker');
     .product-logo {
         width: 64px;
     }
+    .long-text {
+        word-wrap: break-word; /* IE */
+        word-break: break-all;
+    }
 </style>
 <div class="ibox-content m-b-sm border-bottom">
     <?php
@@ -150,6 +154,13 @@ echo $this->element('js/datetimepicker');
             </div>
             <?php echo $this->element('buttonSearchClear'); ?>
         </div>
+        <div class="col-md-4">
+            <div>
+                <label style="visibility: hidden"><?php echo __('search_btn') ?></label>
+            </div>
+            <button type="button" class="btn btn-info m-r-sm"><strong><?php echo number_format($count_pending_status) ?></strong></button>
+            <strong><?php echo __('total_pending_order') ?></strong>
+        </div>
     </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -168,10 +179,10 @@ echo $this->element('js/datetimepicker');
                                 <?php echo $this->Paginator->sort('bundle_id', __('orders_bundle_bundle_id')); ?>
                             </th>
                             <th style="width: 15%"><?php echo $this->Paginator->sort('customer_id', __('orders_bundle_customer_details')); ?></th>
-                            <th><?php echo $this->Paginator->sort('customer_address', __('orders_bundle_customer_address')); ?></th>
+                            <th style="width: 15%"><?php echo $this->Paginator->sort('customer_address', __('orders_bundle_customer_address')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_qty', __('orders_bundle_total_qty')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_total_price')); ?></th>
-                            <th><?php echo $this->Paginator->sort('status', __('orders_bundle_status')); ?></th>
+                            <th style="width: 15%"><?php echo $this->Paginator->sort('status', __('orders_bundle_status')); ?></th>
                             <th>
                                 <?php echo $this->Paginator->sort('created', __('orders_bundle_created')); ?>
                             </th>
@@ -254,7 +265,7 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    $customer_name = !empty($item['Customer']['name']) ? h($item['Customer']['name']) : __('unknown');
+                                    $customer_name = !empty($item[$model_name]['customer_name']) ? h($item[$model_name]['customer_name']) : __('unknown');
                                     $customer_id = !empty($item['Customer']['id']) ? $item['Customer']['id'] : __('unknown');
 
                                     $customer_title = $customer_name . ' (ID:' . $customer_id . ')';
@@ -269,38 +280,16 @@ echo $this->element('js/datetimepicker');
                                     ?>
                                     <br/>
                                     <span>Trạng thái: <button class="btn <?php echo $cust_status_class ?>" title="<?php echo $status_customer[$item['Customer']['status']] ?>"><i class="fa fa-flag"></i></button></span>
-                                    <?php if (!empty($item['Customer']['mobile'])): ?>
+                                    <?php if (!empty($item[$model_name]['customer_mobile'])): ?>
                                         <br/>
-                                        <span>ĐT: <?php echo $item['Customer']['mobile'] ?></span>
+                                        <span>ĐT: <?php echo $item[$model_name]['customer_mobile'] ?></span>
                                     <?php endif; ?>
-                                    <?php if (!empty($item['Customer']['mobile2'])): ?>
+                                    <?php if (!empty($item[$model_name]['customer_mobile2'])): ?>
                                         <br/>
-                                        <span>ĐT2: <?php echo $item['Customer']['mobile2'] ?></span>
-                                    <?php endif; ?>
-                                    <?php if (!empty($item['Customer'])): ?>   
-                                        <?php
-                                        $cus_total_order = !empty($item['Customer']['total_order']) ? $item['Customer']['total_order'] : 0;
-                                        $cus_total_order_bundle_success = !empty($item['Customer']['total_order_bundle_success']) ? $item['Customer']['total_order_bundle_success'] : 0;
-                                        $cus_total_order_bundle_pending = !empty($item['Customer']['total_order_bundle_pending']) ? $item['Customer']['total_order_bundle_pending'] : 0;
-                                        $cus_total_order_bundle_fail = !empty($item['Customer']['total_order_bundle_fail']) ? $item['Customer']['total_order_bundle_fail'] : 0;
-                                        $cus_total_order_bundle_bad = !empty($item['Customer']['total_order_bundle_bad']) ? $item['Customer']['total_order_bundle_bad'] : 0;
-                                        ?>
-                                        <!--                                        <hr/>
-                                                                                <span><strong>Lịch sử đơn hàng</strong></span>
-                                                                                <br/>
-                                                                                <span>Tổng số: <?php echo number_format($cus_total_order) ?></span>
-                                                                                <br/>
-                                                                                <span>Tổng thành công: <?php echo number_format($cus_total_order_bundle_success) ?></span>
-                                                                                <br/>
-                                                                                <span>Tổng chờ xử lý: <?php echo number_format($cus_total_order_bundle_pending) ?></span>
-                                                                                <br/>
-                                                                                <span>Tổng hủy: <?php echo number_format($cus_total_order_bundle_fail) ?></span>
-                                                                                <br/>
-                                                                                <span>Tổng giả mạo: <?php echo number_format($cus_total_order_bundle_bad) ?></span>
-                                                                                <br/>-->
+                                        <span>ĐT2: <?php echo $item[$model_name]['customer_mobile2'] ?></span>
                                     <?php endif; ?>
                                 </td>
-                                <td>
+                                <td class="long-text">
                                     <?php
                                     echo h($item[$model_name]['customer_address']);
                                     ?>
@@ -389,16 +378,20 @@ echo $this->element('js/datetimepicker');
                                                     <tr>
                                                         <td><?php echo $product_index ?></td>
                                                         <td>
-                                                            <a href="<?php echo $product_url ?>" target="_blank">
-                                                                <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
-                                                            </a>
+                        <!--                                                            <a href="<?php echo $product_url ?>" target="_blank">
+                                                                            <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
+                                                                        </a>-->
+                                                            <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
                                                         </td>
                                                         <td>
-                                                            <a href="<?php echo $product_url ?>" target="_blank">
-                                                                <?php
-                                                                echo $product['product_name']
-                                                                ?>
-                                                            </a>
+                        <!--                                                            <a href="<?php echo $product_url ?>" target="_blank">
+                                                                        <?php
+                                                                        echo $product['product_name']
+                                                                        ?>
+                                                                        </a>-->
+                                                            <?php
+                                                            echo $product['product_name']
+                                                            ?>
                                                         </td>
                                                         <td><?php echo number_format($product['qty']) ?></td>
                                                         <td><?php echo number_format($product['product_price']) ?></td>

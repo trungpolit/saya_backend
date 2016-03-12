@@ -24,6 +24,15 @@ class Category extends AppModel {
         )
     );
 
+    public function afterSave($created, $options = array()) {
+        parent::afterSave($created, $options);
+
+        if ($this->cached) {
+
+            $this->cache();
+        }
+    }
+
     public function cache() {
 
         App::uses('CacheCommon', 'Lib');

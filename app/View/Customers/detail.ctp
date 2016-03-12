@@ -440,16 +440,20 @@ echo $this->element('js/datetimepicker');
                                                         <tr>
                                                             <td><?php echo $product_index ?></td>
                                                             <td>
-                                                                <a href="<?php echo $product_url ?>" target="_blank">
+            <!--                                                                <a href="<?php echo $product_url ?>" target="_blank">
                                                                     <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
-                                                                </a>
+                                                                </a>-->
+                                                                <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
                                                             </td>
                                                             <td>
-                                                                <a href="<?php echo $product_url ?>" target="_blank">
+<!--                                                                <a href="<?php echo $product_url ?>" target="_blank">
                                                                     <?php
                                                                     echo $product['product_name']
                                                                     ?>
-                                                                </a>
+                                                                </a>-->
+                                                                <?php
+                                                                echo $product['product_name']
+                                                                ?>
                                                             </td>
                                                             <td><?php echo number_format($product['qty']) ?></td>
                                                             <td><?php echo number_format($product['product_price']) ?></td>

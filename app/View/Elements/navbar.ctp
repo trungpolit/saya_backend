@@ -48,6 +48,34 @@ $perms = $user['perms'];
                     </a>
                 </li>
             <?php endif; ?>
+            <?php if (in_array('Products/indexView', $perms)): ?>
+                <li class="">
+                    <a href="<?php echo Router::url(array('controller' => 'Products', 'action' => 'indexView')) ?>">
+                        <i class="fa fa-gift"></i> <span class="nav-label"> <?php echo __('product_view_nav_title') ?> </span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (in_array('Notifications/index', $perms)): ?>
+                <li class="">
+                    <a href="<?php echo Router::url(array('controller' => 'Notifications', 'action' => 'index')) ?>">
+                        <i class="fa fa-rss"></i> <span class="nav-label"> <?php echo __('notification_nav_title') ?> </span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (in_array('Notifications/indexView', $perms)): ?>
+                <li class="">
+                    <a href="<?php echo Router::url(array('controller' => 'Notifications', 'action' => 'indexView')) ?>">
+                        <i class="fa fa-rss"></i> <span class="nav-label"> <?php echo __('notification_view_nav_title') ?> </span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (in_array('Feedbacks/index', $perms)): ?>
+                <li class="">
+                    <a href="<?php echo Router::url(array('controller' => 'Feedbacks', 'action' => 'index')) ?>">
+                        <i class="fa fa-comments"></i> <span class="nav-label"> <?php echo __('feedback_nav_title') ?> </span>
+                    </a>
+                </li>
+            <?php endif; ?>
             <?php if (in_array('Ads/index', $perms)): ?>
                 <li class="">
                     <a href="<?php echo Router::url(array('controller' => 'Ads', 'action' => 'index')) ?>">

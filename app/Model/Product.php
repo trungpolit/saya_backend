@@ -10,6 +10,7 @@ class Product extends AppModel {
         'FileCommon',
         'HABTMCommon',
         'RegionCommon',
+//        'ManagerFilter',
     );
     public $hasAndBelongsToMany = array(
         'Category' =>
