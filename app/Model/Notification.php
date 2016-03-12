@@ -27,6 +27,11 @@ class Notification extends AppModel {
 
             $this->data[$this->alias]['end_at'] = date('Y-m-d H:i:s', strtotime($this->data[$this->alias]['end_at']));
         }
+
+        if (isset($this->data[$this->alias]['name'])) {
+
+            $this->data[$this->alias]['description'] = $this->data[$this->alias]['name'];
+        }
     }
 
     public function afterSave($created, $options = array()) {
@@ -146,7 +151,7 @@ class Notification extends AppModel {
         $months = array();
 
         foreach ($period as $v) {
-            
+
             $begin_at = $v['begin_at'];
             $end_at = $v['end_at'];
 
