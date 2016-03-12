@@ -125,7 +125,6 @@ echo $this->element('js/datetimepicker');
                                 <?php echo $this->Paginator->sort('end_at', __('notification_end_at')); ?>
                             </th>
                             <th><?php echo $this->Paginator->sort('weight', __('notification_weight')); ?></th>
-                            <th><?php echo $this->Paginator->sort('status', __('notification_status')); ?></th>
                             <th>
                                 <?php echo $this->Paginator->sort('modified', __('notification_modified')); ?>
                             </th>
@@ -143,7 +142,6 @@ echo $this->element('js/datetimepicker');
                                 <?php echo __('notification_end_at'); ?>
                             </th>
                             <th><?php echo __('notification_weight'); ?></th>
-                            <th><?php echo __('notification_status') ?></th>
                             <th>
                                 <?php echo __('notification_modified') ?>
                             </th>
@@ -201,12 +199,6 @@ echo $this->element('js/datetimepicker');
                                     <?php
                                     echo isset($item[$model_name]['weight']) ?
                                             $item[$model_name]['weight'] : '';
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo isset($status[$item[$model_name]['status']]) ?
-                                            $status[$item[$model_name]['status']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>
