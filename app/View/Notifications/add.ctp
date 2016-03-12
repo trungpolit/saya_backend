@@ -86,6 +86,8 @@ echo $this->element('js/datetimepicker');
                             'label' => false,
                             'required' => true,
                             'type' => 'text',
+                            'value' => !empty($this->request->data[$model_name]['begin_at']) ?
+                                    $this->Common->parseDateTime($this->request->data[$model_name]['begin_at']) : '',
                         ));
                         ?>
                     </div>
@@ -106,6 +108,8 @@ echo $this->element('js/datetimepicker');
                             'label' => false,
                             'required' => true,
                             'type' => 'text',
+                            'value' => !empty($this->request->data[$model_name]['end_at']) ?
+                                    $this->Common->parseDateTime($this->request->data[$model_name]['end_at']) : '',
                         ));
                         ?>
                     </div>
