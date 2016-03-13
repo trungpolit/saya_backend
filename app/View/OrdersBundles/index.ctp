@@ -161,6 +161,13 @@ echo $this->element('js/datetimepicker');
             <button type="button" class="btn btn-info m-r-sm"><strong><?php echo number_format($count_pending_status) ?></strong></button>
             <strong><?php echo __('total_pending_order') ?></strong>
         </div>
+        <div class="col-md-4">
+            <div>
+                <label style="visibility: hidden"><?php echo __('search_btn') ?></label>
+            </div>
+            <button type="button" class="btn btn-primary m-r-sm"><strong><?php echo number_format($count_processing_status) ?></strong></button>
+            <strong><?php echo __('total_processing_order') ?></strong>
+        </div>
     </div>
     <?php echo $this->Form->end(); ?>
 </div>
@@ -385,9 +392,9 @@ echo $this->element('js/datetimepicker');
                                                         </td>
                                                         <td>
                         <!--                                                            <a href="<?php echo $product_url ?>" target="_blank">
-                                                                        <?php
-                                                                        echo $product['product_name']
-                                                                        ?>
+                                                            <?php
+                                                            echo $product['product_name']
+                                                            ?>
                                                                         </a>-->
                                                             <?php
                                                             echo $product['product_name']

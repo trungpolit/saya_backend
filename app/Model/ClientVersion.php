@@ -9,7 +9,16 @@ class ClientVersion extends AppModel {
         parent::afterSave($created, $options);
 
         if ($this->cached) {
-            
+
+            $this->updateSettingCache();
+        }
+    }
+
+    public function afterDelete() {
+        parent::afterDelete();
+
+        if ($this->cached) {
+
             $this->updateSettingCache();
         }
     }

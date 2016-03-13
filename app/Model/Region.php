@@ -16,17 +16,17 @@ class Region extends AppModel {
             $this->Behaviors->disable('ManagerFilter');
             $this->cache();
         }
-
-        // đồng bộ với nhóm thông báo NotificationGroup
-//        $this->syncNotificationGroup($this->id);
     }
 
-//    public function afterDelete() {
-//        parent::afterDelete();
-//
-//        $NotificationGroup = new NotificationGroup();
-//        $NotificationGroup->syncDetele($this->id);
-//    }
+    public function afterDelete() {
+        parent::afterDelete();
+
+        if ($this->cached) {
+
+            $this->Behaviors->disable('ManagerFilter');
+            $this->cache();
+        }
+    }
 
     protected function syncNotificationGroup($region_id) {
 

@@ -46,6 +46,8 @@ class CommonHelper extends AppHelper {
         switch ($status) {
             case STATUS_PENDING:
                 return '';
+            case STATUS_PROCESSING:
+                return 'info';
             case STATUS_SUCCESS:
                 return 'success';
             case STATUS_FAIL:

@@ -10,7 +10,6 @@ class Product extends AppModel {
         'FileCommon',
         'HABTMCommon',
         'RegionCommon',
-//        'ManagerFilter',
     );
     public $hasAndBelongsToMany = array(
         'Category' =>
@@ -46,6 +45,15 @@ class Product extends AppModel {
 
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
+
+        if ($this->cached) {
+
+            $this->resetCache();
+        }
+    }
+
+    public function afterDelete() {
+        parent::afterDelete();
 
         if ($this->cached) {
 

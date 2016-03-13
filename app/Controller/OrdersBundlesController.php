@@ -46,6 +46,10 @@ class OrdersBundlesController extends AppController {
         // lấy tổng số đơn hàng đang chờ xử lý
         $count_pending_status = $this->OrdersBundle->countPendingStatus();
         $this->set('count_pending_status', $count_pending_status);
+        
+        // lấy tổng số đơn hàng đang xử lý
+        $count_processing_status = $this->OrdersBundle->countProcessingStatus();
+        $this->set('count_processing_status', $count_processing_status);
 
         // Thực hiện lấy ra thông tin của Customer
         $this->setCustomerInfo($list_data);

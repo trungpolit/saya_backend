@@ -192,6 +192,9 @@ msgstr "Danh sách đơn hàng"
 msgid "total_pending_order"
 msgstr "Tổng số đơn hàng chờ xử lý"
 
+msgid "total_processing_order"
+msgstr "Tổng số đơn hàng đang xử lý"
+
 # /OrderBundles/index/* - END
 
 # OrderBundles - BEGIN
@@ -380,6 +383,9 @@ msgstr "Tổng thành công"
 
 msgid "customer_total_order_bundle_pending"
 msgstr "Tổng chờ xử lý"
+
+msgid "customer_total_order_bundle_processing"
+msgstr "Tổng đang xử lý"
 
 msgid "customer_total_order_bundle_fail"
 msgstr "Tổng hủy"

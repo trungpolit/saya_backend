@@ -164,6 +164,18 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
+                            <?php echo __('customer_total_order_bundle_processing') ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?php
+                            echo number_format($customer[$model_name]['total_order_bundle_processing']);
+                            ?>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-6">
                             <?php echo __('customer_total_order_bundle_fail') ?>
                         </div>
                         <div class="col-sm-6">
@@ -446,10 +458,10 @@ echo $this->element('js/datetimepicker');
                                                                 <img class="product-logo" src="<?php echo Router::url('/', true) . $product['product_logo_uri'] ?>" />
                                                             </td>
                                                             <td>
-<!--                                                                <a href="<?php echo $product_url ?>" target="_blank">
-                                                                    <?php
-                                                                    echo $product['product_name']
-                                                                    ?>
+            <!--                                                                <a href="<?php echo $product_url ?>" target="_blank">
+                                                                <?php
+                                                                echo $product['product_name']
+                                                                ?>
                                                                 </a>-->
                                                                 <?php
                                                                 echo $product['product_name']

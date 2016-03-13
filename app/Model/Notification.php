@@ -43,6 +43,15 @@ class Notification extends AppModel {
         }
     }
 
+    public function afterDelete() {
+        parent::afterDelete();
+
+        if ($this->cached) {
+
+            $this->resetCache();
+        }
+    }
+
     public function cache() {
 
         App::uses('CacheCommon', 'Lib');

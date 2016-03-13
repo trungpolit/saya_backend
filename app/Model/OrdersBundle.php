@@ -197,6 +197,8 @@ class OrdersBundle extends AppModel {
         switch ($status) {
             case STATUS_PENDING:
                 return 'pending';
+            case STATUS_PROCESSING:
+                return 'processing';
             case STATUS_SUCCESS:
                 return 'success';
             case STATUS_FAIL:
@@ -327,6 +329,16 @@ class OrdersBundle extends AppModel {
                     'recursive' => -1,
                     'conditions' => array(
                         'status' => STATUS_PENDING,
+                    ),
+        ));
+    }
+
+    public function countProcessingStatus() {
+
+        return $this->find('count', array(
+                    'recursive' => -1,
+                    'conditions' => array(
+                        'status' => STATUS_PROCESSING,
                     ),
         ));
     }

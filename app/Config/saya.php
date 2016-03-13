@@ -28,6 +28,10 @@ if (!defined("STATUS_BAD")) {
     define("STATUS_BAD", 3);
 }
 
+if (!defined("STATUS_PROCESSING")) {
+    define("STATUS_PROCESSING", 4);
+}
+
 if (!defined("STATUS_BUY_BLACK")) {
     define("STATUS_BUY_BLACK", 0);
 }
@@ -111,6 +115,7 @@ $config['saya'] = array(
             STATUS_FAIL => __('Hủy'),
             STATUS_SUCCESS => __('Thành công'),
             STATUS_PENDING => __('Chờ xử lý'),
+            STATUS_PROCESSING => __('Đang xử lý'),
             STATUS_BAD => __('Giả mạo'),
         ),
     ),

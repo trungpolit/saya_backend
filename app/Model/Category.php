@@ -33,6 +33,15 @@ class Category extends AppModel {
         }
     }
 
+    public function afterDelete() {
+        parent::afterDelete();
+
+        if ($this->cached) {
+
+            $this->cache();
+        }
+    }
+
     public function cache() {
 
         App::uses('CacheCommon', 'Lib');
