@@ -216,7 +216,7 @@
                                 <td>
                                     <?php
                                     echo $this->element('Button/req_edit', array(
-                                        'action_path' => Router::url(array('action' => 'reqEdit', $type, $id)),
+                                        'action_path' => Router::url(array('action' => 'reqEdit', $id)),
                                     ));
                                     ?>
                                     <?php

@@ -360,6 +360,12 @@ msgstr "Giả mạo"
 msgid "customer_name"
 msgstr "Họ và tên"
 
+msgid "customer_id"
+msgstr "Mã ID"
+
+msgid "customer_code"
+msgstr "Mã máy"
+
 msgid "customer_status"
 msgstr "Trạng thái"
 

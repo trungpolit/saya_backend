@@ -17,6 +17,10 @@ echo $this->element('js/datetimepicker');
     .product-logo {
         width: 64px;
     }
+    .long-text {
+        word-wrap: break-word; /* IE */
+        word-break: break-all;
+    }
 </style>
 <div class="ibox-content m-b-sm border-bottom">
 
@@ -32,6 +36,30 @@ echo $this->element('js/datetimepicker');
                         <div class="col-sm-6">
                             <?php
                             echo h($customer[$model_name]['name']);
+                            ?>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <?php echo __('customer_id') ?>
+                        </div>
+                        <div class="col-sm-6">
+                            <?php
+                            echo $customer[$model_name]['id'];
+                            ?>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <?php echo __('customer_code') ?>
+                        </div>
+                        <div class="col-sm-6 long-text">
+                            <?php
+                            echo $customer[$model_name]['code'];
                             ?>
                         </div>
                     </div>
