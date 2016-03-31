@@ -9,6 +9,7 @@ class OrdersBundlesController extends AppController {
         'Customer',
         'Bundle',
         'Region',
+        'Setting',
     );
 
     public function index() {
@@ -46,7 +47,7 @@ class OrdersBundlesController extends AppController {
         // lấy tổng số đơn hàng đang chờ xử lý
         $count_pending_status = $this->OrdersBundle->countPendingStatus();
         $this->set('count_pending_status', $count_pending_status);
-        
+
         // lấy tổng số đơn hàng đang xử lý
         $count_processing_status = $this->OrdersBundle->countProcessingStatus();
         $this->set('count_processing_status', $count_processing_status);
@@ -147,6 +148,16 @@ class OrdersBundlesController extends AppController {
         $this->set('model_name', $this->modelClass);
         $this->set('status', Configure::read('saya.Order.status'));
         $this->set('status_customer', Configure::read('saya.Customer.status'));
+        // lấy ra thiết lập refresh
+        $refresh_setting = $this->Setting->find('first', array(
+            'recursive' => -1,
+            'conditions' => array(
+                'key' => 'DAILY_REPORT_REFRESH',
+            ),
+        ));
+        $refresh = !empty($refresh_setting['Setting']) ?
+                (int) $refresh_setting['Setting']['value'] : DAILY_REPORT_REFRESH;
+        $this->set('refresh', $refresh);
     }
 
     public function edit($id = null) {

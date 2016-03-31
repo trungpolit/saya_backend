@@ -78,6 +78,18 @@ echo $this->element('js/chosen');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
+                echo $this->Form->input('code', array(
+                    'div' => false,
+                    'class' => 'form-control',
+                    'label' => __('user_code'),
+                    'default' => $this->request->query('code'),
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
                 echo $this->Form->input('status', array(
                     'div' => false,
                     'class' => 'form-control',
@@ -110,7 +122,9 @@ echo $this->element('js/chosen');
                             <th><?php echo __('user_role_id') ?></th>
                             <th><?php echo __('user_region_id') ?></th>
                             <th><?php echo __('user_bundle_id') ?></th>
-                            <th><?php echo __('user_weight') ?></th>
+                            <th><?php echo __('user_code') ?></th>
+                            <th><?php echo __('user_password_show') ?></th>
+                            <!--<th><?php echo __('user_weight') ?></th>-->
                             <th><?php echo __('user_status') ?></th>
                             <th><?php echo __('user_modified') ?></th>
                             <th><?php echo __('operation') ?></th>
@@ -120,7 +134,9 @@ echo $this->element('js/chosen');
                             <th><?php echo $this->Paginator->sort('role_id', __('user_role_id')); ?></th>
                             <th><?php echo __('user_region_id') ?></th>
                             <th><?php echo __('user_bundle_id') ?></th>
-                            <th><?php echo $this->Paginator->sort('weight', __('user_weight')); ?></th>
+                            <th><?php echo $this->Paginator->sort('code', __('user_code')); ?></th>
+                            <th><?php echo $this->Paginator->sort('password_show', __('user_password_show')); ?></th>
+                            <!--<th><?php echo $this->Paginator->sort('weight', __('user_weight')); ?></th>-->
                             <th><?php echo $this->Paginator->sort('status', __('user_status')); ?></th>
                             <th><?php echo $this->Paginator->sort('modified', __('user_modified')); ?></th>
                             <th><?php echo __('operation') ?></th>
@@ -171,14 +187,24 @@ echo $this->element('js/chosen');
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input('weight', array(
-                                        'div' => false,
-                                        'class' => 'form-control',
-                                        'label' => false,
-                                        'default' => $item[$model_name]['weight'],
-                                    ));
-                                    ?> 
+                                    echo $item[$model_name]['code'];
+                                    ?>
                                 </td>
+                                <td>
+                                    <?php
+                                    echo $item[$model_name]['password_show'];
+                                    ?>
+                                </td>
+<!--                                <td>
+                                    <?php
+//                                    echo $this->Form->input('weight', array(
+//                                        'div' => false,
+//                                        'class' => 'form-control',
+//                                        'label' => false,
+//                                        'default' => $item[$model_name]['weight'],
+//                                    ));
+                                    ?> 
+                                </td>-->
                                 <td>
                                     <?php
                                     echo $this->Form->input('status', array(
@@ -219,7 +245,7 @@ echo $this->element('js/chosen');
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="9" style="text-align: center"><?php echo __('no_result') ?></td>
+                            <td colspan="10" style="text-align: center"><?php echo __('no_result') ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

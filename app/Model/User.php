@@ -117,4 +117,55 @@ class User extends AppModel {
         }
     }
 
+    public function listCode() {
+
+        $users = $this->find('all', array(
+            'recursive' => -1,
+            'conditions' => array(
+                'code !=' => '',
+            ),
+            'order' => array(
+                'code' => 'ASC',
+            ),
+        ));
+        if (empty($users)) {
+            return $users;
+        }
+        App::uses('UsersBundle', 'Model');
+        App::uses('UsersRegion', 'Model');
+        $UsersBundle = new UsersBundle();
+        $UsersRegion = new UsersRegion();
+        $list = array();
+        foreach ($users as $v) {
+            $user_id = $v[$this->alias]['id'];
+            $regions = $UsersRegion->find('list', array(
+                'recursive' => -1,
+                'conditions' => array(
+                    'user_id' => $user_id,
+                ),
+                'fields' => array(
+                    'region_id', 'region_id',
+                ),
+            ));
+            $bundles = $UsersBundle->find('list', array(
+                'recursive' => -1,
+                'conditions' => array(
+                    'user_id' => $user_id,
+                ),
+                'fields' => array(
+                    'bundle_id', 'bundle_id',
+                ),
+            ));
+            if (empty($regions) || empty($bundles)) {
+                continue;
+            }
+            foreach ($regions as $r) {
+                foreach ($bundles as $b) {
+                    $list[$r . '_' . $b] = $v[$this->alias]['code'] . '|' . $v[$this->alias]['username'];
+                }
+            }
+        }
+        return $list;
+    }
+
 }

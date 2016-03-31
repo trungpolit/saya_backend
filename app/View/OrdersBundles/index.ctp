@@ -1,4 +1,11 @@
 <?php
+if (!empty($refresh)):
+    ?>
+    <?php echo $this->start('meta'); ?>
+    <meta http-equiv="refresh" content="<?php echo $refresh ?>">
+    <?php echo $this->end(); ?>
+<?php endif; ?>
+<?php
 //echo $this->element('page-heading');
 echo $this->element('js/chosen');
 echo $this->element('js/datetimepicker');

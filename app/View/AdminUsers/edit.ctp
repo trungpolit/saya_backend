@@ -119,59 +119,6 @@ echo $this->element('js/validate');
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label"><?php echo __('user_password') ?> <?php echo $this->element('required') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.password', array(
-                            'class' => 'form-control',
-                            'div' => false,
-                            'label' => false,
-                            'required' => true,
-                            'type' => 'password',
-                            'id' => 'password',
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label"><?php echo __('user_password_confirm') ?> <?php echo $this->element('required') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.password_confirm', array(
-                            'class' => 'form-control',
-                            'div' => false,
-                            'label' => false,
-                            'required' => true,
-                            'type' => 'password',
-                            'id' => 'password_confirm',
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $description_err = $this->Form->error($model_name . '.description');
-                $description_err_class = !empty($description_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $description_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('user_description') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->textarea($model_name . '.description', array(
-                            'class' => 'form-control',
-                            'div' => false,
-                            'label' => false,
-                            'rows' => 12,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
                 <?php
                 $weight_err = $this->Form->error($model_name . '.weight');
                 $weight_err_class = !empty($weight_err) ? 'has-error' : '';

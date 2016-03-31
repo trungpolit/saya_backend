@@ -336,6 +336,9 @@ msgstr "Vùng miền"
 msgid "daily_report_bundle_id"
 msgstr "Nhóm sản phẩm"
 
+msgid "daily_report_user_code"
+msgstr "Mã nhà phân phối"
+
 msgid "daily_report_total_revernue"
 msgstr "Doanh thu"
 
@@ -347,6 +350,9 @@ msgstr "Thành công"
 
 msgid "daily_report_total_order_bundle_pending"
 msgstr "Chờ xử lý"
+
+msgid "daily_report_total_order_bundle_processing"
+msgstr "Đang xử lý"
 
 msgid "daily_report_total_order_bundle_fail"
 msgstr "Hủy"
@@ -596,6 +602,12 @@ msgstr "Tên tài khoản"
 
 msgid "user_description"
 msgstr "Mô tả"
+
+msgid "user_code"
+msgstr "Mã"
+
+msgid "user_password_show"
+msgstr "Mật khẩu"
 
 msgid "user_weight"
 msgstr "Trọng số"

@@ -34,7 +34,7 @@ class UsersController extends AppController {
                 'type' => MANAGER_TYPE,
             ),
         );
-
+        $this->setSearchConds($options);
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
@@ -85,6 +85,36 @@ class UsersController extends AppController {
                 $bundle_id = Hash::extract($users_bundle, '{n}.UsersBundle.bundle_id');
                 $list_data[$k][$this->modelClass]['bundle_id'] = $bundle_id;
             }
+        }
+    }
+
+    protected function setSearchConds(&$options) {
+
+        if (isset($this->request->query['username']) && strlen(trim($this->request->query['username']))) {
+
+            $this->request->query['username'] = trim($this->request->query['username']);
+            $options['conditions']['LOWER(User.username) LIKE'] = '%' . strtolower($this->request->query['username']) . '%';
+        }
+        if (isset($this->request->query['region_id']) && strlen($this->request->query['region_id'])) {
+
+            $options['conditions']['User.region_id'] = $this->request->query['region_id'];
+        }
+        if (isset($this->request->query['bundle_id']) && strlen($this->request->query['bundle_id'])) {
+
+            $options['conditions']['User.bundle_id'] = $this->request->query['bundle_id'];
+        }
+        if (isset($this->request->query['status']) && strlen($this->request->query['status'])) {
+
+            $options['conditions']['User.status'] = $this->request->query['status'];
+        }
+        if (isset($this->request->query['id']) && strlen($this->request->query['id'])) {
+
+            $options['conditions']['User.id'] = $this->request->query['id'];
+        }
+        if (isset($this->request->query['code']) && strlen(trim($this->request->query['code']))) {
+
+            $this->request->query['code'] = trim($this->request->query['code']);
+            $options['conditions']['LOWER(User.code) LIKE'] = '%' . strtolower($this->request->query['code']) . '%';
         }
     }
 

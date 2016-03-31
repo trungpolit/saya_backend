@@ -60,6 +60,10 @@ if (!defined("MANAGER_TYPE")) {
     define("MANAGER_TYPE", 'MANAGER');
 }
 
+if (!defined("DAILY_REPORT_REFRESH")) {
+    define("DAILY_REPORT_REFRESH", 180);
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',

@@ -1,4 +1,11 @@
 <?php
+if (!empty($refresh)):
+    ?>
+    <?php echo $this->start('meta'); ?>
+    <meta http-equiv="refresh" content="<?php echo $refresh ?>">
+    <?php echo $this->end(); ?>
+<?php endif; ?>
+<?php
 //echo $this->element('page-heading');
 echo $this->element('js/chosen');
 echo $this->element('js/datetimepicker');
@@ -24,6 +31,20 @@ echo $this->element('js/datetimepicker');
     ))
     ?>
     <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input('user_code', array(
+                    'div' => false,
+                    'class' => 'form-control',
+                    'label' => __('daily_report_user_code'),
+                    'default' => $this->request->query('user_code'),
+                    'options' => $user_codes,
+                    'empty' => '-------',
+                ));
+                ?>
+            </div>
+        </div>
         <div class="col-md-4">
             <div class="form-group">
                 <?php
@@ -94,23 +115,27 @@ echo $this->element('js/datetimepicker');
                         <?php if (!empty($list_data)): ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo $this->Paginator->sort('date', __('daily_report_date')); ?></th>
+                            <th><?php echo __('daily_report_user_code'); ?></th>
                             <th><?php echo $this->Paginator->sort('region_id', __('daily_report_region_id')); ?></th>
                             <th><?php echo $this->Paginator->sort('bundle_id', __('daily_report_bundle_id')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_revernue', __('daily_report_total_revernue')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle', __('daily_report_total_order_bundle')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle_success', __('daily_report_total_order_bundle_success')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle_pending', __('daily_report_total_order_bundle_pending')); ?></th>
+                            <th><?php echo $this->Paginator->sort('total_order_bundle_processing', __('daily_report_total_order_bundle_processing')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_order_bundle_fail', __('daily_report_total_order_bundle_fail')); ?></th>
                             <th> <?php echo $this->Paginator->sort('total_order_bundle_bad', __('daily_report_total_order_bundle_bad')); ?></th>
                         <?php else: ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('daily_report_date'); ?></th>
+                            <th><?php echo __('daily_report_user_code'); ?></th>
                             <th><?php echo __('daily_report_region_id'); ?></th>
                             <th><?php echo __('daily_report_bundle_id'); ?></th>
                             <th><?php echo __('daily_report_total_revernue'); ?></th>
                             <th><?php echo __('daily_report_total_order_bundle') ?></th>
                             <th><?php echo __('daily_report_total_order_bundle_success'); ?></th>
                             <th><?php echo __('daily_report_total_order_bundle_pending') ?></th>
+                            <th><?php echo __('daily_report_total_order_bundle_processing') ?></th>
                             <th><?php echo __('daily_report_total_order_bundle_fail') ?></th>
                             <th><?php echo __('daily_report_total_order_bundle_bad') ?></th>
                         <?php endif; ?>
@@ -131,6 +156,14 @@ echo $this->element('js/datetimepicker');
                                 <td>
                                     <?php
                                     echo $this->Common->parseDate($item[$model_name]['date']);
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    $region_id = $item[$model_name]['region_id'];
+                                    $bundle_id = $item[$model_name]['bundle_id'];
+                                    echo!empty($user_codes[$region_id . '_' . $bundle_id]) ?
+                                            $user_codes[$region_id . '_' . $bundle_id] : __('unknown');
                                     ?>
                                 </td>
                                 <td>
@@ -167,6 +200,11 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
+                                    echo number_format($item[$model_name]['total_order_bundle_processing']);
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
                                     echo number_format($item[$model_name]['total_order_bundle_fail']);
                                     ?>
                                 </td>
@@ -180,7 +218,7 @@ echo $this->element('js/datetimepicker');
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="11" style="text-align: center"><?php echo __('no_result') ?></td>
+                            <td colspan="12" style="text-align: center"><?php echo __('no_result') ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

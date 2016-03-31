@@ -6,6 +6,8 @@ class DailyReportsController extends AppController {
         'DailyReport',
         'Bundle',
         'Region',
+        'Setting',
+        'User',
     );
 
     public function index() {
@@ -66,11 +68,33 @@ class DailyReportsController extends AppController {
             $this->request->query['date_end'] = trim($this->request->query['date_end']);
             $options['conditions']['DailyReport.date <='] = date('Ymd', strtotime($this->request->query['date_end']));
         }
+        if (isset($this->request->query['user_code']) && strlen($this->request->query['user_code'])) {
+
+            $user_code = $this->request->query['user_code'];
+            $extract = explode('|', $user_code);
+            $region_id = $extract[0];
+            $bundle_id = $extract[1];
+            $options['conditions']['DailyReport.region_id'] = $region_id;
+            $options['conditions']['DailyReport.bundle_id'] = $bundle_id;
+        }
     }
 
     protected function setInit() {
 
         $this->set('model_name', $this->modelClass);
+        // lấy ra thiết lập refresh
+        $refresh_setting = $this->Setting->find('first', array(
+            'recursive' => -1,
+            'conditions' => array(
+                'key' => 'DAILY_REPORT_REFRESH',
+            ),
+        ));
+        $refresh = !empty($refresh_setting['Setting']) ?
+                (int) $refresh_setting['Setting']['value'] : DAILY_REPORT_REFRESH;
+        $this->set('refresh', $refresh);
+        // lấy ra mã của user thuộc nhà phân phối
+        $user_codes = $this->User->listCode();
+        $this->set('user_codes', $user_codes);
     }
 
 }

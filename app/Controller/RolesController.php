@@ -28,10 +28,19 @@ class RolesController extends AppController {
                 'modified' => 'DESC',
             ),
         );
-
+        $this->setSearchConds($options);
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
         $this->set('list_data', $list_data);
+    }
+
+    protected function setSearchConds(&$options) {
+
+        if (isset($this->request->query['name']) && strlen(trim($this->request->query['name']))) {
+
+            $this->request->query['name'] = trim($this->request->query['name']);
+            $options['conditions']['LOWER(Role.name) LIKE'] = '%' . strtolower($this->request->query['name']) . '%';
+        }
     }
 
     public function add() {
