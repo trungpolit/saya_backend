@@ -157,6 +157,11 @@ class CustomersController extends AppController {
         ));
         $customer[$this->modelClass]['total_order_bundle_pending'] = $total_order_bundle_pending;
 
+        $total_order_bundle_processing = $this->OrdersBundle->countByCustomerId($customer_id, array(
+            'status' => STATUS_PROCESSING,
+        ));
+        $customer[$this->modelClass]['total_order_bundle_processing'] = $total_order_bundle_processing;
+
         $total_order_bundle_fail = $this->OrdersBundle->countByCustomerId($customer_id, array(
             'status' => STATUS_FAIL,
         ));
