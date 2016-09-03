@@ -50,7 +50,7 @@ class OrderServicesController extends ServiceAppController {
         // kiểm tra xem customer có đang bị khóa hay không?
         $customer = $this->Customer->getInfoByCode($customer_data['code']);
         // nếu customer có trạng thái là -1: khóa, thì không cho tạo ra đơn hàng
-        if (!empty($customer) && $customer['Customer']['status'] == -1) {
+        if (!empty($customer) && $customer['Customer']['status'] <= 0) {
 
             $this->resError('#ord003');
         }

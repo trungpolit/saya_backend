@@ -19,4 +19,8 @@ $config['message_code'] = array(
         '#fee001' => 'The name or description param is empty.',
         '#fee002' => 'The feedback can not save successful.',
     ),
+    'DeviceServices' => array(
+        '#des001' => 'The platform or token param is empty.',
+        '#des002' => 'The device can not save successful.',
+    ),
 );

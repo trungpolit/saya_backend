@@ -64,6 +64,14 @@ if (!defined("DAILY_REPORT_REFRESH")) {
     define("DAILY_REPORT_REFRESH", 180);
 }
 
+if (!defined("DISTRIBUTOR_TYPE")) {
+    define("DISTRIBUTOR_TYPE", 'DISTRIBUTOR');
+}
+
+if (!defined("DISTRIBUTOR_ROLE_ID")) {
+    define("DISTRIBUTOR_ROLE_ID", 2);
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',

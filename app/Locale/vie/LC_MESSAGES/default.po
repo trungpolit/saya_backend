@@ -294,6 +294,9 @@ msgstr "Thông tin liên hệ"
 msgid "product_modified"
 msgstr "Ngày cập nhật"
 
+msgid "product_distributor_id"
+msgstr "Nhà phân phối"
+
 # Product - END
 
 # /Products/* - BEGIN
@@ -817,3 +820,46 @@ msgstr "Đến ngày"
 msgid "feedback_title"
 msgstr "Danh sách phản hồi"
 # /Feedbacks/* - END
+
+# Distributor - BEGIN
+msgid "distributor_name"
+msgstr "Tên"
+
+msgid "distributor_code"
+msgstr "Mã"
+
+msgid "distributor_username"
+msgstr "Tài khoản"
+
+msgid "distributor_password_show"
+msgstr "Mật khẩu"
+
+msgid "distributor_region_id"
+msgstr "Quận/Huyện/Thị xã"
+
+msgid "distributor_status"
+msgstr "Trạng thái"
+
+msgid "distributor_modified"
+msgstr "Ngày cập nhật"
+
+msgid "distributor_weight"
+msgstr "Thứ tự"
+
+msgid "distributor_description"
+msgstr "Mô tả"
+
+msgid "distributor_password_confirm"
+msgstr "Nhập lại mật khẩu"
+# Distributor - END
+
+# /Distributors/* - BEGIN
+msgid "distributor_title"
+msgstr "Danh sách nhà phân phối"
+
+msgid "distributor_add_title"
+msgstr "Thêm mới nhà phân phối"
+
+msgid "distributor_edit_title"
+msgstr "Chỉnh sửa nhà phân phối"
+# /Distributors/* - END

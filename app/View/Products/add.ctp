@@ -7,8 +7,18 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
 ?>
 <script>
     $(function () {
-
         $('.chosen-select').chosen();
+        $('#region_id').on('change', function () {
+            var region_id = $(this).val();
+            var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
+            var req = $.get(request, {region_id: region_id}, function (data) {
+                $('#distributor_id_container').html(data);
+                $('#distributor_id').chosen();
+            });
+            req.fail(function () {
+                alert('reqDistributorByRegionId was failed.');
+            });
+        });
     });
 </script>
 <div class="row">
@@ -34,7 +44,6 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                 ?>
                 <div class="form-group <?php echo $region_id_err_class ?>">
                     <label class="col-sm-2 control-label"><?php echo __('product_region_id') ?> <?php echo $this->element('required') ?></label>
-
                     <div class="col-sm-10">
                         <?php
                         echo $this->Form->input($model_name . '.region_id', array(
@@ -44,27 +53,29 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                             'required' => true,
                             'empty' => '-------',
                             'options' => $regionTree,
+                            'id' => 'region_id',
                         ));
                         ?>
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
                 <?php
-                $bundle_id_err = $this->Form->error($model_name . '.bundle_id');
-                $bundle_id_err_class = !empty($bundle_id_err) ? 'has-error' : '';
+                $distributor_id_err = $this->Form->error($model_name . '.distributor_id');
+                $distributor_id_err_class = !empty($distributor_id_err) ? 'has-error' : '';
                 ?>
-                <div class="form-group <?php echo $bundle_id_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('product_bundle_id') ?> <?php echo $this->element('required') ?></label>
+                <div class="form-group <?php echo $distributor_id_err_class ?>">
+                    <label class="col-sm-2 control-label"><?php echo __('product_distributor_id') ?> <?php echo $this->element('required') ?></label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-10" id="distributor_id_container">
                         <?php
-                        echo $this->Form->input($model_name . '.bundle_id', array(
+                        echo $this->Form->input($model_name . '.distributor_id', array(
                             'class' => 'form-control chosen-select',
                             'div' => false,
                             'label' => false,
                             'required' => true,
                             'empty' => '-------',
-                            'options' => $bundles,
+                            'options' => $distributors,
+                            'id' => 'distributor_id',
                         ));
                         ?>
                     </div>

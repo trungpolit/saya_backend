@@ -61,13 +61,13 @@ echo $this->element('js/datetimepicker');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
-                echo $this->Form->input('bundle_id', array(
+                echo $this->Form->input('distributor_id', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('product_bundle_id'),
-                    'options' => $bundles,
+                    'label' => __('product_distributor_id'),
+                    'options' => $distributors,
                     'empty' => '-------',
-                    'default' => $this->request->query('bundle_id'),
+                    'default' => $this->request->query('distributor_id'),
                 ));
                 ?>
             </div>
@@ -92,7 +92,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('created_start', array(
                     'div' => false,
                     'class' => 'form-control datepicker',
-                    'label' => __('orders_bundle_created_start'),
+                    'label' => __('orders_distributor_created_start'),
                     'default' => $this->request->query('created_start'),
                 ));
                 ?>
@@ -104,7 +104,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('created_end', array(
                     'div' => false,
                     'class' => 'form-control datepicker',
-                    'label' => __('orders_bundle_created_end'),
+                    'label' => __('orders_distributor_created_end'),
                     'default' => $this->request->query('created_end'),
                 ));
                 ?>
@@ -133,7 +133,7 @@ echo $this->element('js/datetimepicker');
                                 <br/>
                                 <?php echo $this->Paginator->sort('region_id', __('product_region_id')); ?>
                             </th>
-                            <th><?php echo $this->Paginator->sort('bundle_id', __('product_bundle_id')); ?></th>
+                            <th><?php echo $this->Paginator->sort('distributor_id', __('product_distributor_id')); ?></th>
                             <th><?php echo __('product_category_id'); ?></th>
                             <th><?php echo $this->Paginator->sort('price', __('product_price')); ?></th>
                             <th><?php echo $this->Paginator->sort('unit', __('product_unit')); ?></th>
@@ -148,7 +148,7 @@ echo $this->element('js/datetimepicker');
                                 <br/>
                                 <?php echo __('product_region_id'); ?>
                             </th>
-                            <th><?php echo __('product_bundle_id'); ?></th>
+                            <th><?php echo __('product_distributor_id'); ?></th>
                             <th><?php echo __('product_category_id'); ?></th>
                             <th><?php echo __('product_price'); ?></th>
                             <th><?php echo __('product_unit') ?></th>
@@ -196,8 +196,8 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo isset($bundles[$item[$model_name]['bundle_id']]) ?
-                                            $bundles[$item[$model_name]['bundle_id']] : __('unknown');
+                                    echo isset($distributors[$item[$model_name]['distributor_id']]) ?
+                                            $distributors[$item[$model_name]['distributor_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>

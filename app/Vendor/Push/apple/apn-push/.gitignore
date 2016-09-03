@@ -1,0 +1,7 @@
+# Composer files
+/vendor/
+composer.phar
+composer.lock
+
+# Other files
+/demo/config.php

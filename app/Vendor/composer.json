@@ -1,0 +1,5 @@
+{
+    "require": {
+        "genkgo/push": "^0.4.1"
+    }
+}

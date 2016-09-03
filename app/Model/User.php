@@ -2,6 +2,9 @@
 
 class User extends AppModel {
 
+    public $actsAs = array(
+        'HABTMCommon',
+    );
     public $useTable = 'users';
     public $validate = array(
         'username' => array(
@@ -14,6 +17,23 @@ class User extends AppModel {
                 'message' => 'Tên tài khoản đã tồn tại',
             ),
         ),
+    );
+    public $hasAndBelongsToMany = array(
+        'Region' =>
+        array(
+            'className' => 'Region',
+            'joinTable' => 'users_regions',
+            'foreignKey' => 'user_id',
+            'associationForeignKey' => 'region_id',
+            'unique' => 'keepExisting',
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'finderQuery' => '',
+            'with' => 'UsersRegion',
+        )
     );
 
     public function beforeValidate($options = array()) {
@@ -69,56 +89,50 @@ class User extends AppModel {
         parent::beforeSave($options);
 
         if (!empty($this->data[$this->alias]['password'])) {
-
             $this->data[$this->alias]['password_show'] = $this->data[$this->alias]['password'];
             $this->data[$this->alias]['password'] = Security::hash(trim($this->data[$this->alias]['password']), null, true);
         }
     }
 
-    public function afterSave($created, $options = array()) {
-        parent::afterSave($created, $options);
-
-        if (isset($this->data[$this->alias]['bundle_id'])) {
-
-            App::uses('UsersBundle', 'Model');
-            $UsersBundle = new UsersBundle();
-            $UsersBundle->deleteAll(array(
-                $UsersBundle->alias . '.user_id' => $this->id,
-                    ), false);
-
-            $save_data = array();
-            foreach ($this->data[$this->alias]['bundle_id'] as $v) {
-
-                $save_data[] = array(
-                    'user_id' => $this->id,
-                    'bundle_id' => $v,
-                );
-            }
-            $UsersBundle->saveAll($save_data);
-        }
-
-        if (isset($this->data[$this->alias]['region_id'])) {
-
-            App::uses('UsersRegion', 'Model');
-            $UsersRegion = new UsersRegion();
-            $UsersRegion->deleteAll(array(
-                $UsersRegion->alias . '.user_id' => $this->id,
-                    ), false);
-
-            $save_data = array();
-            foreach ($this->data[$this->alias]['region_id'] as $v) {
-
-                $save_data[] = array(
-                    'user_id' => $this->id,
-                    'region_id' => $v,
-                );
-            }
-            $UsersRegion->saveAll($save_data);
-        }
-    }
+//    public function afterSave($created, $options = array()) {
+//        parent::afterSave($created, $options);
+//
+//        if (isset($this->data[$this->alias]['bundle_id'])) {
+//            App::uses('UsersBundle', 'Model');
+//            $UsersBundle = new UsersBundle();
+//            $UsersBundle->deleteAll(array(
+//                $UsersBundle->alias . '.user_id' => $this->id,
+//                    ), false);
+//
+//            $save_data = array();
+//            foreach ($this->data[$this->alias]['bundle_id'] as $v) {
+//                $save_data[] = array(
+//                    'user_id' => $this->id,
+//                    'bundle_id' => $v,
+//                );
+//            }
+//            $UsersBundle->saveAll($save_data);
+//        }
+//
+//        if (isset($this->data[$this->alias]['region_id'])) {
+//            App::uses('UsersRegion', 'Model');
+//            $UsersRegion = new UsersRegion();
+//            $UsersRegion->deleteAll(array(
+//                $UsersRegion->alias . '.user_id' => $this->id,
+//                    ), false);
+//
+//            $save_data = array();
+//            foreach ($this->data[$this->alias]['region_id'] as $v) {
+//                $save_data[] = array(
+//                    'user_id' => $this->id,
+//                    'region_id' => $v,
+//                );
+//            }
+//            $UsersRegion->saveAll($save_data);
+//        }
+//    }
 
     public function listCode() {
-
         $users = $this->find('all', array(
             'recursive' => -1,
             'conditions' => array(
@@ -166,6 +180,17 @@ class User extends AppModel {
             }
         }
         return $list;
+    }
+
+    public function beforeDelete($cascade = true) {
+        parent::beforeDelete($cascade);
+
+        $user_id = $this->id;
+        App::uses('UsersRegion', 'Model');
+        $UsersRegion = new UsersRegion();
+        $UsersRegion->deleteAll(array(
+            'user_id' => $user_id
+                ), false);
     }
 
 }

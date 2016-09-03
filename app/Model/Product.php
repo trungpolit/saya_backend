@@ -32,8 +32,15 @@ class Product extends AppModel {
     public function beforeSave($options = array()) {
         parent::beforeSave($options);
 
+        if (isset($this->data[$this->alias]['distributor_id'])) {
+            App::uses('Distributor', 'Model');
+            $Distributor = new Distributor();
+            $distributor_id = $this->data[$this->alias]['distributor_id'];
+            $distributor = $Distributor->findById($distributor_id);
+            $this->data[$this->alias]['distributor_code'] = !empty($distributor[$Distributor->alias]['code']) ?
+                    $distributor[$Distributor->alias]['code'] : '';
+        }
         if ($this->cached && !empty($this->data[$this->alias]['id'])) {
-
             $this->prev_data = $this->find('first', array(
                 'conditions' => array(
                     'id' => $this->data[$this->alias]['id'],
@@ -47,7 +54,6 @@ class Product extends AppModel {
         parent::afterSave($created, $options);
 
         if ($this->cached) {
-
             $this->resetCache();
         }
     }
@@ -56,7 +62,6 @@ class Product extends AppModel {
         parent::afterDelete();
 
         if ($this->cached) {
-
             $this->resetCache();
         }
     }

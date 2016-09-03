@@ -6,12 +6,10 @@ class HABTMCommonBehavior extends ModelBehavior {
         parent::afterSave($model, $created, $options);
 
         if (empty($model->hasAndBelongsToMany)) {
-
             return true;
         }
 
         foreach ($model->hasAndBelongsToMany as $k => $v) {
-
             $join_model = $v['with'];
             $foreignKey = $v['foreignKey'];
             $associationForeignKey = $v['associationForeignKey'];
@@ -25,13 +23,11 @@ class HABTMCommonBehavior extends ModelBehavior {
                     ), false);
 
             if (empty($model->data[$model->alias][$associationForeignKey])) {
-
                 continue;
             }
 
             $save_data = array();
             foreach ($model->data[$model->alias][$associationForeignKey] as $kk => $vv) {
-
                 $save_data[$kk] = array(
                     $foreignKey => $model->id,
                     $associationForeignKey => $vv,
@@ -47,12 +43,10 @@ class HABTMCommonBehavior extends ModelBehavior {
         parent::afterFind($model, $results, $primary);
 
         if (empty($results) || empty($model->hasAndBelongsToMany)) {
-
             return $results;
         }
 
         foreach ($model->hasAndBelongsToMany as $k => $v) {
-
             $join_model = $v['with'];
             $foreignKey = $v['foreignKey'];
             $associationForeignKey = $v['associationForeignKey'];
@@ -61,7 +55,6 @@ class HABTMCommonBehavior extends ModelBehavior {
             $JoinModel = new $join_model();
 
             foreach ($results as $kk => $vv) {
-
                 $id = $vv[$model->alias]['id'];
                 $associationId = $JoinModel->find('list', array(
                     'conditions' => array(

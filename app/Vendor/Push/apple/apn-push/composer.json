@@ -1,0 +1,28 @@
+{
+    "name": "apple/apn-push",
+    "description": "Push notifications to Apple devices",
+    "keywords": ["apple", "push", "apn", "notifications"],
+    "homepage": "https://github.com/ZhukV/AppleApnPush",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vitaliy Zhuk",
+            "email": "zhuk2205@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php": ">=5.3.3"
+    },
+
+    "suggest": {
+        "symfony/console": "Send push notifications from console",
+        "symfony/event-dispatcher": "Use events in apple apn push",
+        "monolog/monolog": "Use logger system"
+    },
+
+    "autoload": {
+        "psr-4": { "Apple\\ApnPush\\": "src/" }
+    }
+}

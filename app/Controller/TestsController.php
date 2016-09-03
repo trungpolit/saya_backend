@@ -1,6 +1,12 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::import('Vendor', 'push', array('file' => 'Push/autoload.php'));
+
+use Genkgo\Push\Gateway;
+use Genkgo\Push\Sender\GoogleGcmSender;
+use Genkgo\Push\Sender\AppleApnSender;
+use Genkgo\Push\Sender\WindowsSender;
 
 class TestsController extends AppController {
 
@@ -116,6 +122,18 @@ class TestsController extends AppController {
         );
 
         echo json_encode($arr);
+    }
+
+    public function push() {
+
+        // construct the gateway, using the different senders
+        $gateway = new Gateway([
+            new GoogleGcmSender('AIzaSyDX_htow84_98lTRxs6BVHJSDwmPOrjutY'),
+            new WindowsSender()
+        ]);
+
+        // below message will automatically go to their own specific sender
+        $gateway->send(new Message(new Body('message content')), new AndroidDeviceRecipient('token'));
     }
 
 }

@@ -1,0 +1,194 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "09dde597a1684ccf3492d87817ea2191",
+    "content-hash": "768427976907de62ca27f3a388f187d7",
+    "packages": [
+        {
+            "name": "apple/apn-push",
+            "version": "v2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ZhukV/AppleApnPush.git",
+                "reference": "d03a4d44e058fc7b308f5a317df78ae7e199f9a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ZhukV/AppleApnPush/zipball/d03a4d44e058fc7b308f5a317df78ae7e199f9a9",
+                "reference": "d03a4d44e058fc7b308f5a317df78ae7e199f9a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "monolog/monolog": "Use logger system",
+                "symfony/console": "Send push notifications from console",
+                "symfony/event-dispatcher": "Use events in apple apn push"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Apple\\ApnPush\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitaliy Zhuk",
+                    "email": "zhuk2205@gmail.com"
+                }
+            ],
+            "description": "Push notifications to Apple devices",
+            "homepage": "https://github.com/ZhukV/AppleApnPush",
+            "keywords": [
+                "apn",
+                "apple",
+                "notifications",
+                "push"
+            ],
+            "time": "2015-11-11 11:38:38"
+        },
+        {
+            "name": "genkgo/push",
+            "version": "0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/genkgo/push.git",
+                "reference": "de6712c9d00411cae7505f6051a232181eec57fb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/genkgo/push/zipball/de6712c9d00411cae7505f6051a232181eec57fb",
+                "reference": "de6712c9d00411cae7505f6051a232181eec57fb",
+                "shasum": ""
+            },
+            "require": {
+                "apple/apn-push": "~2.2.2",
+                "jildertmiedema/windows-phone-push": "~0.0.1",
+                "php": ">=5.6",
+                "php-gcm/php-gcm": "~1.1.1"
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "~6.0.0",
+                "phpunit/phpunit": "~4.0",
+                "phpunit/phpunit-mock-objects": "~2.3"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle is required to create APN certificates (Apple)"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Genkgo\\Push\\": [
+                        "src"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Send push messages to Android, Apple and Windows using one interface. Bonus: generate Apple push certificates automatically",
+            "time": "2016-06-16 16:15:08"
+        },
+        {
+            "name": "jildertmiedema/windows-phone-push",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jildertmiedema/windows-phone-push.git",
+                "reference": "4f6df89e713725697e3d483f265cd44b17edf73a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jildertmiedema/windows-phone-push/zipball/4f6df89e713725697e3d483f265cd44b17edf73a",
+                "reference": "4f6df89e713725697e3d483f265cd44b17edf73a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JildertMiedema\\WindowsPhone\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jildert Miedema",
+                    "email": "jildertmiedema@gmail.com"
+                }
+            ],
+            "description": "Windows Phone Push",
+            "keywords": [
+                "Windows Phone Push",
+                "phone",
+                "push",
+                "windows"
+            ],
+            "time": "2014-08-07 09:19:23"
+        },
+        {
+            "name": "php-gcm/php-gcm",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lkorth/php-gcm.git",
+                "reference": "fdd57ec3f79fd5a7f0936d695a977c27b22ea67a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lkorth/php-gcm/zipball/fdd57ec3f79fd5a7f0936d695a977c27b22ea67a",
+                "reference": "fdd57ec3f79fd5a7f0936d695a977c27b22ea67a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHP_GCM": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Luke Korth",
+                    "email": "luke@lukekorth.com"
+                }
+            ],
+            "description": "A PHP library for sending GCM messages",
+            "homepage": "https://github.com/lkorth/php-gcm",
+            "keywords": [
+                "android",
+                "gcm",
+                "library",
+                "php"
+            ],
+            "time": "2015-05-06 13:25:45"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
