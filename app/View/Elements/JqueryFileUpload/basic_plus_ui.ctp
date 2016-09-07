@@ -151,7 +151,7 @@ if (!empty($uploadYoutube)) {
                             $fileSerialize = json_encode($file);
 
                             // xác định xem file có phải là ảnh không
-                            $image_type = @exif_imagetype(APP . $file_uri);
+                            $image_type = @exif_imagetype(WWW_ROOT . $file_uri);
                             $data_gallery = '';
                             
                             if ($image_type !== false) {

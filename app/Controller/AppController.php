@@ -61,7 +61,6 @@ class AppController extends Controller {
     );
 
     public function reqUpload() {
-
         $this->autoRender = false;
         App::import('Vendor', 'CustomUploadHandler', array('file' => 'UploadHandler/server/php' . DS . 'CustomUploadHandler.php'));
         $log_file_name = __CLASS__ . '_' . __FUNCTION__;
@@ -70,7 +69,6 @@ class AppController extends Controller {
         $result = $upload_handler->post(false);
 
         if (empty($result['files'][0])) {
-
             $this->logAnyFile(__('File upload proccess was failed, raw result: '), $log_file_name);
             $this->logAnyFile($result, $log_file_name);
 
@@ -79,7 +77,6 @@ class AppController extends Controller {
         }
 
         if (!isset($this->FileManaged)) {
-
             $this->loadModel('FileManaged');
         }
 
@@ -119,18 +116,14 @@ class AppController extends Controller {
     }
 
     public function reqDeleteFile() {
-
         $this->autoRender = false;
-
         if ($this->request->is('delete') || $this->request->is('post')) {
-
             $file_managed_id = $this->request->query('file_managed_id');
             $result = array(
                 'success' => true
             );
 
             if (!isset($this->FileManaged)) {
-
                 $this->loadModel('FileManaged');
             }
 
@@ -143,7 +136,6 @@ class AppController extends Controller {
             ));
 
             if (empty($get_file)) {
-
                 echo json_encode($result);
                 return;
             }
@@ -151,14 +143,12 @@ class AppController extends Controller {
             $uri = $get_file['FileManaged']['uri'];
 
             if ($this->FileManaged->delete($file_managed_id, false)) {
-
-                $file = new File(APP . $uri, false);
+                $file = new File(WWW_ROOT . $uri, false);
                 $file->delete();
 
                 echo json_encode($result);
                 return;
             } else {
-
                 echo json_encode(array(
                     'success' => false,
                     'message' => __('Can not delete FileManaged due to id=%s', $file_managed_id),

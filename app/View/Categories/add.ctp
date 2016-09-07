@@ -5,6 +5,11 @@ echo $this->element('js/tinymce');
 // sử dụng upload file
 echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
 ?>
+<script>
+    $(function () {
+        $('.chosen-select').chosen();
+    });
+</script>
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
@@ -35,6 +40,26 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                             'class' => 'form-control',
                             'div' => false,
                             'label' => false,
+                            'required' => true,
+                        ));
+                        ?>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <?php
+                $region_id_err = $this->Form->error($model_name . '.region_id');
+                $region_id_err_class = !empty($region_id_err) ? 'has-error' : '';
+                ?>
+                <div class="form-group <?php echo $region_id_err_class ?>">
+                    <label class="col-sm-2 control-label"><?php echo __('category_region_id') ?> <?php echo $this->element('required') ?></label>
+
+                    <div class="col-sm-10">
+                        <?php
+                        echo $this->Form->input($model_name . '.region_id', array(
+                            'class' => 'form-control chosen-select',
+                            'div' => false,
+                            'label' => false,
+                            'options' => $regionTree,
                             'required' => true,
                         ));
                         ?>

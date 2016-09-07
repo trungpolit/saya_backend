@@ -8,17 +8,28 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
 <script>
     $(function () {
         $('.chosen-select').chosen();
+        var distributor_id = $('#distributor_id').val();
+        var category_id = $('#category_id').val();
         $('#region_id').on('change', function () {
             var region_id = $(this).val();
-            var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
-            var req = $.get(request, {region_id: region_id}, function (data) {
-                $('#distributor_id_container').html(data);
-                $('#distributor_id').chosen();
+            var request1 = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
+            var request2 = '<?php echo $this->Html->url(array('action' => 'reqCategoryByRegionId')) ?>';
+
+            reqByRegionId('distributor_id', request1, region_id, 1, distributor_id);
+            reqByRegionId('category_id', request2, region_id, 1, category_id);
+        });
+        $('#region_id').trigger('change');
+
+        function reqByRegionId(el, request, region_id, disable_label, value) {
+            var req = $.get(request, {region_id: region_id, disable_label: disable_label}, function (data) {
+                $('#' + el + '_container').html(data);
+                $('#' + el).val(value);
+                $('#' + el).chosen();
             });
             req.fail(function () {
-                alert('reqDistributorByRegionId was failed.');
+                alert(request + ' was failed.');
             });
-        });
+        }
     });
 </script>
 <div class="row">
@@ -88,7 +99,7 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                 <div class="form-group <?php echo $category_id_err_class ?>">
                     <label class="col-sm-2 control-label"><?php echo __('product_category_id') ?> <?php echo $this->element('required') ?></label>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-10" id="category_id_container">
                         <?php
                         echo $this->Form->input($model_name . '.category_id', array(
                             'class' => 'form-control chosen-select',
@@ -97,7 +108,7 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                             'required' => true,
                             'empty' => '-------',
                             'options' => $categories,
-                            'multiple' => true,
+                            'id' => 'category_id',
                         ));
                         ?>
                     </div>
@@ -211,6 +222,25 @@ echo $this->element('JqueryFileUpload/basic_plus_ui_assets');
                             ),
                             'upload_options' => array(
                                 'maxNumberOfFiles' => 1,
+                            ),
+                        ));
+                        ?>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><?php echo __('product_thumb') ?></label>
+
+                    <div class="col-sm-10">
+                        <?php
+                        echo $this->element('JqueryFileUpload/basic_plus_ui', array(
+                            'name' => $model_name . '.thumb',
+                            'options' => array(
+                                'id' => 'thumb',
+                                'multiple' => true,
+                            ),
+                            'upload_options' => array(
+                                'maxNumberOfFiles' => 5,
                             ),
                         ));
                         ?>

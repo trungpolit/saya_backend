@@ -247,6 +247,33 @@ class ProductsController extends AppController {
         }
         $distributors = $this->Distributor->find('list', $options);
         $this->set('distributors', $distributors);
+
+        $disable_label = $this->request->query('disable_label');
+        $this->set('disable_label', $disable_label);
+    }
+
+    public function reqCategoryByRegionId() {
+        $this->layout = 'ajax';
+        $this->setInit();
+        $region_id = $this->request->query('region_id');
+        $options = array(
+            'fields' => array(
+                'id', 'name',
+            ),
+            'conditions' => array(
+                'Category.status' => STATUS_PUBLIC,
+                'Category.region_id' => $region_id,
+            ),
+            'order' => array(
+                'Category.weight' => 'ASC',
+                'Category.modified' => 'DESC',
+            ),
+        );
+        $categories = $this->Category->find('list', $options);
+        $this->set('categories', $categories);
+
+        $disable_label = $this->request->query('disable_label');
+        $this->set('disable_label', $disable_label);
     }
 
 }

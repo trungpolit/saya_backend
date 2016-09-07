@@ -118,7 +118,6 @@ class UtilityCommon {
 
         App::uses('Folder', 'Utility');
         App::uses('File', 'Utility');
-
         $data_root_name = Configure::read('saya.App.data_file_root');
 
         $pretty_mime = strtolower($mime);
@@ -134,28 +133,24 @@ class UtilityCommon {
             $year . $month,
             $day,
         );
-        $folder_path = APP;
+        $folder_path = WWW_ROOT;
 
         foreach ($folder_structure as $item) {
-
             $folder_path .= DS . $item;
             if (DIRECTORY_SEPARATOR == '\\') {
-
                 $folder_path = str_replace('/', '\\', $folder_path);
             }
             $folder = new Folder($folder_path, false, 0777);
             if (!$folder->inPath($folder_path)) {
-
                 $folder = new Folder($folder_path, true, 0777);
             }
         }
 
         if ($absolute) {
-
             return $folder_path . DS;
         }
 
-        return str_replace(APP, '', $folder_path . DS);
+        return str_replace(WWW_ROOT, '', $folder_path . DS);
     }
 
     /**
@@ -169,27 +164,21 @@ class UtilityCommon {
      * @throws CakeException
      */
     static public function moveFromTmp($file, $module_name) {
-
         if (empty($file)) {
-
             return true;
         }
         if (!is_array($file)) {
-
             $file = array($file);
         }
         $target_file = array();
         foreach ($file as $v) {
-
             $item = json_decode($v, true);
             if (empty($item)) {
-
                 continue;
             }
 
             // kiểm tra xem file đã được move hay chưa?
             if ($item['status'] == 1) {
-
                 $target_file[] = $item;
                 continue;
             }
@@ -197,29 +186,24 @@ class UtilityCommon {
             $file_uri = APP . DS . $item['uri'];
             // thực hiện support cho môi trường windows
             if (DIRECTORY_SEPARATOR == '\\') {
-
                 $file_uri = str_replace('\\', '/', $file_uri);
             }
 
             $file_obj = new File($file_uri, false, 0755);
             if (!$file_obj->exists()) {
-
                 continue;
             }
 
             $file_name = basename($item['uri']);
             if (!empty($item['mime'])) {
-
                 $mime = $item['mime'];
             } else {
-
                 $mime = self::getMimeType($file_name);
             }
 
             $target = self::generateFolderStructure($module_name, $mime);
-            $copy = $file_obj->copy(APP . $target . $file_name);
+            $copy = $file_obj->copy(WWW_ROOT . $target . $file_name);
             if (!$copy) {
-
                 throw new CakeException(__('Can not copy file from %s to %s', $file_obj->path, APP . $target . $file_name));
             }
             $file_obj->delete();
@@ -231,7 +215,6 @@ class UtilityCommon {
             App::uses('FileManaged', 'Model');
             $FileManaged = new FileManaged();
             if (!$FileManaged->save($item)) {
-
                 throw new CakeException(__('Cant save file data into File Collection'));
             }
 

@@ -46,7 +46,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('region_id', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_region_id'),
+                    'label' => __('orders_distributor_region_id'),
                     'default' => $this->request->query('region_id'),
                     'options' => $regionTree,
                     'empty' => '-------',
@@ -57,12 +57,12 @@ echo $this->element('js/datetimepicker');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
-                echo $this->Form->input('bundle_id', array(
+                echo $this->Form->input('distributor_id', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_bundle_id'),
-                    'default' => $this->request->query('bundle_id'),
-                    'options' => $bundles,
+                    'label' => __('orders_distributor_distributor_id'),
+                    'default' => $this->request->query('distributor_id'),
+                    'options' => $distributors,
                     'empty' => '-------',
                 ));
                 ?>
@@ -74,7 +74,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('code', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_code'),
+                    'label' => __('orders_distributor_code'),
                     'default' => $this->request->query('code'),
                 ));
                 ?>
@@ -86,7 +86,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('customer_name', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_customer_name'),
+                    'label' => __('orders_distributor_customer_name'),
                     'default' => $this->request->query('customer_name'),
                 ));
                 ?>
@@ -98,7 +98,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('customer_mobile', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_customer_mobile'),
+                    'label' => __('orders_distributor_customer_mobile'),
                     'default' => $this->request->query('customer_mobile'),
                 ));
                 ?>
@@ -110,7 +110,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('customer_id', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_customer_id'),
+                    'label' => __('orders_distributor_customer_id'),
                     'default' => $this->request->query('customer_id'),
                     'type' => 'number',
                 ));
@@ -123,7 +123,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('status', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('orders_bundle_status'),
+                    'label' => __('orders_distributor_status'),
                     'options' => $status,
                     'empty' => '-------',
                     'default' => $this->request->query('status'),
@@ -137,7 +137,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('created_start', array(
                     'div' => false,
                     'class' => 'form-control datepicker',
-                    'label' => __('orders_bundle_created_start'),
+                    'label' => __('orders_distributor_created_start'),
                     'default' => $this->request->query('created_start'),
                 ));
                 ?>
@@ -149,7 +149,7 @@ echo $this->element('js/datetimepicker');
                 echo $this->Form->input('created_end', array(
                     'div' => false,
                     'class' => 'form-control datepicker',
-                    'label' => __('orders_bundle_created_end'),
+                    'label' => __('orders_distributor_created_end'),
                     'default' => $this->request->query('created_end'),
                 ));
                 ?>
@@ -186,35 +186,35 @@ echo $this->element('js/datetimepicker');
                     <tr>
                         <?php if (!empty($list_data)): ?>
                             <th><?php echo __('no') ?></th>
-                            <th><?php echo $this->Paginator->sort('code', __('orders_bundle_code')); ?></th>
+                            <th><?php echo $this->Paginator->sort('code', __('orders_distributor_code')); ?></th>
                             <th style="width: 15%">
-                                <?php echo $this->Paginator->sort('region_id', __('orders_bundle_region_id')); ?>
+                                <?php echo $this->Paginator->sort('region_id', __('orders_distributor_region_id')); ?>
                                 <br/>
-                                <?php echo $this->Paginator->sort('bundle_id', __('orders_bundle_bundle_id')); ?>
+                                <?php echo $this->Paginator->sort('distributor_id', __('orders_distributor_distributor_id')); ?>
                             </th>
-                            <th style="width: 15%"><?php echo $this->Paginator->sort('customer_id', __('orders_bundle_customer_details')); ?></th>
-                            <th style="width: 15%"><?php echo $this->Paginator->sort('customer_address', __('orders_bundle_customer_address')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_qty', __('orders_bundle_total_qty')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_total_price')); ?></th>
-                            <th style="width: 15%"><?php echo $this->Paginator->sort('status', __('orders_bundle_status')); ?></th>
+                            <th style="width: 15%"><?php echo $this->Paginator->sort('customer_id', __('orders_distributor_customer_details')); ?></th>
+                            <th style="width: 15%"><?php echo $this->Paginator->sort('customer_address', __('orders_distributor_customer_address')); ?></th>
+                            <th><?php echo $this->Paginator->sort('total_qty', __('orders_distributor_total_qty')); ?></th>
+                            <th><?php echo $this->Paginator->sort('total_price', __('orders_distributor_total_price')); ?></th>
+                            <th style="width: 15%"><?php echo $this->Paginator->sort('status', __('orders_distributor_status')); ?></th>
                             <th>
-                                <?php echo $this->Paginator->sort('created', __('orders_bundle_created')); ?>
+                                <?php echo $this->Paginator->sort('created', __('orders_distributor_created')); ?>
                             </th>
                             <th><?php echo __('operation') ?></th>
                         <?php else: ?>
                             <th><?php echo __('no') ?></th>
-                            <th><?php echo __('orders_bundle_code'); ?></th>
+                            <th><?php echo __('orders_distributor_code'); ?></th>
                             <th>
-                                <?php echo __('orders_bundle_region_id'); ?>
+                                <?php echo __('orders_distributor_region_id'); ?>
                                 <br/>
-                                <?php echo __('orders_bundle_bundle_id'); ?>
+                                <?php echo __('orders_distributor_distributor_id'); ?>
                             </th>
-                            <th><?php echo __('orders_bundle_customer_details'); ?></th>
-                            <th><?php echo __('orders_bundle_customer_address') ?></th>
-                            <th><?php echo __('orders_bundle_total_qty'); ?></th>
-                            <th><?php echo __('orders_bundle_total_price') ?></th>
-                            <th><?php echo __('orders_bundle_status') ?></th>
-                            <th><?php echo __('orders_bundle_created') ?></th>
+                            <th><?php echo __('orders_distributor_customer_details'); ?></th>
+                            <th><?php echo __('orders_distributor_customer_address') ?></th>
+                            <th><?php echo __('orders_distributor_total_qty'); ?></th>
+                            <th><?php echo __('orders_distributor_total_price') ?></th>
+                            <th><?php echo __('orders_distributor_status') ?></th>
+                            <th><?php echo __('orders_distributor_created') ?></th>
                             <th><?php echo __('operation') ?></th>
                         <?php endif; ?>
                     </tr>
@@ -247,8 +247,8 @@ echo $this->element('js/datetimepicker');
                                     echo $this->Form->hidden('region_id', array(
                                         'value' => $item[$model_name]['region_id'],
                                     ));
-                                    echo $this->Form->hidden('bundle_id', array(
-                                        'value' => $item[$model_name]['bundle_id'],
+                                    echo $this->Form->hidden('distributor_id', array(
+                                        'value' => $item[$model_name]['distributor_id'],
                                     ));
                                     echo $this->Form->hidden('created', array(
                                         'value' => $item[$model_name]['created'],
@@ -273,8 +273,8 @@ echo $this->element('js/datetimepicker');
                                     ?>
                                     <br/>
                                     <?php
-                                    echo!empty($bundles[$item[$model_name]['bundle_id']]) ?
-                                            $bundles[$item[$model_name]['bundle_id']] : __('unknown');
+                                    echo!empty($distributors[$item[$model_name]['distributor_id']]) ?
+                                            $distributors[$item[$model_name]['distributor_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>

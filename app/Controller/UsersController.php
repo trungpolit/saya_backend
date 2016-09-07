@@ -291,9 +291,6 @@ class UsersController extends AppController {
         $roles = $this->Role->getList();
         $this->set('roles', $roles);
 
-        $bundles = $this->Bundle->getList();
-        $this->set('bundles', $bundles);
-
         $regionTree = $this->Region->getTree();
         $this->set('regionTree', $regionTree);
     }

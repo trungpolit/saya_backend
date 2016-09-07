@@ -10,6 +10,18 @@ echo $this->element('js/datetimepicker');
             'format': 'DD-MM-YYYY HH:mm:ss',
             'showTodayButton': true
         });
+        $('#region_id').on('change', function () {
+            var region_id = $(this).val();
+            var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
+            var req = $.get(request, {region_id: region_id}, function (data) {
+                $('#distributor_id_container').html(data);
+//                $('#distributor_id').chosen();
+            });
+            req.fail(function () {
+                alert('reqDistributorByRegionId was failed.');
+            });
+        });
+        $('#region_id').trigger('change');
     });
 </script>
 <style>
@@ -54,12 +66,13 @@ echo $this->element('js/datetimepicker');
                     'options' => $regionTree,
                     'empty' => '-------',
                     'default' => $this->request->query('region_id'),
+                    'id' => 'region_id',
                 ));
                 ?>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group" id="distributor_id_container">
                 <?php
                 echo $this->Form->input('distributor_id', array(
                     'div' => false,
@@ -68,6 +81,7 @@ echo $this->element('js/datetimepicker');
                     'options' => $distributors,
                     'empty' => '-------',
                     'default' => $this->request->query('distributor_id'),
+                    'id' => 'distributor_id',
                 ));
                 ?>
             </div>

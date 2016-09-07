@@ -28,3 +28,4 @@ Thumbs.db
 /app/data_files/
 /app/webroot/tmp/
 /app/webroot/files/
+/app/webroot/data_files/

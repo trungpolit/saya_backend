@@ -1,6 +1,14 @@
 <?php
 echo $this->element('page-heading-with-add-action');
 ?>
+<?php
+echo $this->element('js/chosen');
+?>
+<script>
+    $(function () {
+        $('.chosen-select').chosen();
+    });
+</script>
 <div class="ibox-content m-b-sm border-bottom">
     <?php
     echo $this->Form->create('Search', array(
@@ -20,6 +28,20 @@ echo $this->element('page-heading-with-add-action');
                     'class' => 'form-control',
                     'label' => __('category_name'),
                     'default' => $this->request->query('name'),
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input('region_id', array(
+                    'div' => false,
+                    'class' => 'form-control chosen-select',
+                    'label' => __('category_region_id'),
+                    'default' => $this->request->query('region_id'),
+                    'options' => $regionTree,
+                    'empty' => '-------',
                 ));
                 ?>
             </div>
@@ -56,6 +78,7 @@ echo $this->element('page-heading-with-add-action');
                         <?php if (!empty($list_data)): ?>
                             <th style="width: 4%"><?php echo __('no') ?></th>
                             <th style="width: 18%"><?php echo $this->Paginator->sort('name', __('category_name')); ?></th>
+                            <th style="width: 18%"><?php echo $this->Paginator->sort('region_id', __('category_region_id')); ?></th>
                             <th style="width: 18%"><?php echo $this->Paginator->sort('description', __('category_description')); ?></th>
                             <th style="width: 6%"><?php echo $this->Paginator->sort('weight', __('category_weight')); ?></th>
                             <th style="width: 12%"><?php echo (__('category_status')); ?></th>
@@ -66,6 +89,7 @@ echo $this->element('page-heading-with-add-action');
                         <?php else: ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('category_name'); ?></th>
+                            <th><?php echo __('category_region_id'); ?></th>
                             <th><?php echo __('category_description'); ?></th>
                             <th><?php echo __('category_weight'); ?></th>
                             <th><?php echo __('category_status') ?></th>
@@ -100,11 +124,21 @@ echo $this->element('page-heading-with-add-action');
                                     </strong>
                                 </td>
                                 <td>
-                                    <strong>
-                                        <?php
-                                        echo $item[$model_name]['description'];
-                                        ?>
-                                    </strong>
+                                    <?php
+                                    echo $this->Form->input('region_id', array(
+                                        'div' => false,
+                                        'class' => 'form-control chosen-select',
+                                        'label' => false,
+                                        'default' => $item[$model_name]['region_id'],
+                                        'options' => $regionTree,
+                                        'empty' => '-------',
+                                    ));
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    echo $item[$model_name]['description'];
+                                    ?>
                                 </td>
                                 <td>
                                     <?php

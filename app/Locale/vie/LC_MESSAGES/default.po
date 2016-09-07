@@ -186,7 +186,7 @@ msgstr "Dữ liệu không có gì thay đổi"
 # Form messages - END
 
 # /OrderBundles/index/* - BEGIN
-msgid "orders_bundle_title"
+msgid "orders_distributor_title"
 msgstr "Danh sách đơn hàng"
 
 msgid "total_pending_order"
@@ -198,46 +198,46 @@ msgstr "Tổng số đơn hàng đang xử lý"
 # /OrderBundles/index/* - END
 
 # OrderBundles - BEGIN
-msgid "orders_bundle_region_id"
+msgid "orders_distributor_region_id"
 msgstr "Vùng miền"
 
-msgid "orders_bundle_bundle_id"
+msgid "orders_distributor_bundle_id"
 msgstr "Nhóm sản phẩm"
 
-msgid "orders_bundle_code"
+msgid "orders_distributor_code"
 msgstr "Mã đơn hàng"
 
-msgid "orders_bundle_customer_name"
+msgid "orders_distributor_customer_name"
 msgstr "Tên khách hàng"
 
-msgid "orders_bundle_customer_mobile"
+msgid "orders_distributor_customer_mobile"
 msgstr "Số ĐT khách hàng"
 
-msgid "orders_bundle_customer_id"
+msgid "orders_distributor_customer_id"
 msgstr "Mã ID khách hàng"
 
-msgid "orders_bundle_status"
+msgid "orders_distributor_status"
 msgstr "Trạng thái"
 
-msgid "orders_bundle_created_start"
+msgid "orders_distributor_created_start"
 msgstr "Từ ngày"
 
-msgid "orders_bundle_created_end"
+msgid "orders_distributor_created_end"
 msgstr "Đến ngày"
 
-msgid "orders_bundle_total_qty"
+msgid "orders_distributor_total_qty"
 msgstr "Tổng số lượng"
 
-msgid "orders_bundle_total_price"
+msgid "orders_distributor_total_price"
 msgstr "Tổng giá"
 
-msgid "orders_bundle_customer_address"
+msgid "orders_distributor_customer_address"
 msgstr "Địa chỉ"
 
-msgid "orders_bundle_created"
+msgid "orders_distributor_created"
 msgstr "Ngày đặt"
 
-msgid "orders_bundle_customer_details"
+msgid "orders_distributor_customer_details"
 msgstr "Khách hàng"
 
 # OrderBundles - END
@@ -296,6 +296,9 @@ msgstr "Ngày cập nhật"
 
 msgid "product_distributor_id"
 msgstr "Nhà phân phối"
+
+msgid "product_thumb"
+msgstr "Thư viện ảnh"
 
 # Product - END
 
@@ -516,7 +519,7 @@ msgstr "Danh sách quyền"
 msgid "daily_report_nav_title"
 msgstr "Thống kê"
 
-msgid "orders_bundle_nav_title"
+msgid "orders_distributor_nav_title"
 msgstr "Đơn hàng"
 
 msgid "product_nav_title"
@@ -666,6 +669,9 @@ msgstr "Ảnh đại diện"
 
 msgid "category_modified"
 msgstr "Ngày cập nhật"
+
+msgid "category_region_id"
+msgstr "Quận/Huyện/Thị xã"
 # Category - END
 
 # /Categories/* - BEGIN

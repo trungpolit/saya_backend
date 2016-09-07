@@ -92,6 +92,7 @@ $config['saya'] = array(
     ),
     'Category' => array(
         'module_name' => 'categories',
+        'cache_path' => 'webroot/cache/categories/',
     ),
     'Product' => array(
         'module_name' => 'products',
