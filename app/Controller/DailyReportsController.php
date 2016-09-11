@@ -11,7 +11,6 @@ class DailyReportsController extends AppController {
     );
 
     public function index() {
-
         $this->setInit();
 
         $breadcrumb = array();
@@ -35,8 +34,8 @@ class DailyReportsController extends AppController {
         $list_data = $this->Paginator->paginate($this->modelClass);
 
         // lấy ra thông tin tất cả nhóm Bundle
-        $bundles = $this->Bundle->getList();
-        $this->set('bundles', $bundles);
+        $distributors = $this->Bundle->getList();
+        $this->set('distributors', $distributors);
 
         // lấy ra danh sách region theo dạng tree phân cấp
         $regionTree = $this->Region->getTree();
@@ -49,38 +48,31 @@ class DailyReportsController extends AppController {
     }
 
     protected function setSearchConds(&$options) {
-
         if (isset($this->request->query['region_id']) && strlen($this->request->query['region_id'])) {
-
             $options['conditions']['DailyReport.region_id'] = $this->request->query['region_id'];
         }
-        if (isset($this->request->query['bundle_id']) && strlen($this->request->query['bundle_id'])) {
-
-            $options['conditions']['DailyReport.bundle_id'] = $this->request->query['bundle_id'];
+        if (isset($this->request->query['distributor_id']) && strlen($this->request->query['distributor_id'])) {
+            $options['conditions']['DailyReport.distributor_id'] = $this->request->query['distributor_id'];
         }
         if (isset($this->request->query['date_start']) && strlen(trim($this->request->query['date_start']))) {
-
             $this->request->query['date_start'] = trim($this->request->query['date_start']);
             $options['conditions']['DailyReport.date >='] = date('Ymd', strtotime($this->request->query['date_start']));
         }
         if (isset($this->request->query['date_end']) && strlen(trim($this->request->query['date_end']))) {
-
             $this->request->query['date_end'] = trim($this->request->query['date_end']);
             $options['conditions']['DailyReport.date <='] = date('Ymd', strtotime($this->request->query['date_end']));
         }
         if (isset($this->request->query['user_code']) && strlen($this->request->query['user_code'])) {
-
             $user_code = $this->request->query['user_code'];
             $extract = explode('|', $user_code);
             $region_id = $extract[0];
-            $bundle_id = $extract[1];
+            $distributor_id = $extract[1];
             $options['conditions']['DailyReport.region_id'] = $region_id;
-            $options['conditions']['DailyReport.bundle_id'] = $bundle_id;
+            $options['conditions']['DailyReport.distributor_id'] = $distributor_id;
         }
     }
 
     protected function setInit() {
-
         $this->set('model_name', $this->modelClass);
         // lấy ra thiết lập refresh
         $refresh_setting = $this->Setting->find('first', array(

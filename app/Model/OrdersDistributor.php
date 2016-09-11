@@ -62,15 +62,14 @@ class OrdersDistributor extends AppModel {
 
             $customer = $Customer->findById($this->data[$this->alias]['customer_id']);
             if (empty($customer)) {
-
                 throw new NotImplementedException(__('The customer with id=%s does not exist', $this->data[$this->alias]['customer_id']));
             }
 
             $status_alias = $this->getStatusAlias($this->data[$this->alias]['status']);
             $status_old_alias = $this->getStatusAlias($this->data_old[$this->alias]['status']);
 
-            $status_field = 'total_order_bundle_' . $status_alias;
-            $status_old_field = 'total_order_bundle_' . $status_old_alias;
+            $status_field = 'total_order_distributor_' . $status_alias;
+            $status_old_field = 'total_order_distributor_' . $status_old_alias;
 
             $$status_old_field = !empty($customer[$Customer->alias][$status_old_field]) ?
                     $customer[$Customer->alias][$status_old_field] : 0;
@@ -89,16 +88,14 @@ class OrdersDistributor extends AppModel {
 
             // thực hiện set trạng thái của Customer thành STATUS_BUY_BAD nếu đơn hàng bị đánh trạng thái là giả mạo
             if ($this->data[$this->alias]['status'] == STATUS_BAD) {
-
                 $save_data['status'] = STATUS_BUY_BAD;
             }
             $Customer->save($save_data);
         }
-
         if (
                 !$created &&
                 !empty($this->data[$this->alias]['region_id']) &&
-                !empty($this->data[$this->alias]['bundle_id']) &&
+                !empty($this->data[$this->alias]['distributor_id']) &&
                 !empty($this->data[$this->alias]['created']) &&
                 isset($this->data[$this->alias]['total_price']) &&
                 isset($this->data[$this->alias]['status']) &&
@@ -108,21 +105,20 @@ class OrdersDistributor extends AppModel {
             App::uses('DailyReport', 'Model');
             $DailyReport = new DailyReport();
             $region_id = $this->data[$this->alias]['region_id'];
-            $bundle_id = $this->data[$this->alias]['bundle_id'];
+            $distributor_id = $this->data[$this->alias]['distributor_id'];
             $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
 
             $DailyReport->Behaviors->disable('ManagerFilter');
-            $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
+            $report_daily = $DailyReport->checkExist($date, $region_id, $distributor_id);
             if (empty($report_daily)) {
-
-                throw new NotImplementedException(__('The DailyReport with date=%s, region_id=%s, bundle_id=%s  does not exist', $date, $region_id, $bundle_id));
+                throw new NotImplementedException(__('The DailyReport with date=%s, region_id=%s, distributor_id=%s  does not exist', $date, $region_id, $distributor_id));
             }
 
             $status_alias = $this->getStatusAlias($this->data[$this->alias]['status']);
             $status_old_alias = $this->getStatusAlias($this->data_old[$this->alias]['status']);
 
-            $status_field = 'total_order_bundle_' . $status_alias;
-            $status_old_field = 'total_order_bundle_' . $status_old_alias;
+            $status_field = 'total_order_distributor_' . $status_alias;
+            $status_old_field = 'total_order_distributor_' . $status_old_alias;
 
             $$status_old_field = !empty($report_daily[$DailyReport->alias][$status_old_field]) ?
                     $report_daily[$DailyReport->alias][$status_old_field] : 0;
@@ -137,12 +133,10 @@ class OrdersDistributor extends AppModel {
                     $report_daily[$DailyReport->alias]['total_revernue'] : 0;
             // nếu trạng thái mới là STATUS_SUCCESS
             if ($this->data[$this->alias]['status'] == STATUS_SUCCESS) {
-
                 $total_revernue += $this->data[$this->alias]['total_price'];
             }
             // nếu trạng thái cũ là STATUS_SUCCESS
             elseif ($this->data_old[$this->alias]['status'] == STATUS_SUCCESS) {
-
                 $total_revernue -= $this->data[$this->alias]['total_price'];
             }
 
@@ -157,43 +151,61 @@ class OrdersDistributor extends AppModel {
         }
 
 
-        // nếu thưc hiện tạo mới customer thì cộng +1 vào report_dailys.total_order_bundle
-        // công +1 vào report_dailys.total_order_bundle_pending
+        // nếu thưc hiện tạo mới customer thì cộng +1 vào report_dailys.total_order_distributor
+        // công +1 vào report_dailys.total_order_distributor_pending
         if (
                 $created &&
                 isset($this->data[$this->alias]['region_id']) &&
-                isset($this->data[$this->alias]['bundle_id'])
+                isset($this->data[$this->alias]['distributor_id'])
         ) {
 
             App::uses('DailyReport', 'Model');
             $DailyReport = new DailyReport();
             $region_id = $this->data[$this->alias]['region_id'];
-            $bundle_id = $this->data[$this->alias]['bundle_id'];
+            $distributor_id = $this->data[$this->alias]['distributor_id'];
             $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
             $save_data = array();
 
-            $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
+            $report_daily = $DailyReport->checkExist($date, $region_id, $distributor_id);
             if (empty($report_daily)) {
-
                 $DailyReport->create();
                 $save_data['date'] = $date;
                 $save_data['region_id'] = $region_id;
-                $save_data['bundle_id'] = $bundle_id;
-                $save_data['total_order_bundle'] = 1;
-                $save_data['total_order_bundle_pending'] = 1;
+                $save_data['distributor_id'] = $distributor_id;
+                $save_data['total_order_distributor'] = 1;
+                $save_data['total_order_distributor_pending'] = 1;
                 $DailyReport->save($save_data);
             } else {
-
                 $DailyReport->incrementField($report_daily[$DailyReport->alias]['id'], array(
-                    'total_order_bundle',
-                    'total_order_bundle_pending',
+                    'total_order_distributor',
+                    'total_order_distributor_pending',
                 ));
             }
+        }
+
+        // Thực hiện đồng bộ hóa status với OrdersProduct
+        $this->updateOrdersProduct($created);
+    }
+
+    protected function updateOrdersProduct($created) {
+        // Thực hiện đồng bộ hóa status với OrdersProduct
+        if (!$created && isset($this->data[$this->alias]['status'])) {
+            $orders_product = $this->OrdersProduct->findAllByOrdersDistributorId($this->id);
+            if (empty($orders_product)) {
+                return true;
+            }
+            $save_data = array();
+            foreach ($orders_product as $k => $v) {
+                $save_data[$k] = array(
+                    'id' => $v[$this->OrdersProduct->alias]['id'],
+                    'status' => $this->data[$this->alias]['status'],
+                );
+            }
+            return $this->OrdersProduct->saveAll($save_data);
         }
     }
 
     protected function getStatusAlias($status) {
-
         switch ($status) {
             case STATUS_PENDING:
                 return 'pending';
@@ -211,21 +223,17 @@ class OrdersDistributor extends AppModel {
     }
 
     public function cache() {
-
         App::uses('Customer', 'Model');
         $Customer = new Customer();
 
         // lấy ra toàn bộ danh sách Customer
         $customers = $Customer->find('all');
         if (empty($customers)) {
-
             return;
         }
 
         foreach ($customers as $v) {
-
             $customer_code = $v[$Customer->alias]['code'];
-
             // lấy ra toàn bộ đơn hàng tương ứng
             $orders = $this->find('all', array(
                 'conditions' => array(
@@ -237,21 +245,18 @@ class OrdersDistributor extends AppModel {
                 'recursive' => -1,
             ));
             if (empty($orders)) {
-
                 continue;
             }
 
             // thực hiện gộp các order theo từng page để cache
             $order_data = array();
             foreach ($orders as $vv) {
-
                 $no = $vv[$this->alias]['no'];
                 $page = ceil($no / ORDER_LIMIT);
                 $order_data[$page][] = $vv;
             }
 
             foreach ($order_data as $kk => $vv) {
-
                 $this->cacheByCustomerPage($customer_code, $kk, array(
                     'order_data' => $vv,
                 ));
@@ -260,12 +265,9 @@ class OrdersDistributor extends AppModel {
     }
 
     public function cacheByCustomerPage($customer_code, $page, $options = array()) {
-
         if (isset($options['order_data'])) {
-
             $order_data = $options['order_data'];
         } else {
-
             $no_begin = ($page - 1) * ORDER_LIMIT + 1;
             $no_end = $page * ORDER_LIMIT;
 
@@ -283,7 +285,6 @@ class OrdersDistributor extends AppModel {
         }
 
         if (empty($order_data)) {
-
             return;
         }
 
@@ -291,9 +292,7 @@ class OrdersDistributor extends AppModel {
         // thực hiện parse lại format trước khi cache
         $pretty_data = array();
         foreach ($order_data as $k => $v) {
-
             $region_id = $v[$this->alias]['region_id'];
-
             $pretty_data[$k] = array(
                 'customer_code' => $v[$this->alias]['customer_code'],
                 'customer_id' => $v[$this->alias]['customer_id'],
@@ -324,7 +323,6 @@ class OrdersDistributor extends AppModel {
     }
 
     public function countPendingStatus() {
-
         return $this->find('count', array(
                     'recursive' => -1,
                     'conditions' => array(
@@ -334,7 +332,6 @@ class OrdersDistributor extends AppModel {
     }
 
     public function countProcessingStatus() {
-
         return $this->find('count', array(
                     'recursive' => -1,
                     'conditions' => array(
@@ -344,7 +341,6 @@ class OrdersDistributor extends AppModel {
     }
 
     public function countByCustomerId($customer_id, $conditions = array()) {
-
         $default_conditions = array(
             'customer_id' => $customer_id,
         );
@@ -359,6 +355,42 @@ class OrdersDistributor extends AppModel {
         $counter = $this->find('first', $options);
 
         return $counter[0]['counter'];
+    }
+
+    public function statsStatus($status, $options = array()) {
+        $default_opts = array(
+            'recursive' => -1,
+            'group' => array(
+                'region_id', 'distributor_id',
+            ),
+            'fields' => array(
+                'region_id', 'region_name', 'distributor_id',
+                'distributor_code', 'COUNT(id) AS count',
+            ),
+            'conditions' => array(
+                'status' => $status,
+            ),
+        );
+        $options = Hash::merge($default_opts, $options);
+        return $this->find('all', $options);
+    }
+
+    public function stats($options = array()) {
+        $default_opts = array(
+            'recursive' => -1,
+            'group' => array(
+                'region_id', 'distributor_id', 'product_id'
+            ),
+            'fields' => array(
+                'region_id', 'region_name', 'distributor_id',
+                'distributor_code', 'COUNT(id) AS count', 'SUM(total_price) AS total_revernue'
+            ),
+            'conditions' => array(
+                'status' => STATUS_SUCCESS,
+            ),
+        );
+        $options = Hash::merge($default_opts, $options);
+        return $this->find('all', $options);
     }
 
 }

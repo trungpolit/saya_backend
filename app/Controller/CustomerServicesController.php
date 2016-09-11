@@ -10,18 +10,14 @@ class CustomerServicesController extends ServiceAppController {
     public $debug_mode = 3;
 
     public function detail($code = null) {
-
         $this->log_file_name = __CLASS__ . '_' . __FUNCTION__;
         $this->setInit();
-
         if (empty($code)) {
-
             $this->resError('#cus001');
         }
 
         $customer = $this->Customer->findByCode($code);
         if (empty($customer)) {
-
             $this->resError('#cus002', array(
                 'message_args' => array(
                     $code
@@ -43,11 +39,11 @@ class CustomerServicesController extends ServiceAppController {
                 'total_order_pending' => $customer['Customer']['total_order_pending'],
                 'total_order_fail' => $customer['Customer']['total_order_fail'],
                 'total_order_bad' => $customer['Customer']['total_order_bad'],
-                'total_order_bundle' => $customer['Customer']['total_order_bundle'],
-                'total_order_bundle_success' => $customer['Customer']['total_order_bundle_success'],
-                'total_order_bundle_pending' => $customer['Customer']['total_order_bundle_pending'],
-                'total_order_bundle_fail' => $customer['Customer']['total_order_bundle_fail'],
-                'total_order_bundle_bad' => $customer['Customer']['total_order_bundle_bad'],
+                'total_order_distributor' => $customer['Customer']['total_order_distributor'],
+                'total_order_distributor_success' => $customer['Customer']['total_order_distributor_success'],
+                'total_order_distributor_pending' => $customer['Customer']['total_order_distributor_pending'],
+                'total_order_distributor_fail' => $customer['Customer']['total_order_distributor_fail'],
+                'total_order_distributor_bad' => $customer['Customer']['total_order_distributor_bad'],
             ),
         );
 

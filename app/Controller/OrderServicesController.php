@@ -110,6 +110,7 @@ class OrderServicesController extends ServiceAppController {
             $price = $product['Product']['price'];
             $name = $product['Product']['name'];
             $unit = $product['Product']['unit'];
+            $qty = (int) $v['qty'];
 
             // nếu chưa tồn tại dữ liệu cho $order_distributor_data thì khởi tạo
             if (empty($order_distributor_data[$distributor_id])) {
@@ -139,6 +140,8 @@ class OrderServicesController extends ServiceAppController {
                 $order_distributor_cache[$distributor_id] = array();
             }
 
+            $product_total_price = $qty * $price;
+
             $order_product_data[] = array(
                 'customer_code' => $customer_data['code'],
                 'customer_id' => $customer_data['id'],
@@ -150,29 +153,32 @@ class OrderServicesController extends ServiceAppController {
                 'product_name' => $name,
                 'product_unit' => $unit,
                 'product_logo_uri' => $product_logo_uri[0],
-                'qty' => $v['qty'],
+                'qty' => $qty,
                 'product_price' => $price,
+                'total_price' => $product_total_price,
                 'platform_os' => $decode['platform_os'],
                 'platform_version' => $decode['platform_version'],
                 'user_agent' => $user_agent,
                 'client_ip' => $client_ip,
                 'host' => $host,
+                'status' => ORDER_DEFAULT_STATUS,
             );
 
             $order_cache[] = array(
                 'product_id' => $product_id,
                 'product_name' => $name,
                 'product_logo_uri' => $product_logo_uri[0],
-                'qty' => $v['qty'],
+                'qty' => $qty,
                 'product_price' => $price,
                 'product_unit' => $unit,
+                'total_price' => $product_total_price,
             );
 
-            $total_qty += $v['qty'];
-            $total_price += $v['qty'] * $price;
+            $total_qty += $qty;
+            $total_price += $qty * $price;
 
-            $order_distributor_data[$distributor_id]['total_qty'] += $v['qty'];
-            $order_distributor_data [$distributor_id]['total_price'] += $v['qty'] * $price;
+            $order_distributor_data[$distributor_id]['total_qty'] += $qty;
+            $order_distributor_data [$distributor_id]['total_price'] += $qty * $price;
 
             if (empty($order_distributor_cache[$distributor_id])) {
                 $order_distributor_cache[$distributor_id] = array();
@@ -181,9 +187,10 @@ class OrderServicesController extends ServiceAppController {
                 'product_id' => $product_id,
                 'product_name' => $name,
                 'product_logo_uri' => $product_logo_uri[0],
-                'qty' => $v['qty'],
+                'qty' => $qty,
                 'product_price' => $price,
                 'product_unit' => $unit,
+                'total_price' => $product_total_price,
             );
             $order_distributor_data[$distributor_id]['cache_data'] = serialize($order_distributor_cache[$distributor_id]);
         }

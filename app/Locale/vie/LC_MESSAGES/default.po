@@ -332,7 +332,7 @@ msgstr "Đến ngày"
 
 # /DailyReports/* - END
 
-# Product - BEGIN
+# DailyReport - BEGIN
 msgid "daily_report_date"
 msgstr "Ngày"
 
@@ -348,25 +348,76 @@ msgstr "Mã nhà phân phối"
 msgid "daily_report_total_revernue"
 msgstr "Doanh thu"
 
-msgid "daily_report_total_order_bundle"
+msgid "daily_report_total_order_distributor"
 msgstr "Tổng số đơn"
 
-msgid "daily_report_total_order_bundle_success"
+msgid "daily_report_total_order_distributor_success"
 msgstr "Thành công"
 
-msgid "daily_report_total_order_bundle_pending"
+msgid "daily_report_total_order_distributor_pending"
 msgstr "Chờ xử lý"
 
-msgid "daily_report_total_order_bundle_processing"
+msgid "daily_report_total_order_distributor_processing"
 msgstr "Đang xử lý"
 
-msgid "daily_report_total_order_bundle_fail"
+msgid "daily_report_total_order_distributor_fail"
 msgstr "Hủy"
 
-msgid "daily_report_total_order_bundle_bad"
+msgid "daily_report_total_order_distributor_bad"
 msgstr "Giả mạo"
 
-# Product - END
+# DailyReport - END
+
+# /DailyProductReports/* - BEGIN
+msgid "daily_product_report_title"
+msgstr "Thống kê đơn hàng"
+
+msgid "daily_product_report_date_start"
+msgstr "Từ ngày"
+
+msgid "daily_product_report_date_end"
+msgstr "Đến ngày"
+
+msgid "daily_report_date_end"
+msgstr "Đến ngày"
+
+# /DailyProductReports/* - END
+
+# DailyProductReport - BEGIN
+msgid "daily_product_report_date"
+msgstr "Ngày"
+
+msgid "daily_product_report_region_id"
+msgstr "Vùng miền"
+
+msgid "daily_product_report_distributor_id"
+msgstr "Nhà phân phối"
+
+msgid "daily_product_report_product_id"
+msgstr "Sản phẩm"
+
+msgid "daily_product_report_total_revernue"
+msgstr "Doanh thu"
+
+msgid "daily_product_report_total_order_distributor"
+msgstr "Tổng số đơn"
+
+msgid "daily_product_report_total_order_distributor_success"
+msgstr "Thành công"
+
+msgid "daily_product_report_total_order_distributor_pending"
+msgstr "Chờ xử lý"
+
+msgid "daily_product_report_total_order_distributor_processing"
+msgstr "Đang xử lý"
+
+msgid "daily_product_report_total_order_distributor_fail"
+msgstr "Hủy"
+
+msgid "daily_product_report_total_order_distributor_bad"
+msgstr "Giả mạo"
+
+# DailyProductReport - END
 
 # Customer - BEGIN
 msgid "customer_name"
@@ -393,22 +444,22 @@ msgstr "Số ĐT2"
 msgid "customer_address"
 msgstr "Địa chỉ"
 
-msgid "customer_total_order_bundle"
+msgid "customer_total_order_distributor"
 msgstr "Tổng đơn hàng"
 
-msgid "customer_total_order_bundle_success"
+msgid "customer_total_order_distributor_success"
 msgstr "Tổng thành công"
 
-msgid "customer_total_order_bundle_pending"
+msgid "customer_total_order_distributor_pending"
 msgstr "Tổng chờ xử lý"
 
-msgid "customer_total_order_bundle_processing"
+msgid "customer_total_order_distributor_processing"
 msgstr "Tổng đang xử lý"
 
-msgid "customer_total_order_bundle_fail"
+msgid "customer_total_order_distributor_fail"
 msgstr "Tổng hủy"
 
-msgid "customer_total_order_bundle_bad"
+msgid "customer_total_order_distributor_bad"
 msgstr "Tổng giả mạo"
 # Customer - END
 
