@@ -4,7 +4,7 @@ App::uses('CacheCommon', 'Lib');
 
 class OrdersBundle extends AppModel {
 
-    public $useTable = 'orders_bundles';
+    public $useTable = 'orders_distributors';
     public $belongsTo = array(
         'Order' => array(
             'className' => 'Order',
@@ -69,8 +69,8 @@ class OrdersBundle extends AppModel {
             $status_alias = $this->getStatusAlias($this->data[$this->alias]['status']);
             $status_old_alias = $this->getStatusAlias($this->data_old[$this->alias]['status']);
 
-            $status_field = 'total_order_bundle_' . $status_alias;
-            $status_old_field = 'total_order_bundle_' . $status_old_alias;
+            $status_field = 'total_order_distributor_' . $status_alias;
+            $status_old_field = 'total_order_distributor_' . $status_old_alias;
 
             $$status_old_field = !empty($customer[$Customer->alias][$status_old_field]) ?
                     $customer[$Customer->alias][$status_old_field] : 0;
@@ -98,7 +98,7 @@ class OrdersBundle extends AppModel {
         if (
                 !$created &&
                 !empty($this->data[$this->alias]['region_id']) &&
-                !empty($this->data[$this->alias]['bundle_id']) &&
+                !empty($this->data[$this->alias]['distributor_id']) &&
                 !empty($this->data[$this->alias]['created']) &&
                 isset($this->data[$this->alias]['total_price']) &&
                 isset($this->data[$this->alias]['status']) &&
@@ -108,21 +108,21 @@ class OrdersBundle extends AppModel {
             App::uses('DailyReport', 'Model');
             $DailyReport = new DailyReport();
             $region_id = $this->data[$this->alias]['region_id'];
-            $bundle_id = $this->data[$this->alias]['bundle_id'];
+            $distributor_id = $this->data[$this->alias]['distributor_id'];
             $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
 
             $DailyReport->Behaviors->disable('ManagerFilter');
-            $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
+            $report_daily = $DailyReport->checkExist($date, $region_id, $distributor_id);
             if (empty($report_daily)) {
 
-                throw new NotImplementedException(__('The DailyReport with date=%s, region_id=%s, bundle_id=%s  does not exist', $date, $region_id, $bundle_id));
+                throw new NotImplementedException(__('The DailyReport with date=%s, region_id=%s, distributor_id=%s  does not exist', $date, $region_id, $distributor_id));
             }
 
             $status_alias = $this->getStatusAlias($this->data[$this->alias]['status']);
             $status_old_alias = $this->getStatusAlias($this->data_old[$this->alias]['status']);
 
-            $status_field = 'total_order_bundle_' . $status_alias;
-            $status_old_field = 'total_order_bundle_' . $status_old_alias;
+            $status_field = 'total_order_distributor_' . $status_alias;
+            $status_old_field = 'total_order_distributor_' . $status_old_alias;
 
             $$status_old_field = !empty($report_daily[$DailyReport->alias][$status_old_field]) ?
                     $report_daily[$DailyReport->alias][$status_old_field] : 0;
@@ -157,36 +157,36 @@ class OrdersBundle extends AppModel {
         }
 
 
-        // nếu thưc hiện tạo mới customer thì cộng +1 vào report_dailys.total_order_bundle
-        // công +1 vào report_dailys.total_order_bundle_pending
+        // nếu thưc hiện tạo mới customer thì cộng +1 vào report_dailys.total_order_distributor
+        // công +1 vào report_dailys.total_order_distributor_pending
         if (
                 $created &&
                 isset($this->data[$this->alias]['region_id']) &&
-                isset($this->data[$this->alias]['bundle_id'])
+                isset($this->data[$this->alias]['distributor_id'])
         ) {
 
             App::uses('DailyReport', 'Model');
             $DailyReport = new DailyReport();
             $region_id = $this->data[$this->alias]['region_id'];
-            $bundle_id = $this->data[$this->alias]['bundle_id'];
+            $distributor_id = $this->data[$this->alias]['distributor_id'];
             $date = date('Ymd', strtotime($this->data[$this->alias]['created']));
             $save_data = array();
 
-            $report_daily = $DailyReport->checkExist($date, $region_id, $bundle_id);
+            $report_daily = $DailyReport->checkExist($date, $region_id, $distributor_id);
             if (empty($report_daily)) {
 
                 $DailyReport->create();
                 $save_data['date'] = $date;
                 $save_data['region_id'] = $region_id;
-                $save_data['bundle_id'] = $bundle_id;
-                $save_data['total_order_bundle'] = 1;
-                $save_data['total_order_bundle_pending'] = 1;
+                $save_data['distributor_id'] = $distributor_id;
+                $save_data['total_order_distributor'] = 1;
+                $save_data['total_order_distributor_pending'] = 1;
                 $DailyReport->save($save_data);
             } else {
 
                 $DailyReport->incrementField($report_daily[$DailyReport->alias]['id'], array(
-                    'total_order_bundle',
-                    'total_order_bundle_pending',
+                    'total_order_distributor',
+                    'total_order_distributor_pending',
                 ));
             }
         }

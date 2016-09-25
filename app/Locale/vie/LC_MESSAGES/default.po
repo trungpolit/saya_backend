@@ -204,6 +204,9 @@ msgstr "Vùng miền"
 msgid "orders_distributor_bundle_id"
 msgstr "Nhóm sản phẩm"
 
+msgid "orders_distributor_distributor_id"
+msgstr "Nhà phân phối"
+
 msgid "orders_distributor_code"
 msgstr "Mã đơn hàng"
 
@@ -341,6 +344,9 @@ msgstr "Vùng miền"
 
 msgid "daily_report_bundle_id"
 msgstr "Nhóm sản phẩm"
+
+msgid "daily_report_distributor_id"
+msgstr "Nhà phân phối"
 
 msgid "daily_report_user_code"
 msgstr "Mã nhà phân phối"
@@ -542,6 +548,9 @@ msgstr "Ngày cập nhật"
 # /Setting/* - BEGIN
 msgid "setting_title"
 msgstr "Danh sách cài đặt"
+
+msgid "setting_nav_title"
+msgstr "Cài đặt"
 # /Setting/* - END
 
 # Perm - BEGIN
@@ -919,4 +928,7 @@ msgstr "Thêm mới nhà phân phối"
 
 msgid "distributor_edit_title"
 msgstr "Chỉnh sửa nhà phân phối"
+
+msgid "distributor_nav_title"
+msgstr "Nhà phân phối"
 # /Distributors/* - END

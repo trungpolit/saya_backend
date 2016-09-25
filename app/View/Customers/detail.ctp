@@ -156,11 +156,11 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <?php echo __('customer_total_order_bundle') ?>
+                            <?php echo __('customer_total_order_distributor') ?>
                         </div>
                         <div class="col-sm-6">
                             <?php
-                            echo number_format($customer[$model_name]['total_order_bundle']);
+                            echo number_format($customer[$model_name]['total_order_distributor']);
                             ?>
                         </div>
                     </div>
@@ -168,11 +168,11 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <?php echo __('customer_total_order_bundle_success') ?>
+                            <?php echo __('customer_total_order_distributor_success') ?>
                         </div>
                         <div class="col-sm-6">
                             <?php
-                            echo number_format($customer[$model_name]['total_order_bundle_success']);
+                            echo number_format($customer[$model_name]['total_order_distributor_success']);
                             ?>
                         </div>
                     </div>
@@ -180,11 +180,11 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <?php echo __('customer_total_order_bundle_pending') ?>
+                            <?php echo __('customer_total_order_distributor_pending') ?>
                         </div>
                         <div class="col-sm-6">
                             <?php
-                            echo number_format($customer[$model_name]['total_order_bundle_pending']);
+                            echo number_format($customer[$model_name]['total_order_distributor_pending']);
                             ?>
                         </div>
                     </div>
@@ -192,11 +192,11 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <?php echo __('customer_total_order_bundle_processing') ?>
+                            <?php echo __('customer_total_order_distributor_processing') ?>
                         </div>
                         <div class="col-sm-6">
                             <?php
-                            echo number_format($customer[$model_name]['total_order_bundle_processing']);
+                            echo number_format($customer[$model_name]['total_order_distributor_processing']);
                             ?>
                         </div>
                     </div>
@@ -204,11 +204,11 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <?php echo __('customer_total_order_bundle_fail') ?>
+                            <?php echo __('customer_total_order_distributor_fail') ?>
                         </div>
                         <div class="col-sm-6">
                             <?php
-                            echo number_format($customer[$model_name]['total_order_bundle_fail']);
+                            echo number_format($customer[$model_name]['total_order_distributor_fail']);
                             ?>
                         </div>
                     </div>
@@ -216,11 +216,11 @@ echo $this->element('js/datetimepicker');
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-sm-6">
-                            <?php echo __('customer_total_order_bundle_bad') ?>
+                            <?php echo __('customer_total_order_distributor_bad') ?>
                         </div>
                         <div class="col-sm-6">
                             <?php
-                            echo number_format($customer[$model_name]['total_order_bundle_bad']);
+                            echo number_format($customer[$model_name]['total_order_distributor_bad']);
                             ?>
                         </div>
                     </div>
@@ -242,12 +242,12 @@ echo $this->element('js/datetimepicker');
                 <div class="col-md-4">
                     <div class="form-group">
                         <?php
-                        echo $this->Form->input('bundle_id', array(
+                        echo $this->Form->input('distributor_id', array(
                             'div' => false,
                             'class' => 'form-control',
-                            'label' => __('daily_report_bundle_id'),
-                            'default' => $this->request->query('bundle_id'),
-                            'options' => $bundles,
+                            'label' => __('daily_report_distributor_id'),
+                            'default' => $this->request->query('distributor_id'),
+                            'options' => $distributors,
                             'empty' => '-------',
                         ));
                         ?>
@@ -259,7 +259,7 @@ echo $this->element('js/datetimepicker');
                         echo $this->Form->input('code', array(
                             'div' => false,
                             'class' => 'form-control',
-                            'label' => __('orders_bundle_code'),
+                            'label' => __('orders_distributor_code'),
                             'default' => $this->request->query('code'),
                         ));
                         ?>
@@ -271,7 +271,7 @@ echo $this->element('js/datetimepicker');
                         echo $this->Form->input('status', array(
                             'div' => false,
                             'class' => 'form-control',
-                            'label' => __('orders_bundle_status'),
+                            'label' => __('orders_distributor_status'),
                             'options' => $status_order,
                             'empty' => '-------',
                             'default' => $this->request->query('status'),
@@ -318,27 +318,27 @@ echo $this->element('js/datetimepicker');
                         <tr>
                             <?php if (!empty($list_data)): ?>
                                 <th><?php echo __('no') ?></th>
-                                <th><?php echo $this->Paginator->sort('code', __('orders_bundle_code')); ?></th>
+                                <th><?php echo $this->Paginator->sort('code', __('orders_distributor_code')); ?></th>
                                 <th>
-                                    <?php echo $this->Paginator->sort('bundle_id', __('orders_bundle_bundle_id')); ?>
+                                    <?php echo $this->Paginator->sort('distributor_id', __('orders_distributor_distributor_id')); ?>
                                 </th>
-                                <th><?php echo $this->Paginator->sort('total_qty', __('orders_bundle_total_qty')); ?></th>
-                                <th><?php echo $this->Paginator->sort('total_price', __('orders_bundle_total_price')); ?></th>
-                                <th><?php echo $this->Paginator->sort('status', __('orders_bundle_status')); ?></th>
+                                <th><?php echo $this->Paginator->sort('total_qty', __('orders_distributor_total_qty')); ?></th>
+                                <th><?php echo $this->Paginator->sort('total_price', __('orders_distributor_total_price')); ?></th>
+                                <th><?php echo $this->Paginator->sort('status', __('orders_distributor_status')); ?></th>
                                 <th>
-                                    <?php echo $this->Paginator->sort('created', __('orders_bundle_created')); ?>
+                                    <?php echo $this->Paginator->sort('created', __('orders_distributor_created')); ?>
                                 </th>
                                 <th><?php echo __('operation') ?></th>
                             <?php else: ?>
                                 <th><?php echo __('no') ?></th>
-                                <th><?php echo __('orders_bundle_code'); ?></th>
+                                <th><?php echo __('orders_distributor_code'); ?></th>
                                 <th>
-                                    <?php echo __('orders_bundle_bundle_id'); ?>
+                                    <?php echo __('orders_distributor_distributor_id'); ?>
                                 </th>
-                                <th><?php echo __('orders_bundle_total_qty'); ?></th>
-                                <th><?php echo __('orders_bundle_total_price') ?></th>
-                                <th><?php echo __('orders_bundle_status') ?></th>
-                                <th><?php echo __('orders_bundle_created') ?></th>
+                                <th><?php echo __('orders_distributor_total_qty'); ?></th>
+                                <th><?php echo __('orders_distributor_total_price') ?></th>
+                                <th><?php echo __('orders_distributor_status') ?></th>
+                                <th><?php echo __('orders_distributor_created') ?></th>
                                 <th><?php echo __('operation') ?></th>
                             <?php endif; ?>
                         </tr>
@@ -350,35 +350,35 @@ echo $this->element('js/datetimepicker');
                             ?>
                             <?php foreach ($list_data as $item): ?>
                                 <?php
-                                $order_class = $this->Common->getOrderClass($item['OrdersBundle']['status']);
+                                $order_class = $this->Common->getOrderClass($item['OrdersDistributor']['status']);
                                 ?>
                                 <tr class="form-edit <?php echo $order_class ?>">
                                     <td >
                                         <?php
-                                        $id = $item['OrdersBundle']['id'];
+                                        $id = $item['OrdersDistributor']['id'];
                                         echo $this->Form->hidden('id', array(
                                             'value' => $id,
                                         ));
                                         echo $this->Form->hidden('customer_id', array(
-                                            'value' => $item['OrdersBundle']['customer_id'],
+                                            'value' => $item['OrdersDistributor']['customer_id'],
                                         ));
                                         echo $this->Form->hidden('customer_code', array(
-                                            'value' => $item['OrdersBundle']['customer_code'],
+                                            'value' => $item['OrdersDistributor']['customer_code'],
                                         ));
                                         echo $this->Form->hidden('no', array(
-                                            'value' => $item['OrdersBundle']['no'],
+                                            'value' => $item['OrdersDistributor']['no'],
                                         ));
                                         echo $this->Form->hidden('region_id', array(
-                                            'value' => $item['OrdersBundle']['region_id'],
+                                            'value' => $item['OrdersDistributor']['region_id'],
                                         ));
-                                        echo $this->Form->hidden('bundle_id', array(
-                                            'value' => $item['OrdersBundle']['bundle_id'],
+                                        echo $this->Form->hidden('distributor_id', array(
+                                            'value' => $item['OrdersDistributor']['distributor_id'],
                                         ));
                                         echo $this->Form->hidden('created', array(
-                                            'value' => $item['OrdersBundle']['created'],
+                                            'value' => $item['OrdersDistributor']['created'],
                                         ));
                                         echo $this->Form->hidden('total_price', array(
-                                            'value' => $item['OrdersBundle']['total_price'],
+                                            'value' => $item['OrdersDistributor']['total_price'],
                                         ));
                                         echo $stt;
                                         ?>
@@ -386,24 +386,24 @@ echo $this->element('js/datetimepicker');
                                     <td>
                                         <strong>
                                             <?php
-                                            echo $item['OrdersBundle']['code'];
+                                            echo $item['OrdersDistributor']['code'];
                                             ?>
                                         </strong>
                                     </td>
                                     <td>
                                         <?php
-                                        echo!empty($bundles[$item['OrdersBundle']['bundle_id']]) ?
-                                                $bundles[$item['OrdersBundle']['bundle_id']] : __('unknown');
+                                        echo!empty($distributors[$item['OrdersDistributor']['distributor_id']]) ?
+                                                $distributors[$item['OrdersDistributor']['distributor_id']] : __('unknown');
                                         ?>
                                     </td>
                                     <td>
                                         <?php
-                                        echo number_format($item['OrdersBundle']['total_qty']);
+                                        echo number_format($item['OrdersDistributor']['total_qty']);
                                         ?>
                                     </td>
                                     <td>
                                         <?php
-                                        echo number_format($item['OrdersBundle']['total_price']);
+                                        echo number_format($item['OrdersDistributor']['total_price']);
                                         ?>
                                     </td>
                                     <td>
@@ -412,15 +412,15 @@ echo $this->element('js/datetimepicker');
                                             'div' => false,
                                             'class' => 'form-control',
                                             'label' => false,
-                                            'default' => isset($item['OrdersBundle']['status']) ?
-                                                    $item['OrdersBundle']['status'] : STATUS_PENDING,
+                                            'default' => isset($item['OrdersDistributor']['status']) ?
+                                                    $item['OrdersDistributor']['status'] : STATUS_PENDING,
                                             'options' => $status_order,
                                         ));
                                         ?>
                                     </td>
                                     <td>
                                         <?php
-                                        echo $this->Common->parseDateTime($item['OrdersBundle']['created']);
+                                        echo $this->Common->parseDateTime($item['OrdersDistributor']['created']);
                                         ?>
                                     </td>
                                     <td>
@@ -430,7 +430,7 @@ echo $this->element('js/datetimepicker');
                                         <?php
                                         echo $this->element('Button/req_edit', array(
                                             'id' => $id,
-                                            'model_name' => 'OrdersBundle',
+                                            'model_name' => 'OrdersDistributor',
                                         ));
                                         ?>
                                         <?php
@@ -448,7 +448,7 @@ echo $this->element('js/datetimepicker');
                                 <tr  class="panel-collapse collapse"  id="product-data-<?php echo $id ?>">
                                     <td colspan="10">
                                         <?php
-                                        $product_data = $item['OrdersBundle']['product_data'];
+                                        $product_data = $item['OrdersDistributor']['product_data'];
                                         ?>
                                         <div class="table-responsive">
                                             <table class="table table-hover">

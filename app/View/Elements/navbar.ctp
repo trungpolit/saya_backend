@@ -34,10 +34,10 @@ $perms = $user['perms'];
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if (in_array('OrdersBundles/index', $perms)): ?>
+            <?php if (in_array('OrdersDistributors/index', $perms)): ?>
                 <li class="">
-                    <a href="<?php echo Router::url(array('controller' => 'OrdersBundles', 'action' => 'index')) ?>">
-                        <i class="fa fa-shopping-cart"></i> <span class="nav-label"> <?php echo __('orders_bundle_nav_title') ?> </span>
+                    <a href="<?php echo Router::url(array('controller' => 'OrdersDistributors', 'action' => 'index')) ?>">
+                        <i class="fa fa-shopping-cart"></i> <span class="nav-label"> <?php echo __('orders_distributor_nav_title') ?> </span>
                     </a>
                 </li>
             <?php endif; ?>
@@ -111,10 +111,10 @@ $perms = $user['perms'];
                     </a>
                 </li>
             <?php endif; ?>
-            <?php if (in_array('Bundles/index', $perms)): ?>
+            <?php if (in_array('Distributors/index', $perms)): ?>
                 <li class="">
-                    <a href="<?php echo Router::url(array('controller' => 'Bundles', 'action' => 'index')) ?>">
-                        <i class="fa fa-flag"></i> <span class="nav-label"> <?php echo __('bundle_nav_title') ?> </span>
+                    <a href="<?php echo Router::url(array('controller' => 'Distributors', 'action' => 'index')) ?>">
+                        <i class="fa fa-globe"></i> <span class="nav-label"> <?php echo __('distributor_nav_title') ?> </span>
                     </a>
                 </li>
             <?php endif; ?>
@@ -143,6 +143,13 @@ $perms = $user['perms'];
                 <li class="">
                     <a href="<?php echo Router::url(array('controller' => 'Perms', 'action' => 'index')) ?>">
                         <i class="fa fa-user-secret"></i> <span class="nav-label"> <?php echo __('perm_nav_title') ?> </span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (in_array('Settings/index', $perms)): ?>
+                <li class="">
+                    <a href="<?php echo Router::url(array('controller' => 'Settings', 'action' => 'index')) ?>">
+                        <i class="fa fa-gears"></i> <span class="nav-label"> <?php echo __('setting_nav_title') ?> </span>
                     </a>
                 </li>
             <?php endif; ?>

@@ -6,7 +6,7 @@ class CustomersController extends AppController {
         'Customer',
         'OrdersDistributor',
         'Region',
-        'Bundle',
+        'Distributor',
     );
 
     public function detail($id = null) {
@@ -31,8 +31,8 @@ class CustomersController extends AppController {
         $this->setCustomerStats($customer);
         $this->set('customer', $customer);
 
-        // lấy ra thông tin tất cả nhóm Bundle
-        $distributors = $this->Bundle->getList();
+        // lấy ra thông tin tất cả nhóm Distributor
+        $distributors = $this->Distributor->getList();
         $this->set('distributors', $distributors);
 
         // lấy ra danh sách region theo dạng tree phân cấp

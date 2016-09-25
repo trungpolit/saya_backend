@@ -216,11 +216,8 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    foreach ($item[$model_name]['category_id'] as $v) {
-
-                                        echo isset($categories[$v]) ?
-                                                $categories[$v] : __('unknown') . '<br/>';
-                                    }
+                                    echo isset($categories[$item[$model_name]['category_id']]) ?
+                                            $categories[$item[$model_name]['category_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>

@@ -40,7 +40,7 @@ class AppController extends Controller {
                 'controller' => 'Users',
                 'action' => 'login',
             ),
-            'loginRedirect' => array('controller' => 'OrdersBundles', 'action' => 'index'),
+            'loginRedirect' => array('controller' => 'OrdersDistributors', 'action' => 'index'),
             'logoutRedirect' => array('controller' => 'Users', 'action' => 'login'),
             'authorize' => array('Controller'),
             'authenticate' => array(
