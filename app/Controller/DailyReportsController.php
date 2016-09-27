@@ -4,7 +4,7 @@ class DailyReportsController extends AppController {
 
     public $uses = array(
         'DailyReport',
-        'Bundle',
+        'Distributor',
         'Region',
         'Setting',
         'User',
@@ -33,8 +33,8 @@ class DailyReportsController extends AppController {
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
-        // lấy ra thông tin tất cả nhóm Bundle
-        $distributors = $this->Bundle->getList();
+        // lấy ra thông tin tất cả nhóm Distributor
+        $distributors = $this->Distributor->getList();
         $this->set('distributors', $distributors);
 
         // lấy ra danh sách region theo dạng tree phân cấp
@@ -62,14 +62,6 @@ class DailyReportsController extends AppController {
             $this->request->query['date_end'] = trim($this->request->query['date_end']);
             $options['conditions']['DailyReport.date <='] = date('Ymd', strtotime($this->request->query['date_end']));
         }
-        if (isset($this->request->query['user_code']) && strlen($this->request->query['user_code'])) {
-            $user_code = $this->request->query['user_code'];
-            $extract = explode('|', $user_code);
-            $region_id = $extract[0];
-            $distributor_id = $extract[1];
-            $options['conditions']['DailyReport.region_id'] = $region_id;
-            $options['conditions']['DailyReport.distributor_id'] = $distributor_id;
-        }
     }
 
     protected function setInit() {
@@ -84,9 +76,6 @@ class DailyReportsController extends AppController {
         $refresh = !empty($refresh_setting['Setting']) ?
                 (int) $refresh_setting['Setting']['value'] : DAILY_REPORT_REFRESH;
         $this->set('refresh', $refresh);
-        // lấy ra mã của user thuộc nhà phân phối
-        $user_codes = $this->User->listCode();
-        $this->set('user_codes', $user_codes);
     }
 
 }
