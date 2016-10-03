@@ -17,8 +17,10 @@ class CrontabDailyReportsController extends CrontabAppController {
         $date = $this->request->query('date');
         if (empty($date)) {
             $date = date('Y-m-d');
+        } else {
+            $date = date('Y-m-d', strtotime($date));
         }
-        $date_int = (int) $date;
+        $date_int = (int) date('Ymd', strtotime($date));
         $distributor_id = $this->request->query('distributor_id');
         if (empty($distributor_id)) {
             $distributors = $this->Distributor->find('all', array(
@@ -77,6 +79,7 @@ class CrontabDailyReportsController extends CrontabAppController {
                     $v['OrdersDistributor']['total_order_distributor_bad'] : 0;
             $total = $success + $pending + $processing + $fail + $bad;
             $save_data[$k]['total_order_distributor'] = $total;
+            $save_data[$k]['date'] = $date_int;
         }
         $this->DailyReport->saveAll(array_values($save_data));
         $this->logAnyFile(__("END: Thực hiện thống kê cho Distributor=(%s)", implode(',', $distributor_id)), $this->log_file_name);
@@ -101,9 +104,9 @@ class CrontabDailyReportsController extends CrontabAppController {
                 $save_data[$distributor_id]['distributor_id'] = $v['OrdersDistributor']['distributor_id'];
                 $save_data[$distributor_id]['distributor_code'] = $v['OrdersDistributor']['distributor_code'];
                 $alias = $status_conf[$status];
-                $save_data[$distributor_id]['total_order_distributor_' . $alias] = $v['OrdersDistributor']['count'];
+                $save_data[$distributor_id]['total_order_distributor_' . $alias] = $v[0]['count'];
                 if ($status == STATUS_SUCCESS) {
-                    $save_data[$distributor_id]['total_revernue'] = $v['OrdersDistributor']['total_revernue'];
+                    $save_data[$distributor_id]['total_revernue'] = $v[0]['total_revernue'];
                 }
             }
         }

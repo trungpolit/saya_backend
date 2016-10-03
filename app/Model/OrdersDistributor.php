@@ -379,7 +379,7 @@ class OrdersDistributor extends AppModel {
         $default_opts = array(
             'recursive' => -1,
             'group' => array(
-                'region_id', 'distributor_id', 'product_id'
+                'region_id', 'distributor_id',
             ),
             'fields' => array(
                 'region_id', 'region_name', 'distributor_id',
