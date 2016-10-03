@@ -1,7 +1,6 @@
 <?php
 $user = CakeSession::read('Auth.User');
 if (empty($user)) {
-
     return;
 }
 $username = $user['username'];
@@ -31,6 +30,13 @@ $perms = $user['perms'];
                 <li class="">
                     <a href="<?php echo Router::url(array('controller' => 'DailyReports', 'action' => 'index')) ?>">
                         <i class="fa fa-pie-chart"></i> <span class="nav-label"> <?php echo __('daily_report_nav_title') ?> </span>
+                    </a>
+                </li>
+            <?php endif; ?>
+            <?php if (in_array('DailyProductReports/index', $perms)): ?>
+                <li class="">
+                    <a href="<?php echo Router::url(array('controller' => 'DailyProductReports', 'action' => 'index')) ?>">
+                        <i class="fa fa-line-chart"></i> <span class="nav-label"> <?php echo __('daily_product_report_nav_title') ?> </span>
                     </a>
                 </li>
             <?php endif; ?>

@@ -36,61 +36,69 @@ class User extends AppModel {
         )
     );
 
-    public function beforeValidate($options = array()) {
-        parent::beforeValidate($options);
-
-        // thực hiện validate với trường hợp user là MANAGER
-        if (
-                isset($this->data[$this->alias]['type']) &&
-                $this->data[$this->alias]['type'] == MANAGER_TYPE &&
-                isset($this->data[$this->alias]['region_id']) &&
-                isset($this->data[$this->alias]['bundle_id'])
-        ) {
-
-            $options = array(
-                'recursive' => -1,
-                'conditions' => array(
-                    'UsersRegion.region_id' => $this->data[$this->alias]['region_id'],
-                    'UsersBundle.bundle_id' => $this->data[$this->alias]['bundle_id'],
-                ),
-            );
-            $options['joins'] = array(
-                array(
-                    'table' => 'users_regions',
-                    'alias' => 'UsersRegion',
-                    'type' => 'LEFT',
-                    'conditions' => array(
-                        'User.id = UsersRegion.user_id',
-                    )
-                ),
-                array(
-                    'table' => 'users_bundles',
-                    'alias' => 'UsersBundle',
-                    'type' => 'LEFT',
-                    'conditions' => array(
-                        'User.id = UsersBundle.user_id',
-                    )
-                ),
-            );
-            $user = $this->find('first', $options);
-            if (!empty($user)) {
-
-                $this->validationErrors['region_id'] = __('Tài khoản đã tồn tại tương ứng với Vùng miền và Nhóm sản phẩm');
-                $this->validationErrors['bundle_id'] = __('Tài khoản đã tồn tại tương ứng với Vùng miền và Nhóm sản phẩm');
-
-                return false;
-            }
-        }
-
-        return true;
-    }
+//    public function beforeValidate($options = array()) {
+//        parent::beforeValidate($options);
+//
+//        // thực hiện validate với trường hợp user là MANAGER
+//        if (
+//                isset($this->data[$this->alias]['type']) &&
+//                $this->data[$this->alias]['type'] == MANAGER_TYPE &&
+//                isset($this->data[$this->alias]['region_id']) &&
+//                isset($this->data[$this->alias]['bundle_id'])
+//        ) {
+//
+//            $options = array(
+//                'recursive' => -1,
+//                'conditions' => array(
+//                    'UsersRegion.region_id' => $this->data[$this->alias]['region_id'],
+//                    'UsersBundle.bundle_id' => $this->data[$this->alias]['bundle_id'],
+//                ),
+//            );
+//            $options['joins'] = array(
+//                array(
+//                    'table' => 'users_regions',
+//                    'alias' => 'UsersRegion',
+//                    'type' => 'LEFT',
+//                    'conditions' => array(
+//                        'User.id = UsersRegion.user_id',
+//                    )
+//                ),
+//                array(
+//                    'table' => 'users_bundles',
+//                    'alias' => 'UsersBundle',
+//                    'type' => 'LEFT',
+//                    'conditions' => array(
+//                        'User.id = UsersBundle.user_id',
+//                    )
+//                ),
+//            );
+//            $user = $this->find('first', $options);
+//            if (!empty($user)) {
+//
+//                $this->validationErrors['region_id'] = __('Tài khoản đã tồn tại tương ứng với Vùng miền và Nhóm sản phẩm');
+//                $this->validationErrors['bundle_id'] = __('Tài khoản đã tồn tại tương ứng với Vùng miền và Nhóm sản phẩm');
+//
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
 
     public function beforeSave($options = array()) {
         parent::beforeSave($options);
-
         if (!empty($this->data[$this->alias]['password'])) {
             $this->data[$this->alias]['password_show'] = $this->data[$this->alias]['password'];
             $this->data[$this->alias]['password'] = Security::hash(trim($this->data[$this->alias]['password']), null, true);
+        }
+        if (!empty($this->data[$this->alias]['distributor_id']) && empty($this->data[$this->alias]['distributor_code'])) {
+            App::uses('Distributor', 'Model');
+            $Distributor = new Distributor();
+            $distributor = $Distributor->findById($this->data[$this->alias]['distributor_id']);
+            if (empty($distributor)) {
+                throw new NotImplementedException(__('Không tồn tại Distributor tương ứng với id=%s', $this->data[$this->alias]['distributor_id']));
+            }
+            $this->data[$this->alias]['distributor_code'] = $distributor[$Distributor->alias]['code'];
         }
     }
 

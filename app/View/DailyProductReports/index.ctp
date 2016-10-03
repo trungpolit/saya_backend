@@ -149,26 +149,16 @@ echo $this->element('js/datetimepicker');
                             <th><?php echo $this->Paginator->sort('region_id', __('daily_product_report_region_id')); ?></th>
                             <th><?php echo $this->Paginator->sort('distributor_id', __('daily_product_report_distributor_id')); ?></th>
                             <th><?php echo $this->Paginator->sort('product_id', __('daily_product_report_product_id')); ?></th>
+                            <th><?php echo $this->Paginator->sort('total_qty', __('daily_product_report_total_qty')); ?></th>
                             <th><?php echo $this->Paginator->sort('total_revernue', __('daily_product_report_total_revernue')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_order_distributor', __('daily_product_report_total_order_distributor')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_order_distributor_success', __('daily_product_report_total_order_distributor_success')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_order_distributor_pending', __('daily_product_report_total_order_distributor_pending')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_order_distributor_processing', __('daily_product_report_total_order_distributor_processing')); ?></th>
-                            <th><?php echo $this->Paginator->sort('total_order_distributor_fail', __('daily_product_report_total_order_distributor_fail')); ?></th>
-                            <th> <?php echo $this->Paginator->sort('total_order_distributor_bad', __('daily_product_report_total_order_distributor_bad')); ?></th>
                         <?php else: ?>
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('daily_product_report_date'); ?></th>
                             <th><?php echo __('daily_product_report_region_id'); ?></th>
                             <th><?php echo __('daily_product_report_distributor_id'); ?></th>
                             <th><?php echo __('daily_product_report_product_id'); ?></th>
+                            <th><?php echo __('daily_product_report_total_qty'); ?></th>
                             <th><?php echo __('daily_product_report_total_revernue'); ?></th>
-                            <th><?php echo __('daily_product_report_total_order_distributor') ?></th>
-                            <th><?php echo __('daily_product_report_total_order_distributor_success'); ?></th>
-                            <th><?php echo __('daily_product_report_total_order_distributor_pending') ?></th>
-                            <th><?php echo __('daily_product_report_total_order_distributor_processing') ?></th>
-                            <th><?php echo __('daily_product_report_total_order_distributor_fail') ?></th>
-                            <th><?php echo __('daily_product_report_total_order_distributor_bad') ?></th>
                         <?php endif; ?>
                     </tr>
                 </thead>
@@ -191,8 +181,7 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo!empty($regions[$item[$model_name]['region_id']]) ?
-                                            $regions[$item[$model_name]['region_id']] : __('unknown');
+                                    echo $item[$model_name]['region_name'];
                                     ?>
                                 </td>
                                 <td>
@@ -203,8 +192,12 @@ echo $this->element('js/datetimepicker');
                                 </td>
                                 <td>
                                     <?php
-                                    echo!empty($products[$item[$model_name]['product_id']]) ?
-                                            $products[$item[$model_name]['product_id']] : __('unknown');
+                                    echo $item[$model_name]['product_name'];
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php
+                                    echo number_format($item[$model_name]['total_qty']);
                                     ?>
                                 </td>
                                 <td>
@@ -212,42 +205,12 @@ echo $this->element('js/datetimepicker');
                                     echo number_format($item[$model_name]['total_revernue']);
                                     ?>
                                 </td>
-                                <td>
-                                    <?php
-                                    echo number_format($item[$model_name]['total_order_distributor']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo number_format($item[$model_name]['total_order_distributor_success']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo number_format($item[$model_name]['total_order_distributor_pending']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo number_format($item[$model_name]['total_order_distributor_processing']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo number_format($item[$model_name]['total_order_distributor_fail']);
-                                    ?>
-                                </td>
-                                <td>
-                                    <?php
-                                    echo number_format($item[$model_name]['total_order_distributor_bad']);
-                                    ?>
-                                </td>
                             </tr>
                             <?php $stt++; ?>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="12" style="text-align: center"><?php echo __('no_result') ?></td>
+                            <td colspan="7" style="text-align: center"><?php echo __('no_result') ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

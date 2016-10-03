@@ -33,34 +33,20 @@ echo $this->element('js/chosen');
                 ?>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input('role_id', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('user_role_id'),
-                    'default' => $this->request->query('role_id'),
-                    'options' => $roles,
-                    'empty' => '-------',
-                ));
-                ?>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input('bundle_id', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('user_bundle_id'),
-                    'default' => $this->request->query('bundle_id'),
-                    'options' => $bundles,
-                    'empty' => '-------',
-                ));
-                ?>
-            </div>
-        </div>
+        <!--        <div class="col-md-4">
+                    <div class="form-group">
+        <?php
+//                echo $this->Form->input('role_id', array(
+//                    'div' => false,
+//                    'class' => 'form-control',
+//                    'label' => __('user_role_id'),
+//                    'default' => $this->request->query('role_id'),
+//                    'options' => $roles,
+//                    'empty' => '-------',
+//                ));
+        ?>
+                    </div>
+                </div>-->
         <div class="col-md-4">
             <div class="form-group">
                 <?php
@@ -78,10 +64,24 @@ echo $this->element('js/chosen');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
+                echo $this->Form->input('distributor_id', array(
+                    'div' => false,
+                    'class' => 'form-control',
+                    'label' => __('user_distributor_id'),
+                    'default' => $this->request->query('distributor_id'),
+                    'options' => $distributors,
+                    'empty' => '-------',
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
                 echo $this->Form->input('code', array(
                     'div' => false,
                     'class' => 'form-control',
-                    'label' => __('user_code'),
+                    'label' => __('user_distributor_code'),
                     'default' => $this->request->query('code'),
                 ));
                 ?>
@@ -120,11 +120,10 @@ echo $this->element('js/chosen');
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('user_username') ?></th>
                             <th><?php echo __('user_role_id') ?></th>
+                            <th><?php echo __('user_distributor_id') ?></th>
+                            <th><?php echo __('user_distributor_code') ?></th>
                             <th><?php echo __('user_region_id') ?></th>
-                            <th><?php echo __('user_bundle_id') ?></th>
-                            <th><?php echo __('user_code') ?></th>
                             <th><?php echo __('user_password_show') ?></th>
-                            <!--<th><?php echo __('user_weight') ?></th>-->
                             <th><?php echo __('user_status') ?></th>
                             <th><?php echo __('user_modified') ?></th>
                             <th><?php echo __('operation') ?></th>
@@ -132,11 +131,10 @@ echo $this->element('js/chosen');
                             <th><?php echo __('no') ?></th>
                             <th><?php echo $this->Paginator->sort('name', __('user_username')); ?></th>
                             <th><?php echo $this->Paginator->sort('role_id', __('user_role_id')); ?></th>
-                            <th><?php echo __('user_region_id') ?></th>
-                            <th><?php echo __('user_bundle_id') ?></th>
-                            <th><?php echo $this->Paginator->sort('code', __('user_code')); ?></th>
+                            <th><?php echo $this->Paginator->sort('distributor_id', __('user_distributor_id')) ?></th>
+                            <th><?php echo $this->Paginator->sort('distributor_code', __('user_distributor_code')); ?></th>
+                            <th><?php echo $this->Paginator->sort('region_id', __('user_region_id')) ?></th>
                             <th><?php echo $this->Paginator->sort('password_show', __('user_password_show')); ?></th>
-                            <!--<th><?php echo $this->Paginator->sort('weight', __('user_weight')); ?></th>-->
                             <th><?php echo $this->Paginator->sort('status', __('user_status')); ?></th>
                             <th><?php echo $this->Paginator->sort('modified', __('user_modified')); ?></th>
                             <th><?php echo __('operation') ?></th>
@@ -163,48 +161,48 @@ echo $this->element('js/chosen');
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input($model_name . '.region_id', array(
-                                        'class' => 'form-control chosen-select-one',
-                                        'div' => false,
-                                        'label' => false,
-                                        'options' => $regionTree,
-                                        'multiple' => true,
-                                        'default' => $item[$model_name]['region_id'],
-                                    ));
+//                                    echo $this->Form->input($model_name . '.distributor_id', array(
+//                                        'class' => 'form-control chosen-select-one',
+//                                        'div' => false,
+//                                        'label' => false,
+//                                        'options' => $distributors,
+//                                        'default' => $item[$model_name]['distributor_id'],
+//                                        'disabled' => true,
+//                                    ));
+                                    echo!empty($distributors[$item[$model_name]['distributor_id']]) ?
+                                            $distributors[$item[$model_name]['distributor_id']] : __('unknown');
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    echo $this->Form->input($model_name . '.bundle_id', array(
-                                        'class' => 'form-control chosen-select-one',
-                                        'div' => false,
-                                        'label' => false,
-                                        'options' => $bundles,
-                                        'multiple' => true,
-                                        'default' => $item[$model_name]['bundle_id'],
-                                    ));
+                                    echo $item[$model_name]['distributor_code'];
                                     ?>
                                 </td>
                                 <td>
                                     <?php
-                                    echo $item[$model_name]['code'];
-                                    ?>
+//                                    echo $this->Form->input($model_name . '.region_id', array(
+//                                        'class' => 'form-control chosen-select-one',
+//                                        'div' => false,
+//                                        'label' => false,
+//                                        'options' => $regionTree,
+//                                        'multiple' => true,
+//                                        'default' => $item[$model_name]['region_id'],
+//                                        'disabled' => true,
+//                                    ));
+                                    if (!empty($item[$model_name]['region_id'])):
+                                        ?>
+                                        <?php foreach ($item[$model_name]['region_id'] as $v): ?>
+                                            <?php
+                                            echo $regions[$v] ? $regions[$v] : __('unknown');
+                                            ?><hr/>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php
                                     echo $item[$model_name]['password_show'];
                                     ?>
                                 </td>
-<!--                                <td>
-                                    <?php
-//                                    echo $this->Form->input('weight', array(
-//                                        'div' => false,
-//                                        'class' => 'form-control',
-//                                        'label' => false,
-//                                        'default' => $item[$model_name]['weight'],
-//                                    ));
-                                    ?> 
-                                </td>-->
                                 <td>
                                     <?php
                                     echo $this->Form->input('status', array(

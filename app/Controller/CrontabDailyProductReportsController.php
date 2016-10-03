@@ -17,8 +17,10 @@ class CrontabDailyProductReportsController extends CrontabAppController {
         $date = $this->request->query('date');
         if (empty($date)) {
             $date = date('Y-m-d');
+        } else {
+            $date = date('Y-m-d', strtotime($date));
         }
-        $date_int = (int) $date;
+        $date_int = (int) date('Ymd', strtotime($date));
         $distributor_id = $this->request->query('distributor_id');
         if (empty($distributor_id)) {
             $distributors = $this->Distributor->find('all', array(
@@ -47,6 +49,8 @@ class CrontabDailyProductReportsController extends CrontabAppController {
         $options = array(
             'conditions' => array(
                 'distributor_id' => $distributor_id,
+                'created >=' => date('Y-m-d', strtotime($date)) . ' 00:00:00',
+                'created <' => date('Y-m-d', strtotime('+1 day', strtotime($date))) . ' 00:00:00',
             ),
         );
         $stats = $this->OrdersProduct->stats($options);
@@ -65,8 +69,8 @@ class CrontabDailyProductReportsController extends CrontabAppController {
                 'distributor_code' => $v['OrdersProduct']['distributor_code'],
                 'product_id' => $v['OrdersProduct']['product_id'],
                 'product_name' => $v['OrdersProduct']['product_name'],
-                'total_qty' => $v['OrdersProduct']['total_qty'],
-                'total_revernue' => $v['OrdersProduct']['total_revernue'],
+                'total_qty' => $v[0]['total_qty'],
+                'total_revernue' => $v[0]['total_revernue'],
             );
         }
         $this->DailyProductReport->saveAll($save_data);

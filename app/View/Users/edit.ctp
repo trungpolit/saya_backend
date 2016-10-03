@@ -4,11 +4,9 @@ echo $this->element('js/validate');
 ?>
 <script>
     $(function () {
-
         $('.chosen-select').chosen({
             max_selected_options: 1
         });
-
         $('form').validate();
         // thực hiện validate cho password và password confirm
         $("#password_confirm").rules("add", {
@@ -96,105 +94,28 @@ echo $this->element('js/validate');
                             'label' => false,
                             'required' => true,
                         ));
+                        echo $this->Form->hidden($model_name . '.role_id', array(
+                            'value' => DISTRIBUTOR_ROLE_ID,
+                        ));
                         ?>
                     </div>
                 </div>
                 <div class="hr-line-dashed"></div>
                 <?php
-                $role_id_err = $this->Form->error($model_name . '.role_id');
-                $role_id_err_class = !empty($role_id_err) ? 'has-error' : '';
+                $distributor_id_err = $this->Form->error($model_name . '.distributor_id');
+                $distributor_id_err_class = !empty($distributor_id_err) ? 'has-error' : '';
                 ?>
-                <div class="form-group <?php echo $role_id_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('user_role_id') ?> <?php echo $this->element('required') ?></label>
+                <div class="form-group <?php echo $distributor_id_err_class ?>">
+                    <label class="col-sm-2 control-label"><?php echo __('user_distributor_id') ?> <?php echo $this->element('required') ?></label>
 
                     <div class="col-sm-10">
                         <?php
-                        echo $this->Form->input($model_name . '.role_id', array(
+                        echo $this->Form->input($model_name . '.distributor_id', array(
                             'class' => 'form-control chosen-select',
                             'div' => false,
                             'label' => false,
-                            'options' => $roles,
+                            'options' => $distributors,
                             'required' => true,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $region_id_err = $this->Form->error($model_name . '.region_id');
-                $region_id_err_class = !empty($region_id_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $region_id_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('user_region_id') ?> <?php echo $this->element('required') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.region_id', array(
-                            'class' => 'form-control chosen-select',
-                            'div' => false,
-                            'label' => false,
-                            'options' => $regionTree,
-                            'multiple' => true,
-                            'required' => true,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $bundle_id_err = $this->Form->error($model_name . '.bundle_id');
-                $bundle_id_err_class = !empty($bundle_id_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $bundle_id_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('user_bundle_id') ?> <?php echo $this->element('required') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.bundle_id', array(
-                            'class' => 'form-control chosen-select',
-                            'div' => false,
-                            'label' => false,
-                            'options' => $bundles,
-                            'multiple' => true,
-                            'required' => true,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $description_err = $this->Form->error($model_name . '.code');
-                $description_err_class = !empty($description_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $description_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('user_code') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.code', array(
-                            'class' => 'form-control',
-                            'div' => false,
-                            'label' => false,
-                            'required' => true,
-                        ));
-                        ?>
-                    </div>
-                </div>
-                <div class="hr-line-dashed"></div>
-                <?php
-                $weight_err = $this->Form->error($model_name . '.weight');
-                $weight_err_class = !empty($weight_err) ? 'has-error' : '';
-                ?>
-                <div class="form-group <?php echo $weight_err_class ?>">
-                    <label class="col-sm-2 control-label"><?php echo __('user_weight') ?></label>
-
-                    <div class="col-sm-10">
-                        <?php
-                        echo $this->Form->input($model_name . '.weight', array(
-                            'class' => 'form-control',
-                            'div' => false,
-                            'label' => false,
-                            'type' => 'number',
                         ));
                         ?>
                     </div>

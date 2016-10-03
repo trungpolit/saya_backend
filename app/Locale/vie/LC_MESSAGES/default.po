@@ -387,6 +387,9 @@ msgstr "Đến ngày"
 msgid "daily_report_date_end"
 msgstr "Đến ngày"
 
+msgid "daily_product_report_nav_title"
+msgstr "Thống kê sản phẩm"
+
 # /DailyProductReports/* - END
 
 # DailyProductReport - BEGIN
@@ -422,6 +425,9 @@ msgstr "Hủy"
 
 msgid "daily_product_report_total_order_distributor_bad"
 msgstr "Giả mạo"
+
+msgid "daily_product_report_total_qty"
+msgstr "Số lượng"
 
 # DailyProductReport - END
 
@@ -698,6 +704,12 @@ msgstr "Mật khẩu"
 
 msgid "user_password_confirm"
 msgstr "Nhập lại mật khẩu"
+
+msgid "user_distributor_id"
+msgstr "Nhà phân phối"
+
+msgid "user_distributor_code"
+msgstr "Mã phân phối"
 # User - END
 
 # /Users/* - BEGIN
