@@ -188,6 +188,15 @@ echo $this->element('js/datetimepicker');
                                     echo $this->Form->hidden('id', array(
                                         'value' => $id,
                                     ));
+                                    echo $this->Form->hidden('region_id', array(
+                                        'value' => $item[$model_name]['region_id'],
+                                    ));
+                                    echo $this->Form->hidden('category_id', array(
+                                        'value' => $item[$model_name]['category_id'],
+                                    ));
+                                    echo $this->Form->hidden('distributor_id', array(
+                                        'value' => $item[$model_name]['distributor_id'],
+                                    ));
                                     echo $stt;
                                     ?>
                                 </td>
