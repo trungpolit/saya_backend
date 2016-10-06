@@ -18,6 +18,9 @@ class FileCommonBehavior extends ModelBehavior {
         );
 
         foreach ($model->file_fields as $field) {
+            if (!isset($model->data[$model->alias][$field])) {
+                continue;
+            }
             $FileMapping->deleteAll(array(
                 'FileMapping.row_id' => $model->id,
                 'FileMapping.table_name' => $model->useTable,

@@ -279,61 +279,44 @@ class AppController extends Controller {
     }
 
     public function isAuthorized($user) {
-
         if (empty($user)) {
-
             return $this->redirect($this->Auth->logout());
         }
 
         // xác định trạng thái của user, nếu không phải là kích hoạt thì logout
         $user_status = $user['status'];
         if ($user_status != STATUS_PUBLIC) {
-
             return $this->redirect($this->Auth->logout());
         }
 
         // xác định group của user
         $role_id = $user['role_id'];
         if (!isset($this->Role)) {
-
             $this->loadModel('Role');
         }
 
         $role = $this->Role->findByPublicId($role_id);
         if (empty($role)) {
-
             return $this->redirect($this->Auth->logout());
         }
 
         $perms = $this->Role->getPerms($role_id);
         if (empty($perms)) {
-
             return $this->redirect($this->Auth->logout());
         }
         $user['perms'] = $perms;
 
         $allow_controllers = array();
         foreach ($perms as $perm) {
-
             $extract = explode('/', $perm);
             $allow_controllers[$extract[0]] = $extract[0];
         }
         $user['allow_controllers'] = array_values($allow_controllers);
-
-        if ($user['type'] == MANAGER_TYPE) {
-
-            if (!isset($this->UsersBundle)) {
-
-                $this->loadModel('UsersBundle');
+        if ($user['type'] == DISTRIBUTOR_TYPE) {
+            if (!isset($this->DistributorsRegion)) {
+                $this->loadModel('DistributorsRegion');
             }
-            $bundle_id = $this->UsersBundle->getBundleId($user['id']);
-            $user['bundle_id'] = $bundle_id;
-
-            if (!isset($this->UsersRegion)) {
-
-                $this->loadModel('UsersRegion');
-            }
-            $region_id = $this->UsersRegion->getRegionId($user['id']);
+            $region_id = $this->DistributorsRegion->getRegionId($user['distributor_id']);
             $user['region_id'] = $region_id;
         }
 

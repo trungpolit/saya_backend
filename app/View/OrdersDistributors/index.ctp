@@ -9,6 +9,8 @@ if (!empty($refresh)):
 //echo $this->element('page-heading');
 echo $this->element('js/chosen');
 echo $this->element('js/datetimepicker');
+
+$user_type = CakeSession::read('Auth.User.type');
 ?>
 <script>
     $(function () {
@@ -54,20 +56,22 @@ echo $this->element('js/datetimepicker');
                 ?>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php
-                echo $this->Form->input('distributor_id', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('orders_distributor_distributor_id'),
-                    'default' => $this->request->query('distributor_id'),
-                    'options' => $distributors,
-                    'empty' => '-------',
-                ));
-                ?>
+        <?php if ($user_type == ADMIN_TYPE): ?>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <?php
+                    echo $this->Form->input('distributor_id', array(
+                        'div' => false,
+                        'class' => 'form-control',
+                        'label' => __('orders_distributor_distributor_id'),
+                        'default' => $this->request->query('distributor_id'),
+                        'options' => $distributors,
+                        'empty' => '-------',
+                    ));
+                    ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="col-md-4">
             <div class="form-group">
                 <?php

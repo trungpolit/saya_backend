@@ -106,7 +106,8 @@ class DailyProductReportsController extends AppController {
     public function reqProductByDistributorId() {
         $this->layout = 'ajax';
         $this->setInit();
-        $distributor_id= $this->request->query('distributor_id');
+        $distributor_id = $this->request->query('distributor_id');
+        $region_id = $this->request->query('region_id');
         $options = array(
             'fields' => array(
                 'id', 'name',
@@ -114,6 +115,7 @@ class DailyProductReportsController extends AppController {
             'conditions' => array(
                 'Product.status' => STATUS_PUBLIC,
                 'Product.distributor_id' => $distributor_id,
+                'Product.region_id' => $region_id,
             ),
             'order' => array(
                 'Product.weight' => 'ASC',

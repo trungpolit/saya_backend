@@ -22,6 +22,10 @@ class ManagerFilterBehavior extends ModelBehavior {
         if ($model->alias == 'DailyProductReport') {
             $query['conditions'][$model->alias . '.distributor_id'] = $distributor_id;
         }
+        $region_id = $user['region_id'];
+        if ($model->alias == 'Region') {
+            $query['conditions'][$model->alias . '.id'] = $region_id;
+        }
 
         return $query;
     }

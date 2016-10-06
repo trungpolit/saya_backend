@@ -1,6 +1,8 @@
 <?php
 echo $this->element('js/chosen');
 echo $this->element('js/datetimepicker');
+
+$user_type = CakeSession::read('Auth.User.type');
 ?>
 <script>
     $(function () {
@@ -10,18 +12,20 @@ echo $this->element('js/datetimepicker');
             'format': 'DD-MM-YYYY HH:mm:ss',
             'showTodayButton': true
         });
-        $('#region_id').on('change', function () {
-            var region_id = $(this).val();
-            var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
-            var req = $.get(request, {region_id: region_id}, function (data) {
-                $('#distributor_id_container').html(data);
-//                $('#distributor_id').chosen();
+<?php if ($user_type == ADMIN_TYPE): ?>
+            $('#region_id').on('change', function () {
+                var region_id = $(this).val();
+                var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
+                var req = $.get(request, {region_id: region_id}, function (data) {
+                    $('#distributor_id_container').html(data);
+                    //                $('#distributor_id').chosen();
+                });
+                req.fail(function () {
+                    alert('reqDistributorByRegionId was failed.');
+                });
             });
-            req.fail(function () {
-                alert('reqDistributorByRegionId was failed.');
-            });
-        });
-        $('#region_id').trigger('change');
+            $('#region_id').trigger('change');
+<?php endif; ?>
     });
 </script>
 <style>
@@ -71,21 +75,23 @@ echo $this->element('js/datetimepicker');
                 ?>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group" id="distributor_id_container">
-                <?php
-                echo $this->Form->input('distributor_id', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('product_distributor_id'),
-                    'options' => $distributors,
-                    'empty' => '-------',
-                    'default' => $this->request->query('distributor_id'),
-                    'id' => 'distributor_id',
-                ));
-                ?>
+        <?php if ($user_type == ADMIN_TYPE): ?>
+            <div class="col-md-4">
+                <div class="form-group" id="distributor_id_container">
+                    <?php
+                    echo $this->Form->input('distributor_id', array(
+                        'div' => false,
+                        'class' => 'form-control',
+                        'label' => __('product_distributor_id'),
+                        'options' => $distributors,
+                        'empty' => '-------',
+                        'default' => $this->request->query('distributor_id'),
+                        'id' => 'distributor_id',
+                    ));
+                    ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="col-md-4">
             <div class="form-group">
                 <?php

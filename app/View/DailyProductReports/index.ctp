@@ -9,6 +9,8 @@ if (!empty($refresh)):
 //echo $this->element('page-heading');
 echo $this->element('js/chosen');
 echo $this->element('js/datetimepicker');
+
+$user_type = CakeSession::read('Auth.User.type');
 ?>
 <script>
     $(function () {
@@ -17,35 +19,55 @@ echo $this->element('js/datetimepicker');
             'format': 'DD-MM-YYYY',
             'showTodayButton': true
         });
-        var distributor_id = $('#distributor_id').val();
-        var product_id = $('#product_id').val();
-        $('body').on('change', '#distributor_id', function () {
-            distributor_id = $(this).val();
-            var request = '<?php echo $this->Html->url(array('action' => 'reqProductByDistributorId')) ?>';
-            var req = $.get(request, {distributor_id: distributor_id}, function (data) {
-                $('#product_id_container').html(data);
-                $('#product_id').val(product_id);
-                $('#product_id').chosen();
+<?php if ($user_type == ADMIN_TYPE): ?>
+            var distributor_id = $('#distributor_id').val();
+            var product_id = $('#product_id').val();
+            $('body').on('change', '#distributor_id', function () {
+                distributor_id = $(this).val();
+                var region_id = $('#region_id').val();
+                var request = '<?php echo $this->Html->url(array('action' => 'reqProductByDistributorId')) ?>';
+                var req = $.get(request, {distributor_id: distributor_id, region_id: region_id}, function (data) {
+                    $('#product_id_container').html(data);
+                    $('#product_id').val(product_id);
+                    $('#product_id').chosen();
+                });
+                req.fail(function () {
+                    alert('reqProductByDistributorId was failed.');
+                });
             });
-            req.fail(function () {
-                alert('reqProductByDistributorId was failed.');
-            });
-        });
 
-        $('#region_id').on('change', function () {
-            var region_id = $(this).val();
-            var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
-            var req = $.get(request, {region_id: region_id}, function (data) {
-                $('#distributor_id_container').html(data);
-                $('#distributor_id').val(distributor_id);
-                $('#distributor_id').chosen();
-                $('#distributor_id').trigger('change');
+            $('#region_id').on('change', function () {
+                var region_id = $(this).val();
+                var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
+                var req = $.get(request, {region_id: region_id}, function (data) {
+                    $('#distributor_id_container').html(data);
+                    $('#distributor_id').val(distributor_id);
+                    $('#distributor_id').chosen();
+                    $('#distributor_id').trigger('change');
+                });
+                req.fail(function () {
+                    alert('reqDistributorByRegionId was failed.');
+                });
             });
-            req.fail(function () {
-                alert('reqDistributorByRegionId was failed.');
+            $('#region_id').trigger('change');
+<?php endif; ?>
+<?php if ($user_type == DISTRIBUTOR_TYPE): ?>
+            var product_id = $('#product_id').val();
+            $('#region_id').on('change', function () {
+                var region_id = $(this).val();
+                var distributor_id = '<?php echo CakeSession::read('Auth.User.distributor_id') ?>';
+                var request = '<?php echo $this->Html->url(array('action' => 'reqProductByDistributorId')) ?>';
+                var req = $.get(request, {distributor_id: distributor_id, region_id: region_id}, function (data) {
+                    $('#product_id_container').html(data);
+                    $('#product_id').val(product_id);
+                    $('#product_id').chosen();
+                });
+                req.fail(function () {
+                    alert('reqProductByDistributorId was failed.');
+                });
             });
-        });
-        $('#region_id').trigger('change');
+            $('#region_id').trigger('change');
+<?php endif; ?>
     });
 </script>
 <div class="ibox-content m-b-sm border-bottom">
@@ -74,21 +96,23 @@ echo $this->element('js/datetimepicker');
                 ?>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group" id="distributor_id_container">
-                <?php
-                echo $this->Form->input('distributor_id', array(
-                    'div' => false,
-                    'class' => 'form-control chosen-select',
-                    'label' => __('daily_product_report_distributor_id'),
-                    'default' => $this->request->query('distributor_id'),
-                    'options' => $distributors,
-                    'empty' => '-------',
-                    'id' => 'distributor_id',
-                ));
-                ?>
+        <?php if ($user_type == ADMIN_TYPE): ?>
+            <div class="col-md-4">
+                <div class="form-group" id="distributor_id_container">
+                    <?php
+                    echo $this->Form->input('distributor_id', array(
+                        'div' => false,
+                        'class' => 'form-control chosen-select',
+                        'label' => __('daily_product_report_distributor_id'),
+                        'default' => $this->request->query('distributor_id'),
+                        'options' => $distributors,
+                        'empty' => '-------',
+                        'id' => 'distributor_id',
+                    ));
+                    ?>
+                </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="col-md-4">
             <div class="form-group" id="product_id_container">
                 <?php
