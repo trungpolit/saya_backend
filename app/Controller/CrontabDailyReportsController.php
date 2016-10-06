@@ -49,6 +49,8 @@ class CrontabDailyReportsController extends CrontabAppController {
         $options = array(
             'conditions' => array(
                 'distributor_id' => $distributor_id,
+                'created >=' => date('Y-m-d', strtotime($date)) . ' 00:00:00',
+                'created <' => date('Y-m-d', strtotime('+1 day', strtotime($date))) . ' 00:00:00',
             ),
         );
 
