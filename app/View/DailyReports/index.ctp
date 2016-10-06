@@ -23,7 +23,7 @@ echo $this->element('js/datetimepicker');
             var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
             var req = $.get(request, {region_id: region_id}, function (data) {
                 $('#distributor_id_container').html(data);
-//                $('#distributor_id').chosen();
+                $('#distributor_id').chosen();
             });
             req.fail(function () {
                 alert('reqDistributorByRegionId was failed.');
@@ -48,7 +48,7 @@ echo $this->element('js/datetimepicker');
                 <?php
                 echo $this->Form->input('region_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('daily_report_region_id'),
                     'default' => $this->request->query('region_id'),
                     'options' => $regionTree,
@@ -63,7 +63,7 @@ echo $this->element('js/datetimepicker');
                 <?php
                 echo $this->Form->input('distributor_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('daily_report_distributor_id'),
                     'default' => $this->request->query('distributor_id'),
                     'options' => $distributors,

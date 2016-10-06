@@ -78,4 +78,39 @@ class DailyReportsController extends AppController {
         $this->set('refresh', $refresh);
     }
 
+    public function reqDistributorByRegionId() {
+        $this->layout = 'ajax';
+        $this->setInit();
+        $region_id = $this->request->query('region_id');
+        $options = array(
+            'fields' => array(
+                'id', 'name',
+            ),
+            'conditions' => array(
+                'Distributor.status' => STATUS_PUBLIC,
+            ),
+            'order' => array(
+                'Distributor.weight' => 'ASC',
+                'Distributor.modified' => 'DESC',
+            ),
+        );
+        if (!empty($region_id)) {
+            $options['joins'] = array(
+                array('table' => 'distributors_regions',
+                    'alias' => 'DistributorsRegion',
+                    'type' => 'INNER',
+                    'conditions' => array(
+                        'DistributorsRegion.distributor_id = Distributor.id',
+                    )
+                )
+            );
+            $options['conditions']['DistributorsRegion.region_id'] = $region_id;
+        }
+        $distributors = $this->Distributor->find('list', $options);
+        $this->set('distributors', $distributors);
+
+        $disable_label = $this->request->query('disable_label');
+        $this->set('disable_label', $disable_label);
+    }
+
 }
