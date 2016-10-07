@@ -115,6 +115,8 @@ $config['saya'] = array(
             'FEEDBACK_ERROR',
             'CLIENT_VERSION_MESSAGE',
             'CATEGORY_WELCOME_CONTENT',
+            'EMAIL_ADDRESS',
+            'EMAIL_CONTACT',
         ),
     ),
     'Setting' => array(

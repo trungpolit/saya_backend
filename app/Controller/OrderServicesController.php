@@ -1,6 +1,7 @@
 <?php
 
 App::uses('ServiceAppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 class OrderServicesController extends ServiceAppController {
 
@@ -10,6 +11,8 @@ class OrderServicesController extends ServiceAppController {
         'OrdersDistributor',
         'Customer',
         'Product',
+        'Distributor',
+        'Setting',
     );
     public $debug_mode = 3;
 
@@ -30,6 +33,8 @@ class OrderServicesController extends ServiceAppController {
             $this->resError('#ord002');
         }
 
+        $statuses = Configure::read('saya.Order.status');
+
         // trích xuất thông tin liên quan tới customer
         $user_agent = $this->request->header('User-Agent');
         $host = $this->request->host();
@@ -38,6 +43,8 @@ class OrderServicesController extends ServiceAppController {
         $customer_data = $decode['customer'];
         $customer_data['region_id'] = $decode['region_id'];
         $customer_data['region_name'] = $decode['region_name'];
+        $customer_data['region_parent_id'] = $decode['region_parent_id'];
+        $customer_data['region_parent_name'] = $decode['region_parent_name'];
         $customer_data['platform_os'] = $decode['platform_os'];
         $customer_data['platform_version'] = $decode['platform_version'];
         $customer_data['user_agent'] = $user_agent;
@@ -91,6 +98,9 @@ class OrderServicesController extends ServiceAppController {
         $order_no = $total_order + 1;
         $order_code = $customer_id . self::ORDER_CODE_DELIMITER . $order_no;
 
+        $distributors = array();
+        $email_params = array();
+
         foreach ($cart_data as $v) {
             $product_id = $v['id'];
             $product = $this->Product->find('first', array(
@@ -112,6 +122,15 @@ class OrderServicesController extends ServiceAppController {
             $unit = $product['Product']['unit'];
             $qty = (int) $v['qty'];
 
+            if (!isset($distributors[$distributor_id])) {
+                $get_distributor = $this->Distributor->findById($distributor_id);
+                $distributors[$distributor_id] = !empty($get_distributor) ? $get_distributor['Distributor'] : array();
+                $email_params[$distributor_id]['distributor_id'] = $distributor_id;
+                $email_params[$distributor_id]['email'] = strlen($distributors[$distributor_id]['email']) ? explode(',', $distributors[$distributor_id]['email']) : array();
+                $email_params[$distributor_id]['distributor_name'] = strlen($distributors[$distributor_id]['name']) ? explode(',', $distributors[$distributor_id]['name']) : null;
+                $email_params[$distributor_id]['distributor_code'] = strlen($distributors[$distributor_id]['code']) ? explode(',', $distributors[$distributor_id]['code']) : null;
+            }
+
             // nếu chưa tồn tại dữ liệu cho $order_distributor_data thì khởi tạo
             if (empty($order_distributor_data[$distributor_id])) {
                 $order_distributor_data[$distributor_id] = array(
@@ -123,6 +142,8 @@ class OrderServicesController extends ServiceAppController {
                     'customer_address' => $customer_data['address'],
                     'region_id' => $decode['region_id'],
                     'region_name' => $decode['region_name'],
+                    'region_parent_id' => $decode['region_parent_id'],
+                    'region_parent_name' => $decode['region_parent_name'],
                     'distributor_id' => $distributor_id,
                     'distributor_code' => $distributor_code,
                     'order_code' => $order_code,
@@ -147,6 +168,8 @@ class OrderServicesController extends ServiceAppController {
                 'customer_id' => $customer_data['id'],
                 'region_id' => $decode['region_id'],
                 'region_name' => $decode['region_name'],
+                'region_parent_id' => $decode['region_parent_id'],
+                'region_parent_name' => $decode['region_parent_name'],
                 'distributor_id' => $distributor_id,
                 'distributor_code' => $distributor_code,
                 'product_id' => $product_id,
@@ -162,6 +185,16 @@ class OrderServicesController extends ServiceAppController {
                 'client_ip' => $client_ip,
                 'host' => $host,
                 'status' => ORDER_DEFAULT_STATUS,
+            );
+
+            $email_params[$distributor_id]['status'] = !empty($statuses[ORDER_DEFAULT_STATUS]) ? $statuses[ORDER_DEFAULT_STATUS] : __('unknown');
+            $email_params[$distributor_id]['items'][] = array(
+                'name' => $name,
+                'unit' => $unit,
+                'qty' => $qty,
+                'price' => $price,
+                'total_price' => $product_total_price,
+                'logo_uri' => $product_logo_uri[0],
             );
 
             $order_cache[] = array(
@@ -204,6 +237,8 @@ class OrderServicesController extends ServiceAppController {
             'customer_address' => $customer_data['address'],
             'region_id' => $decode['region_id'],
             'region_name' => $decode['region_name'],
+            'region_parent_id' => $decode['region_parent_id'],
+            'region_parent_name' => $decode['region_parent_name'],
             'code' => $order_code,
             'no' => $total_order + 1,
             'total_qty' => $total_qty,
@@ -218,6 +253,17 @@ class OrderServicesController extends ServiceAppController {
             'cache_data' => serialize($order_cache),
             'status' => ORDER_DEFAULT_STATUS,
         );
+
+        $email_params[$distributor_id]['region_id'] = $decode['region_id'];
+        $email_params[$distributor_id]['region_name'] = $decode['region_name'];
+        $email_params[$distributor_id]['region_parent_id'] = $decode['region_parent_id'];
+        $email_params[$distributor_id]['region_parent_name'] = $decode['region_parent_name'];
+        $email_params[$distributor_id]['customer_name'] = $customer_data['name'];
+        $email_params[$distributor_id]['customer_mobile'] = $customer_data['mobile'];
+        $email_params[$distributor_id]['customer_mobile2'] = $customer_data['mobile2'];
+        $email_params[$distributor_id]['customer_address'] = $customer_data['address'];
+        $email_params[$distributor_id]['total_price'] = $total_price;
+        $email_params[$distributor_id]['total_qty'] = $total_qty;
 
         $dataSource = $this->Order->getDataSource();
         $dataSource->begin();
@@ -237,6 +283,7 @@ class OrderServicesController extends ServiceAppController {
             $v['order_id'] = $order_id;
             $v['no'] = $total_order_distributor + $order_distributor_count;
             $v['code'] = $customer_id . self::ORDER_BUNDLE_CODE_DELIMITER . $v['no'];
+            $email_params[$distributor_id]['code'] = $v['code'];
 
             $this->OrdersDistributor->create();
             if (!$this->OrdersDistributor->save($v)) {
@@ -273,6 +320,9 @@ class OrderServicesController extends ServiceAppController {
 
         $dataSource->commit();
 
+        // Thực hiện gửi email thông báo
+        $this->sendEmail($email_params);
+
         $res['data'] = array(
             'order_id' => $order_id,
             'order_code' => $order_code,
@@ -292,6 +342,60 @@ class OrderServicesController extends ServiceAppController {
             $order_product_data[$k]['order_code'] = $order_code;
             $order_product_data[$k]['orders_distributor_id'] = $order_distributor_ref[$distributor_id]['id'];
             $order_product_data[$k]['orders_distributor_code'] = $order_distributor_ref[$distributor_id]['code'];
+        }
+    }
+
+    protected function sendEmail($email_params) {
+        if (empty($email_params)) {
+            return true;
+        }
+        $settings = $this->Setting->find('list', array(
+            'recursive' => -1,
+            'conditions' => array(
+                'key' => array(
+                    'EMAIL_ADMIN',
+                    'EMAIL_SUBJECT',
+                    'EMAIL_LOGO',
+                ),
+            ),
+            'fields' => array(
+                'key', 'value',
+            ),
+        ));
+        $email_admin = strlen($settings['EMAIL_ADMIN']) ? explode(',', $settings['EMAIL_ADMIN']) : array();
+        $email_subject_pattern = $settings['EMAIL_SUBJECT'];
+
+        foreach ($email_params as $v) {
+            $v['logo_uri'] = $settings['EMAIL_LOGO'];
+            $v['created'] = date('d-m-Y H:i:s');
+            $email_contact = array_merge($email_admin, $v['email']);
+            if (empty($email_contact)) {
+                $this->logAnyFile("Không cần thực hiện gửi email do danh sách contact rỗng", $this->log_file_name);
+                continue;
+            }
+            $email_subject = strtr($email_subject_pattern, array(
+                '[MA_DON]' => $v['code'],
+                '[VUNG_MIEN]' => $v['region_name'],
+                '[THANH_PHO]' => $v['region_parent_name'],
+            ));
+            $email_template = 'invoice';
+
+            $Email = new CakeEmail();
+            $Email->template($email_template);
+            $Email->emailFormat('html')
+                    ->subject($email_subject)
+                    ->to($email_contact);
+            $Email->viewVars(compact($v));
+            try {
+                $content = $Email->send();
+                $this->logAnyFile(__('email "%s" được gửi tới "%s" thành công, nội dung:', $email_subject, implode(',', $email_contact)), $this->log_file_name);
+                $this->logAnyFile($content, $this->log_file_name);
+            } catch (Exception $ex) {
+                $this->logAnyFile(__("Không gửi được email: %s, chi tiết:", $ex->getMessage()), $this->log_file_name);
+                $this->logAnyFile($ex->getTraceAsString(), $this->log_file_name);
+
+                return false;
+            }
         }
     }
 
