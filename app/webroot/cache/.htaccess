@@ -1,0 +1,4 @@
+<FilesMatch "\.gz$">
+ForceType text/plain
+Header set Content-Encoding: gzip
+</FilesMatch>

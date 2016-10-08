@@ -21,7 +21,6 @@ class Customer extends AppModel {
         parent::afterSave($created, $options);
 
         if ($this->cached) {
-
             // đọc lại thông tin customer để cache
             $customer = $this->find('first', array(
                 'recursive' => -1,
@@ -84,12 +83,10 @@ class Customer extends AppModel {
         ));
 
         if (empty($customers)) {
-
             return;
         }
 
         foreach ($customers as $cust) {
-
             $this->save(array(
                 'id' => $cust[$this->alias]['id'],
             ));

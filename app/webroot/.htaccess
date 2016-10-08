@@ -4,3 +4,7 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^ index.php [L]
 </IfModule>
+<FilesMatch "\.gz$">
+ForceType text/plain
+Header set Content-Encoding: gzip
+</FilesMatch>
