@@ -72,6 +72,18 @@ if (!defined("DISTRIBUTOR_ROLE_ID")) {
     define("DISTRIBUTOR_ROLE_ID", 2);
 }
 
+if (!defined("STATUS_NOT_SEND")) {
+    define("STATUS_NOT_SEND", 2);
+}
+
+if (!defined("STATUS_SEND_SUCCESS")) {
+    define("STATUS_SEND_SUCCESS", 1);
+}
+
+if (!defined("STATUS_SEND_FAIL")) {
+    define("STATUS_SEND_FAIL", 0);
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',
