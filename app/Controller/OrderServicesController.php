@@ -127,8 +127,8 @@ class OrderServicesController extends ServiceAppController {
                 $distributors[$distributor_id] = !empty($get_distributor) ? $get_distributor['Distributor'] : array();
                 $email_params[$distributor_id]['distributor_id'] = $distributor_id;
                 $email_params[$distributor_id]['email'] = strlen($distributors[$distributor_id]['email']) ? explode(',', $distributors[$distributor_id]['email']) : array();
-                $email_params[$distributor_id]['distributor_name'] = strlen($distributors[$distributor_id]['name']) ? explode(',', $distributors[$distributor_id]['name']) : null;
-                $email_params[$distributor_id]['distributor_code'] = strlen($distributors[$distributor_id]['code']) ? explode(',', $distributors[$distributor_id]['code']) : null;
+                $email_params[$distributor_id]['distributor_name'] = strlen($distributors[$distributor_id]['name']) ? $distributors[$distributor_id]['name'] : null;
+                $email_params[$distributor_id]['distributor_code'] = strlen($distributors[$distributor_id]['code']) ? $distributors[$distributor_id]['code'] : null;
             }
 
             // nếu chưa tồn tại dữ liệu cho $order_distributor_data thì khởi tạo
@@ -226,6 +226,17 @@ class OrderServicesController extends ServiceAppController {
                 'total_price' => $product_total_price,
             );
             $order_distributor_data[$distributor_id]['cache_data'] = serialize($order_distributor_cache[$distributor_id]);
+
+            $email_params[$distributor_id]['region_id'] = $decode['region_id'];
+            $email_params[$distributor_id]['region_name'] = $decode['region_name'];
+            $email_params[$distributor_id]['region_parent_id'] = $decode['region_parent_id'];
+            $email_params[$distributor_id]['region_parent_name'] = $decode['region_parent_name'];
+            $email_params[$distributor_id]['customer_name'] = $customer_data['name'];
+            $email_params[$distributor_id]['customer_mobile'] = $customer_data['mobile'];
+            $email_params[$distributor_id]['customer_mobile2'] = $customer_data['mobile2'];
+            $email_params[$distributor_id]['customer_address'] = $customer_data['address'];
+            $email_params[$distributor_id]['total_price'] = $total_price;
+            $email_params[$distributor_id]['total_qty'] = $total_qty;
         }
 
         $order_data = array(
@@ -253,17 +264,6 @@ class OrderServicesController extends ServiceAppController {
             'cache_data' => serialize($order_cache),
             'status' => ORDER_DEFAULT_STATUS,
         );
-
-        $email_params[$distributor_id]['region_id'] = $decode['region_id'];
-        $email_params[$distributor_id]['region_name'] = $decode['region_name'];
-        $email_params[$distributor_id]['region_parent_id'] = $decode['region_parent_id'];
-        $email_params[$distributor_id]['region_parent_name'] = $decode['region_parent_name'];
-        $email_params[$distributor_id]['customer_name'] = $customer_data['name'];
-        $email_params[$distributor_id]['customer_mobile'] = $customer_data['mobile'];
-        $email_params[$distributor_id]['customer_mobile2'] = $customer_data['mobile2'];
-        $email_params[$distributor_id]['customer_address'] = $customer_data['address'];
-        $email_params[$distributor_id]['total_price'] = $total_price;
-        $email_params[$distributor_id]['total_qty'] = $total_qty;
 
         $dataSource = $this->Order->getDataSource();
         $dataSource->begin();
@@ -381,11 +381,12 @@ class OrderServicesController extends ServiceAppController {
             $email_template = 'invoice';
 
             $Email = new CakeEmail();
+            $Email->config('default');
             $Email->template($email_template);
             $Email->emailFormat('html')
-                    ->subject($email_subject)
+                    ->subject($email_subject)->from('cskh@ongas.vn')
                     ->to($email_contact);
-            $Email->viewVars(compact($v));
+            $Email->viewVars($v);
             try {
                 $content = $Email->send();
                 $this->logAnyFile(__('email "%s" được gửi tới "%s" thành công, nội dung:', $email_subject, implode(',', $email_contact)), $this->log_file_name);

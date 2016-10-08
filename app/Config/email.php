@@ -42,10 +42,10 @@ class EmailConfig {
 
     public $default = array(
         'transport' => 'Smtp',
-        'from' => array('cskh@ongas.vn' => 'cskh@ongas.vn'),
+        'from' => 'cskh@ongas.vn',
         'host' => 'mx1.hostinger.vn',
-        'port' => 25,
-        'timeout' => 30,
+        'port' => 2525,
+        'timeout' => 180,
         'username' => 'cskh@ongas.vn',
         'password' => 'ongas123',
         'client' => null,
