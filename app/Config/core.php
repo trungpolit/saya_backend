@@ -113,7 +113,7 @@ Configure::write('App.encoding', 'UTF-8');
  * will override the automatic detection of full base URL and can be
  * useful when generating links from the CLI (e.g. sending emails)
  */
-Configure::write('App.fullBaseUrl', 'http://cms.ongas.vn');
+//Configure::write('App.fullBaseUrl', 'http://cms.ongas.vn');
 
 /**
  * Web path to the public images directory under webroot.

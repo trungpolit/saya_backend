@@ -83,7 +83,7 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
                 $distributor_name = $distributor_code = null;
                 if (!isset($distributors[$distributor_id])) {
                     $distributors[$distributor_id] = $this->Distributor->findById($distributor_id);
-                    $distributor_email = !empty($distributors[$distributor_id]) ?
+                    $distributor_email = !empty($distributors[$distributor_id]['Distributor']['email']) ?
                             $distributors[$distributor_id]['Distributor']['email'] : array();
                     $distributor_name = !empty($distributors[$distributor_id]) ?
                             $distributors[$distributor_id]['Distributor']['name'] : null;
@@ -151,10 +151,10 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
         $Email = new CakeEmail();
         $Email->config('default');
         $EmailConfig = new EmailConfig();
-        $params['from'] = $EmailConfig['from'];
+        $params['from'] = $EmailConfig->default['from'];
         $Email->template($email_template);
         $Email->emailFormat('html')
-                ->subject($params['subject'])->from('cskh@ongas.vn')
+                ->subject($params['subject'])->from(array($params['from'] => 'famion-cskh'))
                 ->to($params['email']);
         $Email->viewVars($params);
         try {
@@ -166,7 +166,7 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
                 'id' => $params['id'],
                 'sent_status' => STATUS_SEND_SUCCESS,
                 'sent_at' => date('Y-m-d H:i:s'),
-                'sent_content' => $content,
+                'sent_content' => $content['message'],
                 'sent_to' => implode(',', $params['email']),
                 'sent_from' => $params['from'],
                 'sent_subject' => $params['subject'],

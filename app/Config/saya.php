@@ -1,5 +1,9 @@
 <?php
 
+if (!defined("FULL_BASE_URL")) {
+    define("FULL_BASE_URL", "http://cms.ongas.vn");
+}
+
 if (!defined("ORDER_DEFAULT_STATUS")) {
     define("ORDER_DEFAULT_STATUS", 2);
 }
