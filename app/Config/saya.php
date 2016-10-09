@@ -84,6 +84,10 @@ if (!defined("STATUS_SEND_FAIL")) {
     define("STATUS_SEND_FAIL", 0);
 }
 
+if (!defined("STATUS_SEND_EXCEPTION")) {
+    define("STATUS_SEND_EXCEPTION", 3);
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',

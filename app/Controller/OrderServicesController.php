@@ -321,7 +321,7 @@ class OrderServicesController extends ServiceAppController {
         $dataSource->commit();
 
         // Thực hiện gửi email thông báo
-        $this->sendEmail($email_params);
+//        $this->sendEmail($email_params);
 
         $res['data'] = array(
             'order_id' => $order_id,

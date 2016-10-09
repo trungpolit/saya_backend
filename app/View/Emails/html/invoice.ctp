@@ -1,188 +1,105 @@
-<style>
-    .invoice-box{
-        max-width:800px;
-        margin:auto;
-        padding:30px;
-        border:1px solid #eee;
-        box-shadow:0 0 10px rgba(0, 0, 0, .15);
-        font-size:16px;
-        line-height:24px;
-        font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-        color:#555;
-    }
-
-    .invoice-box table{
-        width:100%;
-        line-height:inherit;
-        text-align:left;
-    }
-
-    .invoice-box table td{
-        padding:5px;
-        vertical-align:top;
-    }
-
-    .invoice-box table tr td:nth-child(2){
-        text-align:right;
-    }
-
-    .invoice-box table tr.top table td{
-        padding-bottom:20px;
-    }
-
-    .invoice-box table tr.top table td.title{
-        font-size:45px;
-        line-height:45px;
-        color:#333;
-    }
-
-    .invoice-box table tr.information table td{
-        padding-bottom:40px;
-    }
-
-    .invoice-box table tr.heading td{
-        background:#eee;
-        border-bottom:1px solid #ddd;
-        font-weight:bold;
-    }
-
-    .invoice-box table tr.details td{
-        padding-bottom:20px;
-    }
-
-    .invoice-box table tr.item td{
-        border-bottom:1px solid #eee;
-    }
-
-    .invoice-box table tr.item.last td{
-        border-bottom:none;
-    }
-
-    .invoice-box table tr.total td:nth-child(2){
-        border-top:2px solid #eee;
-        font-weight:bold;
-    }
-
-    @media only screen and (max-width: 600px) {
-        .invoice-box table tr.top table td{
-            width:100%;
-            display:block;
-            text-align:center;
-        }
-
-        .invoice-box table tr.information table td{
-            width:100%;
-            display:block;
-            text-align:center;
-        }
-    }
-</style>
-
-<div class="invoice-box" style="max-width: 800px;margin: auto;padding: 30px;border: 1px solid #eee;box-shadow: 0 0 10px rgba(0, 0, 0, .15);font-size: 16px;line-height: 24px;font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;color: #555;">
-    <table cellpadding="0" cellspacing="0" style="width: 100%;line-height: inherit;text-align: left;">
-        <tr class="top">
-            <td colspan="2" style="padding: 5px;vertical-align: top;">
-                <table style="width: 100%;line-height: inherit;text-align: left;">
-                    <tr>
-                        <td class="title" style="padding: 5px;vertical-align: top;padding-bottom: 20px;font-size: 45px;line-height: 45px;color: #333;">
-                            <img src="<?php echo Router::url('/', true) . $logo_uri ?>" style="width:100%; max-width:300px;">
-                        </td>
-
-                        <td style="padding: 5px;vertical-align: top;text-align: right;padding-bottom: 20px;">
-                            Đơn hàng #: <?php echo $code ?><br>
-                            Thời điểm tạo: <?php echo $created ?><br>
+<table class="body-wrap" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: #f6f6f6; margin: 0;" bgcolor="#f6f6f6">
+    <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+        <td class="container" width="600" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; width: 100% !important; margin: 0 auto; padding: 0;" valign="top">
+            <div class="content" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 0;">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff">
+                    <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                        <td class="content-wrap aligncenter" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 10px;" align="center" valign="top">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                    <td class="content-block aligncenter" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
+                                        <table class="invoice" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; text-align: left; width: 100% !important; margin: 40px auto;">
+                                            <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                <td class="content-block" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">
+                                                    <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; box-sizing: border-box; font-size: 18px !important; color: #000; line-height: 1.2em; font-weight: 800 !important; margin: 20px 0 5px;">Thông tin đơn hàng</h2>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">
+                                                    <table class="invoice-items" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; margin: 0;">
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Mã đơn hàng:</td>
+                                                            <td class="" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"><?php echo $code ?></td>
+                                                        </tr>
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Thời điểm đặt:</td>
+                                                            <td class="" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"><?php echo date('d/m/Y H:i:s', strtotime($created)) ?></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                <td class="content-block" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">
+                                                    <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; box-sizing: border-box; font-size: 18px !important; color: #000; line-height: 1.2em; font-weight: 800 !important; margin: 20px 0 5px;">Thông tin khách hàng</h2>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">
+                                                    <table class="invoice-items" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; margin: 0;">
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Tên khách hàng:</td>
+                                                            <td class="" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"><?php echo $customer_name ?></td>
+                                                        </tr>
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Số điện thoại 1:</td>
+                                                            <td class="" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"><?php echo $customer_mobile ?></td>
+                                                        </tr>
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Số điện thoại 2:</td>
+                                                            <td class="" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top"><?php echo $customer_mobile2 ?></td>
+                                                        </tr>
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">Địa chỉ:</td>
+                                                            <td class="" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">
+                                                                <?php if (!empty($customer_address)): ?>
+                                                                    <?php echo $customer_address ?><br/>
+                                                                <?php endif; ?>
+                                                                <?php echo $region_name ?> - <?php echo $region_parent_name ?>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 5px 0;" valign="top">
+                                                    <table class="invoice-items" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; margin: 0;">
+                                                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td class="content-block" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">
+                                                                <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; box-sizing: border-box; font-size: 18px !important; color: #000; line-height: 1.2em; font-weight: 800 !important; margin: 20px 0 5px;">Đơn hàng chi tiết</h2>
+                                                            </td>
+                                                        </tr>
+                                                        <?php foreach ($items as $item): ?>
+                                                            <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                                <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" valign="top">
+                                                                    <?php echo $item['product_name'] ?><br style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;" />
+                                                                    <img alt="<?php echo $item['product_name'] ?>" style="width: 64px; height: auto; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; max-width: 100%; margin: 0;" src="<?php echo Configure::read('App.fullBaseUrl') . $item['product_logo_uri'] ?>" /><br style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;" /> Số lượng: <?php echo number_format($item['qty']) ?><br style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;" /> Đơn giá: <?php echo number_format($item['total_price'] / $item['product_price']) ?>
+                                                                </td>
+                                                                <td class="alignright" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 5px 0;" align="right" valign="top"><?php echo number_format($item['total_price']) ?></td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                        <tr class="total" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                            <td class="alignright" width="75%" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #333; border-top-style: solid; border-bottom-color: #333; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 5px 0;" align="right" valign="top">Thành tiền</td>
+                                                            <td class="alignright" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #333; border-top-style: solid; border-bottom-color: #333; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 5px 0;" align="right" valign="top"><?php echo number_format($total_price) ?></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                 </table>
-            </td>
-        </tr>
-
-        <tr class="information">
-            <td colspan="2" style="padding: 5px;vertical-align: top;">
-                <table style="width: 100%;line-height: inherit;text-align: left;">
-                    <tr>
-                        <td style="padding: 5px;vertical-align: top;padding-bottom: 40px;">
-                            <?php echo nl2br($customer_address); ?><br/>
-                            <?php echo $region_name ?> - <?php echo $region_parent_name ?>
-                        </td>
-
-                        <td style="padding: 5px;vertical-align: top;text-align: right;padding-bottom: 40px;">
-                            <?php echo $customer_name ?><br>
-                            <?php echo $customer_mobile ?><br>
-                            <?php echo $customer_mobile2 ?>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
-        <tr class="heading">
-            <td style="padding: 5px;vertical-align: top;background: #eee;border-bottom: 1px solid #ddd;font-weight: bold;">
-                Nhà phân phối
-            </td>
-
-            <td style="padding: 5px;vertical-align: top;text-align: right;background: #eee;border-bottom: 1px solid #ddd;font-weight: bold;">
-                Trạng thái đơn hàng
-            </td>
-        </tr>
-
-        <tr class="details">
-            <td style="padding: 5px;vertical-align: top;padding-bottom: 20px;">
-                <?php echo $distributor_name ?> ( <?php echo $distributor_code ?> )
-            </td>
-
-            <td style="padding: 5px;vertical-align: top;text-align: right;padding-bottom: 20px;">
-                <?php echo $status ?>
-            </td>
-        </tr>
-
-        <tr class="heading">
-            <td style="padding: 5px;vertical-align: top;background: #eee;border-bottom: 1px solid #ddd;font-weight: bold;">
-                Sản phẩm (số lượng)
-            </td>
-
-            <td style="padding: 5px;vertical-align: top;text-align: right;background: #eee;border-bottom: 1px solid #ddd;font-weight: bold;">
-                Giá tiền
-            </td>
-        </tr>
-        <?php
-        $count = 0;
-        $max = count($items);
-        ?>
-        <?php foreach ($items as $item): ?>
-            <?php
-            $count++;
-            ?>
-            <?php if ($count != $max): ?>
-                <tr class="item">
-                    <td style="padding: 5px;vertical-align: top;border-bottom: 1px solid #eee;">
-                        <img src="<?php echo Router::url('/', true) . $item['logo_uri'] ?>" alt="<?php echo $item['name'] ?>" style="width: 100px; height: auto" /><br/>
-                        <?php echo $item['name'] ?> (<?php echo number_format($item['qty']) ?>/<?php echo $item['unit'] ?>)
-                    </td>
-
-                    <td style="padding: 5px;vertical-align: top;text-align: right;border-bottom: 1px solid #eee;">
-                        <?php echo number_format($item['total_price']) ?>
-                    </td>
-                </tr>
-            <?php else: ?>
-                <tr class="item last">
-                    <td style="padding: 5px;vertical-align: top;border-bottom: none;">
-                        <img src="<?php echo Router::url('/', true) . $item['logo_uri'] ?>" alt="<?php echo $item['name'] ?>" style="width: 100px; height: auto" /><br/>
-                        <?php echo $item['name'] ?> (<?php echo number_format($item['qty']) ?>/<?php echo $item['unit'] ?>)
-                    </td>
-
-                    <td style="padding: 5px;vertical-align: top;text-align: right;border-bottom: none;">
-                        <?php echo number_format($item['total_price']) ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-        <?php endforeach; ?>
-
-        <tr class="total">
-            <td style="padding: 5px;vertical-align: top;"></td>
-            <td style="padding: 5px;vertical-align: top;text-align: right;border-top: 2px solid #eee;font-weight: bold;">
-                Thành tiền: <?php echo number_format($total_price) ?>
-            </td>
-        </tr>
-    </table>
-</div>
+                <div class="footer" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; clear: both; color: #999; margin: 0; padding: 20px;">
+                    <table width="100%" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                        <tr style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                            <td class="aligncenter content-block" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">Cần hỗ trợ? Email <a href="mailto:" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 12px; color: #999; text-decoration: underline; margin: 0;"><?php echo $from ?></a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+        <td style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>
+    </tr>
+</table>

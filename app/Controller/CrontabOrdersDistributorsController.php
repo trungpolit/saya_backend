@@ -58,7 +58,13 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
                         'sent_at <' => date('Y-m-d', strtotime('+1 day', strtotime($date))) . ' 00:00:00',
                     ),
                 ),
-                'sent_status !=' => STATUS_SEND_SUCCESS,
+                'NOT' => array(
+                    'sent_status' => array(
+                        STATUS_SEND_SUCCESS,
+                        STATUS_SEND_EXCEPTION,
+                    ),
+                ),
+                'status' => STATUS_PENDING,
             ),
             'limit' => $limit,
         );
@@ -93,13 +99,97 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
                 $params = array(
                     'email' => $email_contacts,
                     'subject' => $email_subject,
+                    'region_name' => $v['OrdersDistributor']['region_name'],
+                    'region_parent_name' => $v['OrdersDistributor']['region_parent_name'],
+                    'created' => $v['OrdersDistributor']['created'],
+                    'code' => $v['OrdersDistributor']['code'],
+                    'customer_name' => $v['OrdersDistributor']['customer_name'],
+                    'customer_mobile' => $v['OrdersDistributor']['customer_mobile'],
+                    'customer_mobile2' => $v['OrdersDistributor']['customer_mobile2'],
+                    'customer_address' => $v['OrdersDistributor']['customer_address'],
+                    'total_qty' => $v['OrdersDistributor']['total_qty'],
+                    'total_price' => $v['OrdersDistributor']['total_price'],
+                    'id' => $v['OrdersDistributor']['id'],
+                    'distributor_id' => $distributor_id,
+                    'distributor_code' => $distributor_code,
+                    'distributor_name' => $distributor_name,
                 );
+                // Lấy ra danh sách sản phẩm
+                $cache_data = $v['OrdersDistributor']['cache_data'];
+                $decoded_data = unserialize($cache_data);
+                $params['items'] = $decoded_data;
+
+                $this->sendEmail($params);
             }
         }
     }
 
-    protected function sendEmail() {
-        
+    protected function sendEmail($params) {
+        if (empty($params['items'])) {
+            $this->logAnyFile(__('ERROR: Dữ liệu trong trường cache_data không hợp lệ với id="%s"', $params['id']), $this->log_file_name);
+
+            $this->OrdersDistributor->save(array(
+                'id' => $params['id'],
+                'sent_status' => STATUS_SEND_EXCEPTION,
+                'sent_message' => 'Dữ liệu trong trường cache_data không hợp lệ',
+            ));
+            return false;
+        }
+        if (empty($params['email'])) {
+            $this->logAnyFile(__('ERROR: Dữ liệu trong trường cache_data không hợp lệ với id="%s"', $params['id']), $this->log_file_name);
+
+            $this->OrdersDistributor->save(array(
+                'id' => $params['id'],
+                'sent_status' => STATUS_SEND_EXCEPTION,
+                'sent_message' => 'Không tồn tại email nào để gửi đi',
+            ));
+            return false;
+        }
+        $this->logAnyFile(__('SEND_EMAIL: Thực hiện xử lý gửi email cho distributor_id="%s", distributor_code="%s", distributor_name="%s"', $params['distributor_id'], $params['distributor_code'], $params['distributor_name']), $this->log_file_name);
+        $email_template = 'invoice';
+
+        $Email = new CakeEmail();
+        $Email->config('default');
+        $EmailConfig = new EmailConfig();
+        $params['from'] = $EmailConfig['from'];
+        $Email->template($email_template);
+        $Email->emailFormat('html')
+                ->subject($params['subject'])->from('cskh@ongas.vn')
+                ->to($params['email']);
+        $Email->viewVars($params);
+        try {
+            $content = $Email->send();
+            $this->logAnyFile(__('email "%s" được gửi tới "%s" thành công, nội dung:', $params['subject'], implode(',', $params['email'])), $this->log_file_name);
+            $this->logAnyFile($content, $this->log_file_name);
+
+            $this->OrdersDistributor->save(array(
+                'id' => $params['id'],
+                'sent_status' => STATUS_SEND_SUCCESS,
+                'sent_at' => date('Y-m-d H:i:s'),
+                'sent_content' => $content,
+                'sent_to' => implode(',', $params['email']),
+                'sent_from' => $params['from'],
+                'sent_subject' => $params['subject'],
+            ));
+
+            return $content;
+        } catch (Exception $ex) {
+            $this->logAnyFile(__("Không gửi được email: %s, chi tiết:", $ex->getMessage()), $this->log_file_name);
+            $this->logAnyFile($ex->getTraceAsString(), $this->log_file_name);
+
+            $this->OrdersDistributor->save(array(
+                'id' => $params['id'],
+                'sent_status' => STATUS_SEND_FAIL,
+                'sent_at' => date('Y-m-d H:i:s'),
+                'sent_to' => implode(',', $params['email']),
+                'sent_from' => $params['from'],
+                'sent_message' => $ex->getMessage(),
+                'sent_message_variables' => $ex->getTraceAsString(),
+                'sent_subject' => $params['subject'],
+            ));
+
+            return false;
+        }
     }
 
 }
