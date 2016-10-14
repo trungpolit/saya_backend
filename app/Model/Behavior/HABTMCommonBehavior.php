@@ -55,6 +55,9 @@ class HABTMCommonBehavior extends ModelBehavior {
             $JoinModel = new $join_model();
 
             foreach ($results as $kk => $vv) {
+                if (empty($vv[$model->alias]['id'])) {
+                    continue;
+                }
                 $id = $vv[$model->alias]['id'];
                 $associationId = $JoinModel->find('list', array(
                     'conditions' => array(

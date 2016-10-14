@@ -929,6 +929,9 @@ msgstr "Mô tả"
 
 msgid "distributor_password_confirm"
 msgstr "Nhập lại mật khẩu"
+
+msgid "distributor_email"
+msgstr "Nhóm email"
 # Distributor - END
 
 # /Distributors/* - BEGIN

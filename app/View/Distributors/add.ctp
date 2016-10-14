@@ -1,11 +1,16 @@
 <?php
 echo $this->element('js/chosen');
 echo $this->element('js/validate');
+echo $this->element('js/select2');
 ?>
 <script>
     $(function () {
 
         $('.chosen-select').chosen({
+        });
+        $('#email').select2({
+            tags: true,
+            tokenSeparators: [",", " "]
         });
 
 <?php if ($this->action == 'add'): ?>
@@ -205,6 +210,28 @@ echo $this->element('js/validate');
                 </div>
                 <div class="hr-line-dashed"></div>
                 <?php
+                $email_err = $this->Form->error($model_name . '.email');
+                $email_err_class = !empty($email_err) ? 'has-error' : '';
+                ?>
+                <div class="form-group <?php echo $email_err_class ?>">
+                    <label class="col-sm-2 control-label"><?php echo __('distributor_email') ?></label>
+
+                    <div class="col-sm-10">
+                        <?php
+                        echo $this->Form->input($model_name . '.email', array(
+                            'class' => 'form-control',
+                            'div' => false,
+                            'label' => false,
+                            'id' => 'email',
+                            'multiple' => true,
+                            'options' => !empty($this->request->data[$model_name]['email']) ?
+                                    $this->request->data[$model_name]['email'] : array(),
+                        ));
+                        ?>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <?php
                 $description_err = $this->Form->error($model_name . '.description');
                 $description_err_class = !empty($description_err) ? 'has-error' : '';
                 ?>
@@ -349,6 +376,17 @@ echo $this->element('js/validate');
         </div>
     </div>
     <?php
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -27,6 +27,12 @@ class Distributor extends AppModel {
                 'message' => 'Mã đã tồn tại',
             ),
         ),
+        'email' => array(
+            'email' => array(
+                'rule' => array('validateEmail'),
+                'message' => 'Chuỗi nhập phải là email.'
+            ),
+        ),
     );
     public $hasAndBelongsToMany = array(
         'Region' =>
@@ -46,11 +52,30 @@ class Distributor extends AppModel {
         )
     );
 
+    public function validateEmail($check) {
+        $value = array_values($check)[0];
+        if (empty($value)) {
+            return true;
+        }
+        foreach ($value as $v) {
+            if (!filter_var($v, FILTER_VALIDATE_EMAIL)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public function beforeSave($options = array()) {
         parent::beforeSave($options);
 
         if (isset($this->data[$this->alias]['password_show'])) {
             $this->data[$this->alias]['password'] = Security::hash(trim($this->data[$this->alias]['password_show']), null, true);
+        }
+
+        if (isset($this->data[$this->alias]['email']) && !empty($this->data[$this->alias]['email'])) {
+            $this->data[$this->alias]['email'] = implode(',', $this->data[$this->alias]['email']);
+        } elseif (isset($this->data[$this->alias]['email'])) {
+            $this->data[$this->alias]['email'] = null;
         }
     }
 
@@ -97,6 +122,30 @@ class Distributor extends AppModel {
                 ), false);
 
         return true;
+    }
+
+    public function afterFind($results, $primary = false) {
+        parent::afterFind($results, $primary);
+
+        if (empty($results)) {
+            return $results;
+        }
+        foreach ($results as $k => $v) {
+            if (!isset($v[$this->alias]['email'])) {
+                continue;
+            }
+            $email = $v[$this->alias]['email'];
+            if (empty($email)) {
+                $results[$k][$this->alias]['email'] = array();
+                continue;
+            }
+            $results[$k][$this->alias]['email'] = array();
+            $emails = explode(',', $email);
+            foreach ($emails as $vv) {
+                $results[$k][$this->alias]['email'][$vv] = $vv;
+            }
+        }
+        return $results;
     }
 
 }

@@ -4,8 +4,11 @@ echo $this->element('js/chosen');
 ?>
 <script>
     $(function () {
-
         $('.chosen-select').chosen({
+        });
+        $('.email').select2({
+            tags: true,
+            tokenSeparators: [",", " "]
         });
     });
 </script>
@@ -103,6 +106,7 @@ echo $this->element('js/chosen');
                             <th><?php echo __('no') ?></th>
                             <th><?php echo __('distributor_name') ?></th>
                             <th><?php echo __('distributor_code') ?></th>
+                            <th><?php echo __('distributor_email') ?></th>
                             <th><?php echo __('distributor_region_id') ?></th>
                             <th><?php echo __('distributor_username') ?></th>
                             <th><?php echo __('distributor_password_show') ?></th>
@@ -113,6 +117,7 @@ echo $this->element('js/chosen');
                             <th><?php echo __('no') ?></th>
                             <th><?php echo $this->Paginator->sort('name', __('distributor_name')); ?></th>
                             <th><?php echo $this->Paginator->sort('code', __('distributor_code')); ?></th>
+                            <th><?php echo $this->Paginator->sort('email', __('distributor_email')); ?></th>
                             <th><?php echo __('distributor_region_id') ?></th>
                             <th><?php echo $this->Paginator->sort('username', __('distributor_username')); ?></th>
                             <th><?php echo $this->Paginator->sort('password_show', __('distributor_password_show')); ?></th>
@@ -139,6 +144,20 @@ echo $this->element('js/chosen');
                                 <td><?php echo $stt ?></td>
                                 <td><?php echo $item[$model_name]['name'] ?></td>
                                 <td><?php echo $item[$model_name]['code'] ?></td>
+                                <td>
+                                    <?php
+                                    echo $this->Form->input('email', array(
+                                        'class' => 'form-control email',
+                                        'div' => false,
+                                        'label' => false,
+                                        'multiple' => true,
+                                        'default' => $item[$model_name]['email'],
+                                        'multiple' => true,
+                                        'options' => !empty($item[$model_name]['email']) ?
+                                                $item[$model_name]['email'] : array(),
+                                    ));
+                                    ?>
+                                </td>
                                 <td>
                                     <?php
                                     echo $this->Form->input('region_id', array(
@@ -193,7 +212,7 @@ echo $this->element('js/chosen');
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="9" style="text-align: center"><?php echo __('no_result') ?></td>
+                            <td colspan="10" style="text-align: center"><?php echo __('no_result') ?></td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
