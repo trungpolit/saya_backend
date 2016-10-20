@@ -26,6 +26,9 @@ class ManagerFilterBehavior extends ModelBehavior {
         if ($model->alias == 'Region') {
             $query['conditions'][$model->alias . '.id'] = $region_id;
         }
+        if ($model->alias == 'Notification') {
+            $query['conditions'][$model->alias . '.region_id'] = $region_id;
+        }
 
         return $query;
     }

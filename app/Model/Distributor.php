@@ -84,7 +84,13 @@ class Distributor extends AppModel {
 
         App::uses('User', 'Model');
         $User = new User();
-        $user = $User->findByIsDistributorLink(1);
+        $user = $User->find('first', array(
+            'recursive' => -1,
+            'conditions' => array(
+                'is_distributor_link' => 1,
+                'distributor_id' => $this->id,
+            ),
+        ));
         $save_data = array();
         $save_data['distributor_id'] = $this->id;
         $save_data['is_distributor_link'] = 1;

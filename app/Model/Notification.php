@@ -4,6 +4,9 @@ class Notification extends AppModel {
 
     public $useTable = 'notifications';
     public $cached = 1;
+    public $actsAs = array(
+        'ManagerFilter',
+    );
 
     public function beforeSave($options = array()) {
         parent::beforeSave($options);
