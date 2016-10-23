@@ -100,15 +100,17 @@ class CrontabDailyReportsController extends CrontabAppController {
             }
             foreach ($stats as $v) {
                 $distributor_id = $v['OrdersDistributor']['distributor_id'];
-                $save_data[$distributor_id] = !empty($save_data[$distributor_id]) ? $save_data[$distributor_id] : array();
-                $save_data[$distributor_id]['region_id'] = $v['OrdersDistributor']['region_id'];
-                $save_data[$distributor_id]['region_name'] = $v['OrdersDistributor']['region_name'];
-                $save_data[$distributor_id]['distributor_id'] = $v['OrdersDistributor']['distributor_id'];
-                $save_data[$distributor_id]['distributor_code'] = $v['OrdersDistributor']['distributor_code'];
+                $region_id = $v['OrdersDistributor']['region_id'];
+                $key = $region_id.'_'.$distributor_id;
+                $save_data[$key] = !empty($save_data[$key]) ? $save_data[$key] : array();
+                $save_data[$key]['region_id'] = $v['OrdersDistributor']['region_id'];
+                $save_data[$key]['region_name'] = $v['OrdersDistributor']['region_name'];
+                $save_data[$key]['distributor_id'] = $v['OrdersDistributor']['distributor_id'];
+                $save_data[$key]['distributor_code'] = $v['OrdersDistributor']['distributor_code'];
                 $alias = $status_conf[$status];
-                $save_data[$distributor_id]['total_order_distributor_' . $alias] = $v[0]['count'];
+                $save_data[$key]['total_order_distributor_' . $alias] = $v[0]['count'];
                 if ($status == STATUS_SUCCESS) {
-                    $save_data[$distributor_id]['total_revernue'] = $v[0]['total_revernue'];
+                    $save_data[$key]['total_revernue'] = $v[0]['total_revernue'];
                 }
             }
         }
