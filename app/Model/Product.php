@@ -64,8 +64,20 @@ class Product extends AppModel {
         parent::afterDelete();
 
         if ($this->cached) {
+            $this->data = $this->prev_data;
             $this->resetCache();
         }
+
+//        if (!empty($this->prev_data)) {
+//            // Thực hiện xóa cache file
+//            App::uses('CacheCommon', 'Lib');
+//            $region_id = $this->prev_data[$this->alias]['region_id'];
+//            $category_id = $this->prev_data[$this->alias]['category_id'];
+//            $cache_path = APP . Configure::read('saya.Product.cache_path');
+//            $cache_file = $cache_path . $region_id . '_' . $category_id . '.json';
+//
+//            CacheCommon::delete($cache_file);
+//        }
     }
 
     public function getByRegionCategory($region_id, $category_id) {

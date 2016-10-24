@@ -20,6 +20,9 @@ class CacheCommon {
     }
 
     static public function parseFileUri(&$data, $file_fields) {
+        if (empty($data)) {
+            return;
+        }
         foreach ($file_fields as $field) {
             $uri_field = $field . '_uri';
             foreach ($data as $k => $v) {
@@ -41,6 +44,21 @@ class CacheCommon {
         $file_gz = new File($cache_gz_path, true);
         $conent_gz = gzencode($content, 9);
         return $file_gz->write($conent_gz);
+    }
+
+    static public function delete($cache_path) {
+        if (DIRECTORY_SEPARATOR == '\\') {
+            $cache_path = str_replace('/', '\\', $cache_path);
+        }
+        if (file_exists($cache_path)) {
+            unlink($cache_path);
+        }
+        // Thực hiện tạo ra gz file
+        $ext = pathinfo($cache_path, PATHINFO_EXTENSION);
+        $cache_gz_path = str_replace('.' . $ext, '.gz', $cache_path);
+        if (file_exists($cache_gz_path)) {
+            unlink($cache_gz_path);
+        }
     }
 
 }
