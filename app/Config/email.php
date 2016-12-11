@@ -42,12 +42,12 @@ class EmailConfig {
 
     public $default = array(
         'transport' => 'Smtp',
-        'from' => 'cskh@ongas.vn',
-        'host' => 'mx1.hostinger.vn',
-        'port' => 2525,
+        'from' => 'cskh@famion.vn',
+        'host' => 'mail.famion.vn',
+        'port' => 25,
         'timeout' => 180,
-        'username' => 'cskh@ongas.vn',
-        'password' => 'ongas123',
+        'username' => 'cskh@famion.vn',
+        'password' => 'famion123',
         'client' => null,
         'log' => true,
         'charset' => 'utf-8',
