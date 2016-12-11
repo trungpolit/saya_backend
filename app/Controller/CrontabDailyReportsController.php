@@ -36,7 +36,7 @@ class CrontabDailyReportsController extends CrontabAppController {
                 ),
             ));
         }
-        $this->logAnyFile(__("BEGIN: Thực hiện thống kê cho Distributor=(%s)", implode(',', $distributor_id)), $this->log_file_name);
+        $this->logAnyFile(__("BEGIN: Thực hiện thống kê cho Distributor=(%s), Ngày='%s'", implode(',', $distributor_id), $date), $this->log_file_name);
         if (empty($distributors)) {
             $this->logAnyFile("Không thực hiện thống kê, do không tồn tại Distributor nào", $this->log_file_name);
         }
@@ -69,20 +69,24 @@ class CrontabDailyReportsController extends CrontabAppController {
         }
 
         foreach ($save_data as $k => $v) {
-            $success = !empty($v['OrdersDistributor']['total_order_distributor_success']) ?
-                    $v['OrdersDistributor']['total_order_distributor_success'] : 0;
-            $pending = !empty($v['OrdersDistributor']['total_order_distributor_pending']) ?
-                    $v['OrdersDistributor']['total_order_distributor_pending'] : 0;
-            $processing = !empty($v['OrdersDistributor']['total_order_distributor_processing']) ?
-                    $v['OrdersDistributor']['total_order_distributor_processing'] : 0;
-            $fail = !empty($v['OrdersDistributor']['total_order_distributor_fail']) ?
-                    $v['OrdersDistributor']['total_order_distributor_fail'] : 0;
-            $bad = !empty($v['OrdersDistributor']['total_order_distributor_bad']) ?
-                    $v['OrdersDistributor']['total_order_distributor_bad'] : 0;
+            $success = !empty($v['total_order_distributor_success']) ?
+                    $v['total_order_distributor_success'] : 0;
+            $pending = !empty($v['total_order_distributor_pending']) ?
+                    $v['total_order_distributor_pending'] : 0;
+            $processing = !empty($v['total_order_distributor_processing']) ?
+                    $v['total_order_distributor_processing'] : 0;
+            $fail = !empty($v['total_order_distributor_fail']) ?
+                    $v['total_order_distributor_fail'] : 0;
+            $bad = !empty($v['total_order_distributor_bad']) ?
+                    $v['total_order_distributor_bad'] : 0;
             $total = $success + $pending + $processing + $fail + $bad;
             $save_data[$k]['total_order_distributor'] = $total;
             $save_data[$k]['date'] = $date_int;
         }
+
+        $this->logAnyFile(__('Save: Thực hiện lưu trữ thống kê:'), $this->log_file_name);
+        $this->logAnyFile($save_data, $this->log_file_name);
+
         $this->DailyReport->saveAll(array_values($save_data));
         $this->logAnyFile(__("END: Thực hiện thống kê cho Distributor=(%s)", implode(',', $distributor_id)), $this->log_file_name);
     }
@@ -101,7 +105,7 @@ class CrontabDailyReportsController extends CrontabAppController {
             foreach ($stats as $v) {
                 $distributor_id = $v['OrdersDistributor']['distributor_id'];
                 $region_id = $v['OrdersDistributor']['region_id'];
-                $key = $region_id.'_'.$distributor_id;
+                $key = $region_id . '_' . $distributor_id;
                 $save_data[$key] = !empty($save_data[$key]) ? $save_data[$key] : array();
                 $save_data[$key]['region_id'] = $v['OrdersDistributor']['region_id'];
                 $save_data[$key]['region_name'] = $v['OrdersDistributor']['region_name'];

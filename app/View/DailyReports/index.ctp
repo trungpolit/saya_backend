@@ -115,7 +115,7 @@ $user_type = CakeSession::read('Auth.User.type');
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <?php if (!empty($list_data)): ?>
@@ -150,6 +150,16 @@ $user_type = CakeSession::read('Auth.User.type');
                         <?php
                         $stt = $this->Paginator->counter('{:start}');
                         ?>
+                        <tr class="success">
+                            <td colspan="4" style="text-align: center"><strong><?php echo __('daily_report_sum') ?></strong></td>
+                            <td><strong><?php echo number_format($sum_revernue) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_order_distributor) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_order_distributor_success) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_order_distributor_pending) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_order_distributor_processing) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_order_distributor_fail) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_order_distributor_bad) ?></strong></td>
+                        </tr>
                         <?php foreach ($list_data as $item): ?>
                             <tr>
                                 <td >

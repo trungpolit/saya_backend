@@ -250,6 +250,9 @@ class ProductsController extends AppController {
 
         $disable_label = $this->request->query('disable_label');
         $this->set('disable_label', $disable_label);
+
+        $action = $this->request->query('action');
+        $this->set('action', $action);
     }
 
     public function reqCategoryByRegionId() {

@@ -38,7 +38,7 @@ echo $this->element('js/datetimepicker');
                 <?php
                 echo $this->Form->input('region_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('product_region_id'),
                     'options' => $regionTree,
                     'empty' => '-------',

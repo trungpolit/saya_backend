@@ -199,7 +199,7 @@ msgstr "Tổng số đơn hàng đang xử lý"
 
 # OrderBundles - BEGIN
 msgid "orders_distributor_region_id"
-msgstr "Vùng miền"
+msgstr "Quận/Huyện/Thị xã"
 
 msgid "orders_distributor_bundle_id"
 msgstr "Nhóm sản phẩm"
@@ -318,11 +318,21 @@ msgstr "Thêm mới sản phẩm"
 msgid "product_edit_title"
 msgstr "Chỉnh sửa sản phẩm"
 
+msgid "product_created_start"
+msgstr "Từ ngày"
+
+msgid "product_created_end"
+msgstr "Đến ngày"
+
+
 # /Products/* - END
 
 # /DailyReports/* - BEGIN
 msgid "daily_report_title"
 msgstr "Thống kê đơn hàng"
+
+msgid "daily_report_sum"
+msgstr "Tổng số"
 
 msgid "daily_report_date_start"
 msgstr "Từ ngày"
@@ -340,7 +350,7 @@ msgid "daily_report_date"
 msgstr "Ngày"
 
 msgid "daily_report_region_id"
-msgstr "Vùng miền"
+msgstr "Quận/Huyện/Thị xã"
 
 msgid "daily_report_bundle_id"
 msgstr "Nhóm sản phẩm"
@@ -376,7 +386,7 @@ msgstr "Giả mạo"
 
 # /DailyProductReports/* - BEGIN
 msgid "daily_product_report_title"
-msgstr "Thống kê đơn hàng"
+msgstr "Thống kê sản phẩm"
 
 msgid "daily_product_report_date_start"
 msgstr "Từ ngày"
@@ -397,7 +407,7 @@ msgid "daily_product_report_date"
 msgstr "Ngày"
 
 msgid "daily_product_report_region_id"
-msgstr "Vùng miền"
+msgstr "Quận/Huyện/Thị xã"
 
 msgid "daily_product_report_distributor_id"
 msgstr "Nhà phân phối"
@@ -445,7 +455,7 @@ msgid "customer_status"
 msgstr "Trạng thái"
 
 msgid "customer_region_id"
-msgstr "Vùng miền"
+msgstr "Quận/Huyện/Thị xã"
 
 msgid "customer_mobile"
 msgstr "Số ĐT"
@@ -694,7 +704,7 @@ msgid "user_role_id"
 msgstr "Nhóm quyền"
 
 msgid "user_region_id"
-msgstr "Vùng miền"
+msgstr "Quận/Huyện/Thị xã"
 
 msgid "user_bundle_id"
 msgstr "Nhóm sản phẩm"

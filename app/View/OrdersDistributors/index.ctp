@@ -20,6 +20,23 @@ $user_type = CakeSession::read('Auth.User.type');
             'format': 'DD-MM-YYYY HH:mm:ss',
             'showTodayButton': true
         });
+<?php if ($user_type == ADMIN_TYPE): ?>
+            var distributor_id = $('#distributor_id').val();
+            $('#region_id').on('change', function () {
+                var region_id = $(this).val();
+                var action = '<?php echo $this->action ?>';
+                var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
+                var req = $.get(request, {region_id: region_id, action: action}, function (data) {
+                    $('#distributor_id_container').html(data);
+                    $('#distributor_id').val(distributor_id);
+                    $('#distributor_id').chosen();
+                });
+                req.fail(function () {
+                    alert('reqDistributorByRegionId was failed.');
+                });
+            });
+            $('#region_id').trigger('change');
+<?php endif; ?>
     });
 </script>
 <style>
@@ -47,26 +64,28 @@ $user_type = CakeSession::read('Auth.User.type');
                 <?php
                 echo $this->Form->input('region_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('orders_distributor_region_id'),
                     'default' => $this->request->query('region_id'),
                     'options' => $regionTree,
                     'empty' => '-------',
+                    'id' => 'region_id',
                 ));
                 ?>
             </div>
         </div>
         <?php if ($user_type == ADMIN_TYPE): ?>
             <div class="col-md-4">
-                <div class="form-group">
+                <div class="form-group" id="distributor_id_container">
                     <?php
                     echo $this->Form->input('distributor_id', array(
                         'div' => false,
-                        'class' => 'form-control',
+                        'class' => 'form-control chosen-select',
                         'label' => __('orders_distributor_distributor_id'),
                         'default' => $this->request->query('distributor_id'),
                         'options' => $distributors,
                         'empty' => '-------',
+                        'id' => 'distributor_id',
                     ));
                     ?>
                 </div>

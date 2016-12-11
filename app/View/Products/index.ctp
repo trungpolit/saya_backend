@@ -11,12 +11,15 @@ echo $this->element('js/datetimepicker');
             'format': 'DD-MM-YYYY HH:mm:ss',
             'showTodayButton': true
         });
+        var action = '<?php echo $this->action ?>';
+        var distributor_id = $('#distributor_id').val();
         $('#region_id').on('change', function () {
             var region_id = $(this).val();
             var request = '<?php echo $this->Html->url(array('action' => 'reqDistributorByRegionId')) ?>';
-            var req = $.get(request, {region_id: region_id}, function (data) {
+            var req = $.get(request, {region_id: region_id, action: action}, function (data) {
                 $('#distributor_id_container').html(data);
-//                $('#distributor_id').chosen();
+                $('#distributor_id').val(distributor_id);
+                $('#distributor_id').chosen();
             });
             req.fail(function () {
                 alert('reqDistributorByRegionId was failed.');
@@ -48,21 +51,9 @@ echo $this->element('js/datetimepicker');
         <div class="col-md-4">
             <div class="form-group">
                 <?php
-                echo $this->Form->input('name', array(
-                    'div' => false,
-                    'class' => 'form-control',
-                    'label' => __('product_name'),
-                    'default' => $this->request->query('name'),
-                ));
-                ?>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <?php
                 echo $this->Form->input('region_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('product_region_id'),
                     'options' => $regionTree,
                     'empty' => '-------',
@@ -77,12 +68,24 @@ echo $this->element('js/datetimepicker');
                 <?php
                 echo $this->Form->input('distributor_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('product_distributor_id'),
                     'options' => $distributors,
                     'empty' => '-------',
                     'default' => $this->request->query('distributor_id'),
                     'id' => 'distributor_id',
+                ));
+                ?>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <?php
+                echo $this->Form->input('name', array(
+                    'div' => false,
+                    'class' => 'form-control',
+                    'label' => __('product_name'),
+                    'default' => $this->request->query('name'),
                 ));
                 ?>
             </div>

@@ -164,7 +164,7 @@ $user_type = CakeSession::read('Auth.User.type');
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <?php if (!empty($list_data)): ?>
@@ -191,6 +191,11 @@ $user_type = CakeSession::read('Auth.User.type');
                         <?php
                         $stt = $this->Paginator->counter('{:start}');
                         ?>
+                        <tr class="success">
+                            <td colspan="5" style="text-align: center"><strong><?php echo __('daily_report_sum') ?></strong></td>
+                            <td><strong><?php echo number_format($sum_qty) ?></strong></td>
+                            <td><strong><?php echo number_format($sum_revernue) ?></strong></td>
+                        </tr>
                         <?php foreach ($list_data as $item): ?>
                             <tr>
                                 <td >

@@ -34,6 +34,9 @@ class DailyProductReportsController extends AppController {
         $this->Paginator->settings = $options;
         $list_data = $this->Paginator->paginate($this->modelClass);
 
+        // Thực hiện tính tổng
+        $this->setSum($options);
+
         // lấy ra thông tin tất cả nhóm Distributor
         $distributors = $this->Distributor->getList();
         $this->set('distributors', $distributors);
@@ -49,6 +52,19 @@ class DailyProductReportsController extends AppController {
         $this->set('products', $products);
 
         $this->set('list_data', $list_data);
+    }
+
+    protected function setSum($options) {
+        $options['fields'] = array(
+            'SUM(total_qty) AS sum_qty',
+            'SUM(total_revernue) AS sum_revernue',
+        );
+        unset($options['order']);
+        $get_sum = $this->DailyProductReport->find('first', $options);
+        if (empty($get_sum)) {
+            return;
+        }
+        $this->set($get_sum[0]);
     }
 
     protected function setSearchConds(&$options) {

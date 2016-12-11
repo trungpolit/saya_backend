@@ -247,7 +247,7 @@ $user_type = CakeSession::read('Auth.User.type');
                             <?php
                             echo $this->Form->input('distributor_id', array(
                                 'div' => false,
-                                'class' => 'form-control',
+                                'class' => 'form-control chosen-select',
                                 'label' => __('daily_report_distributor_id'),
                                 'default' => $this->request->query('distributor_id'),
                                 'options' => $distributors,

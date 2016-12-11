@@ -1,8 +1,8 @@
 <?php
 
-if (!defined("FULL_BASE_URL")) {
-    define("FULL_BASE_URL", "http://cms.ongas.vn");
-}
+//if (!defined("FULL_BASE_URL")) {
+//    define("FULL_BASE_URL", "http://cms.ongas.vn");
+//}
 
 if (!defined("ORDER_DEFAULT_STATUS")) {
     define("ORDER_DEFAULT_STATUS", 2);
@@ -101,7 +101,7 @@ $config['saya'] = array(
             1 => __('status_wait_review'),
             2 => __('status_approved'),
         ),
-        'name' => 'onGas',
+        'name' => 'famion',
         'max_file_size_upload' => 5 * 1000 * 1000,
         'data_file_root' => 'data_files/',
         'video_types' => array(

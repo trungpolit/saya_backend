@@ -52,7 +52,7 @@ echo $this->element('js/chosen');
                 <?php
                 echo $this->Form->input('region_id', array(
                     'div' => false,
-                    'class' => 'form-control',
+                    'class' => 'form-control chosen-select',
                     'label' => __('distributor_region_id'),
                     'default' => $this->request->query('region_id'),
                     'options' => $regionTree,

@@ -36,7 +36,7 @@ class CrontabDailyProductReportsController extends CrontabAppController {
                 ),
             ));
         }
-        $this->logAnyFile(__("BEGIN: Thực hiện thống kê cho Distributor=(%s)", implode(',', $distributor_id)), $this->log_file_name);
+        $this->logAnyFile(__("BEGIN: Thực hiện thống kê cho Distributor=(%s), Ngày='%s'", implode(',', $distributor_id), $date), $this->log_file_name);
         if (empty($distributors)) {
             $this->logAnyFile("Không thực hiện thống kê, do không tồn tại Distributor nào", $this->log_file_name);
         }
@@ -73,6 +73,10 @@ class CrontabDailyProductReportsController extends CrontabAppController {
                 'total_revernue' => $v[0]['total_revernue'],
             );
         }
+
+        $this->logAnyFile(__('Save: Thực hiện lưu trữ thống kê:'), $this->log_file_name);
+        $this->logAnyFile($save_data, $this->log_file_name);
+
         $this->DailyProductReport->saveAll($save_data);
         $this->logAnyFile(__("END: Thực hiện thống kê cho Distributor=(%s)", implode(',', $distributor_id)), $this->log_file_name);
     }

@@ -5,6 +5,7 @@ if (empty($user)) {
 }
 $username = $user['username'];
 $perms = $user['perms'];
+$user_type = $user['type'];
 ?>
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
@@ -12,7 +13,11 @@ $perms = $user['perms'];
             <li class="nav-header">
                 <div class="dropdown profile-element"> 
                     <span>
-                        <img src="<?php echo Router::url('/', true) ?>/img/icon-user-default.png" class="img-circle" alt="image">
+                        <?php if ($user_type == ADMIN_TYPE): ?>
+                            <img src="<?php echo Router::url('/', true) ?>/img/admin.png" class="img-circle" alt="image">
+                        <?php else: ?>
+                            <img src="<?php echo Router::url('/', true) ?>/img/distributor.png" class="img-circle" alt="image">
+                        <?php endif; ?>
                     </span>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="clear"> 
