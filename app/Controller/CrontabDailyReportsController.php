@@ -14,6 +14,10 @@ class CrontabDailyReportsController extends CrontabAppController {
     public function index() {
         $this->autoRender = false;
         $this->log_file_name = __CLASS__ . '_' . __FUNCTION__;
+
+        // Thực hiện khóa crontab
+        $this->lock();
+
         $date = $this->request->query('date');
         if (empty($date)) {
             $date = date('Y-m-d');

@@ -32,4 +32,12 @@ class CrontabAppController extends Controller {
         return $raw_arr;
     }
 
+    protected function lock() {
+        $f = fopen(TMP . 'logs' . DS . $this->log_file_name . '.lock', 'w') or die('Cannot create lock file');
+        if (flock($f, LOCK_EX | LOCK_NB)) {
+            $this->logAnyFile(__('LOCKED: Tiến trình xử lý trước đó vẫn đang hoạt động'), $this->log_file_name);
+            exit();
+        }
+    }
+
 }

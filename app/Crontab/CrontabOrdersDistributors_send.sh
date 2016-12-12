@@ -1,5 +1,5 @@
 PID_FILE=$0.pid
-APP_PATH=/home/u289389444/public_html/cms/app
+APP_PATH=/home/famcd044/public_html/cms.famion.vn/app
 FILE_NAME=$(basename $0)
 FILE_NAME="${FILE_NAME%.*}"
 [ -f $PID_FILE ] && {

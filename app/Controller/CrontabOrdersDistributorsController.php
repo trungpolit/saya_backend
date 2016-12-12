@@ -16,6 +16,10 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
 
     public function send() {
         $this->log_file_name = __CLASS__ . '_' . __FUNCTION__;
+
+        // Thực hiện khóa crontab
+        $this->lock();
+
         $limit = $this->request->query('limit');
         if (empty($limit)) {
             $limit = self::LIMIT;
