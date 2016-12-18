@@ -178,6 +178,12 @@ $config['saya'] = array(
             'iOS' => 'iOS',
         ),
     ),
+    'CrontabQueue' => array(
+        'names' => array(
+            'CrontabDailyReports_index',
+            'CrontabDailyProductReports_index',
+        )
+    ),
 );
 
 

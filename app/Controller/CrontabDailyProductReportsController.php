@@ -53,8 +53,8 @@ class CrontabDailyProductReportsController extends CrontabAppController {
         $options = array(
             'conditions' => array(
                 'distributor_id' => $distributor_id,
-                'modified >=' => date('Y-m-d', strtotime($date)) . ' 00:00:00',
-                'modified <' => date('Y-m-d', strtotime('+1 day', strtotime($date))) . ' 00:00:00',
+                'created >=' => date('Y-m-d', strtotime($date)) . ' 00:00:00',
+                'created <' => date('Y-m-d', strtotime('+1 day', strtotime($date))) . ' 00:00:00',
             ),
         );
         $stats = $this->OrdersProduct->stats($options);

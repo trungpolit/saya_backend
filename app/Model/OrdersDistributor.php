@@ -36,6 +36,11 @@ class OrdersDistributor extends AppModel {
     public function afterSave($created, $options = array()) {
         parent::afterSave($created, $options);
 
+        // Thực hiện update vào CrontabQueue
+        if (!$created) {
+            $this->updateCrontabQueue();
+        }
+
         if (
                 !empty($this->data[$this->alias]['customer_code']) &&
                 !empty($this->data[$this->alias]['no']) &&
@@ -391,6 +396,46 @@ class OrdersDistributor extends AppModel {
         );
         $options = Hash::merge($default_opts, $options);
         return $this->find('all', $options);
+    }
+
+    protected function updateCrontabQueue() {
+        $names = Configure::read('saya.CrontabQueue.names');
+        $this->insertCrontabQueue($names, $this->data_old[$this->alias]['created']);
+//        $this->insertCrontabQueue($names, $this->data[$this->alias]['modified']);
+    }
+
+    protected function insertCrontabQueue($names, $modified) {
+        if (date('Ymd', strtotime($modified)) == date('Ymd')) {
+            return;
+        }
+        $date_int = (int) date('Ymd', strtotime($modified));
+        App::uses('CrontabQueue', 'Model');
+        $CrontabQueue = new CrontabQueue();
+        foreach ($names as $name) {
+            $check_exists = $CrontabQueue->checkExists($date_int, $name);
+            if (!empty($check_exists)) {
+                continue;
+            }
+            $extract = explode('_', $name);
+            $params = array(
+                'date' => date('Y-m-d', strtotime($modified)),
+            );
+            $save_data = array(
+                'date' => $date_int,
+                'name' => $name,
+                'controller' => $extract[0],
+                'action' => $extract[1],
+                'params' => json_encode($params),
+                'url' => Router::url(array(
+                    'controller' => $extract[0],
+                    'action' => $extract[1],
+                    '?' => $params,
+                )),
+                'status' => STATUS_PENDING,
+            );
+            $CrontabQueue->create();
+            $CrontabQueue->save($save_data);
+        }
     }
 
 }
