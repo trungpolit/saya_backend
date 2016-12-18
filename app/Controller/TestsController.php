@@ -136,4 +136,20 @@ class TestsController extends AppController {
         $gateway->send(new Message(new Body('message content')), new AndroidDeviceRecipient('token'));
     }
 
+    public function mail() {
+        $this->autoRender = false;
+        App::uses('CakeEmail', 'Network/Email');
+        $Email = new CakeEmail();
+        $Email->config('default');
+        $EmailConfig = new EmailConfig();
+        $params['email'] = array('ngotrung.poli.t@gmail.com');
+        $params['from'] = $EmailConfig->default['from'];
+        $params['subject'] = 'Test send mail';
+        $Email->emailFormat('html')
+                ->subject($params['subject'])->from(array($params['from'] => 'cskh'))
+                ->to($params['email']);
+
+        $Email->send('Test send mail');
+    }
+
 }

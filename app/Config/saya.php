@@ -92,6 +92,10 @@ if (!defined("STATUS_SEND_EXCEPTION")) {
     define("STATUS_SEND_EXCEPTION", 3);
 }
 
+if (!defined("FILE_MANAGER_SECRET")) {
+    define("FILE_MANAGER_SECRET", 'aaHgX#$a!@'); // 8 giờ
+}
+
 $config['saya'] = array(
     'App' => array(
         'cache_path' => 'webroot/cache/',

@@ -158,7 +158,7 @@ class CrontabOrdersDistributorsController extends CrontabAppController {
         $params['from'] = $EmailConfig->default['from'];
         $Email->template($email_template);
         $Email->emailFormat('html')
-                ->subject($params['subject'])->from(array($params['from'] => 'famion-cskh'))
+                ->subject($params['subject'])->from(array($params['from'] => 'cskh'))
                 ->to($params['email']);
         $Email->viewVars($params);
         try {

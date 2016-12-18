@@ -1,6 +1,8 @@
 <?php
 echo $this->start('script');
 echo $this->Html->script('plugins/tinymce/tinymce.min');
+$user_id = CakeSession::read('Auth.User.id');
+$akey = md5($user_id.FILE_MANAGER_SECRET);
 ?>
 <script>
     tinymce.init({
@@ -16,7 +18,8 @@ echo $this->Html->script('plugins/tinymce/tinymce.min');
         relative_urls: false,
         external_filemanager_path: "<?php echo Router::url('/', true) ?>filemanager/",
         filemanager_title: "Quản lý file",
-        external_plugins: {"filemanager": "<?php echo Router::url('/', true) ?>filemanager/plugin.min.js"}
+        external_plugins: {"filemanager": "<?php echo Router::url('/', true) ?>filemanager/plugin.min.js"},
+        filemanager_access_key: "<?php echo $akey ?>",
     });
 </script>
 <?php
