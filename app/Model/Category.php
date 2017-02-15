@@ -58,6 +58,19 @@ class Category extends AppModel {
         return true;
     }
 
+    public function beforeDelete($cascade = true) {
+        parent::beforeDelete($cascade);
+
+        if ($this->cached && empty($this->data)) {
+            $this->data = $this->find('first', array(
+                'recursive' => -1,
+                'conditions' => array(
+                    'id' => $this->id,
+                ),
+            ));
+        }
+    }
+
     public function afterDelete() {
         parent::afterDelete();
 
@@ -115,7 +128,18 @@ class Category extends AppModel {
 
     protected function resetCacheByRegion($region_ids, $cache_path) {
         foreach ($region_ids as $v) {
-            $raw_categories = $this->findAllByRegionId($v);
+//            $raw_categories = $this->findAllByRegionId($v);
+            $raw_categories = $this->find('all', array(
+                'recursive' => -1,
+                'conditions' => array(
+                    'region_id' => $v,
+                    'status' => STATUS_PUBLIC,
+                ),
+                'order' => array(
+                    'weight' => 'ASC',
+                    'modified' => 'DESC',
+                ),
+            ));
             $categories = Hash::extract($raw_categories, '{n}.' . $this->alias);
             CacheCommon::parseFileUri($categories, $this->file_fields);
             $cache_file = $cache_path . $v . '.json';
